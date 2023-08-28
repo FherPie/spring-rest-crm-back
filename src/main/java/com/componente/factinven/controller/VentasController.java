@@ -1,5 +1,7 @@
 package com.componente.factinven.controller;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +81,21 @@ public class VentasController {
 	public VentaResponse findById(@PathVariable Integer id) {
 		return (VentaResponse) ventaService.findById(id);
 	}
+
+	@GetMapping("/reporteVentaxCliente")
+	public ResponseEntity<List<VentaResponse>> getAllMovimientosByClienteId(@RequestParam(required = false) Integer clienteId,
+			@RequestParam(required = true) LocalDateTime startDate, @RequestParam(required = true) LocalDateTime endDate, @RequestParam(required = false) String estado ) {
+		try {
+			List<VentaResponse> listaReporte = ventaService.getAllMovimientoByClienteId(clienteId, startDate, endDate);
+			return new ResponseEntity<>(listaReporte, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+
+
 
 	@PostMapping("/venta/uploadFile/{pathName}")
 	public String handleFileUpload(@RequestPart(required = true) MultipartFile file, @PathVariable String pathName) {

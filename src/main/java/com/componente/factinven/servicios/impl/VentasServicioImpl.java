@@ -3,6 +3,7 @@ package com.componente.factinven.servicios.impl;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import com.componente.factinven.repositorios.ComprobanteRepositorio;
 import com.componente.factinven.repositorios.DetalleComprobanteRepositorio;
 import com.componente.factinven.repositorios.EmpleadoRepositorio;
 import com.componente.factinven.repositorios.ProductoRepositorio;
+import com.componente.factinven.repositorios.VentaRepositorio;
 import com.componente.factinven.servicios.interfaz.IComprobanteServicio;
 
 @Service
@@ -30,6 +32,11 @@ public class VentasServicioImpl implements IComprobanteServicio {
 	
 	@Autowired
 	ComprobanteRepositorio comprobanteRespositorio;
+	
+	
+	@Autowired
+	VentaRepositorio ventaRespositorio;
+	
 	
 	@Autowired
 	AlmacenRepositorio almacenRespositorio;
@@ -110,8 +117,7 @@ public class VentasServicioImpl implements IComprobanteServicio {
 	@Override
 	public List<VentaResponse> findAll() {
 		List<VentaResponse> listaRetorna= new ArrayList<>();
-
-		comprobanteRespositorio.findAll().forEach((n)->{
+		ventaRespositorio.findAll().forEach((n)->{
 			VentaResponse venta= new VentaResponse();
 			venta.setEstado(n.getEstado());
 			venta.setFechayHora(n.getFechayHora());
@@ -128,6 +134,22 @@ public class VentasServicioImpl implements IComprobanteServicio {
 	@Override
 	public ComprobanteResponse findById(Integer id) {
 		return  new ComprobanteResponse(comprobanteRespositorio.findById(id).get());
+	}
+
+	public List<VentaResponse> getAllMovimientoByClienteId(Integer clienteId, LocalDateTime startDate, LocalDateTime endDate) {
+		List<VentaResponse> listaRetorna= new ArrayList<>();
+		ventaRespositorio.fecthVentaBetweenDatesAndClientID(startDate, endDate, clienteId).forEach((n)->{
+			VentaResponse venta= new VentaResponse();
+			venta.setEstado(n.getEstado());
+			venta.setFechayHora(n.getFechayHora());
+			venta.setFormaPago(n.getFormaPago());
+			venta.setNombreCliente(n.getCliente().getPersona().getNombres()+" "+n.getCliente().getPersona().getApellidos());
+			venta.setId(n.getId());
+			venta.setTotal(new BigDecimal(1000));
+			//List<DetalleComprobante> lista= detalleComprobanteRespositorio.fin;
+			listaRetorna.add(venta);
+		});
+		return listaRetorna;
 	}
 	
 	
