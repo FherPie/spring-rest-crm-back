@@ -24,7 +24,7 @@ public interface VentaRepositorio extends JpaRepository<Venta, Integer> {
             + "WHERE "
             + "cliente.id = :clienteId  and fechayHora BETWEEN :startDate AND :endDate")
     List<Venta> fecthVentaBetweenDatesAndClientID(@Param("startDate")LocalDateTime startDate,@Param("endDate")LocalDateTime endDate, Integer clienteId);
-
+    
     @Query("SELECT "
             + " (venta) from Venta venta "
             + "WHERE "
