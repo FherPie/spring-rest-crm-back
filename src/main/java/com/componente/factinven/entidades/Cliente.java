@@ -34,6 +34,4 @@ public class Cliente implements Serializable {
 	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	private Persona persona;
 	private String categoria;
-	
-	
 }

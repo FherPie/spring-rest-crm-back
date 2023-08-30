@@ -83,16 +83,12 @@ public class AlmacenController {
 	
 	@Data
 	public static class AlmacenRequest {
-		
-
 		private int id;
 		private String codigo;
 		private String nombre;
 		private String direccion;
 		private String telefono;
 		private int empleadoaCargoId;
-		
-		
 	}
 	
 	@Data

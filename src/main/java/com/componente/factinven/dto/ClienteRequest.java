@@ -23,8 +23,4 @@ public class ClienteRequest implements Serializable {
     private String identificacion;
     private String categoria;
     private Integer idPersona;
-    
-    
-    
- 	
 }

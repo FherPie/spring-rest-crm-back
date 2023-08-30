@@ -33,15 +33,7 @@ public class ClienteController {
 	
 
 	private final ImporterExcelCliente importerExcelCliente;
-	
-	//private final StorageService storageService;
-	
-//	@Autowired
-//	public ClienteController(StorageService storageService) {
-//		this.storageService=storageService;
-//	} 
-	
-	
+
 	@Autowired
 	public ClienteController(ImporterExcelCliente importerExcelCliente) {
 		this.importerExcelCliente=importerExcelCliente;
