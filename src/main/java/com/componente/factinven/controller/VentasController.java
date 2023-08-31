@@ -86,6 +86,7 @@ public class VentasController {
 	public ResponseEntity<List<VentaResponse>> getAllMovimientosByClienteId(@RequestParam(required = false) Integer clienteId,
 			@RequestParam(required = true) LocalDateTime startDate, @RequestParam(required = true) LocalDateTime endDate, @RequestParam(required = false) String estado ) {
 		try {
+			
 			List<VentaResponse> listaReporte = ventaService.getAllMovimientoByClienteId(clienteId, startDate, endDate);
 			return new ResponseEntity<>(listaReporte, HttpStatus.OK);
 		} catch (Exception e) {
