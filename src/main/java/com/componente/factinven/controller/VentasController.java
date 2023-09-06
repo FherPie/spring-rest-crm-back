@@ -1,10 +1,13 @@
 package com.componente.factinven.controller;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -84,10 +87,15 @@ public class VentasController {
 
 	@GetMapping("/reporteVentaxCliente")
 	public ResponseEntity<List<VentaResponse>> getAllMovimientosByClienteId(@RequestParam(required = false) Integer clienteId,
-			@RequestParam(required = true) LocalDateTime startDate, @RequestParam(required = true) LocalDateTime endDate, @RequestParam(required = false) String estado ) {
-		try {
-			
-			List<VentaResponse> listaReporte = ventaService.getAllMovimientoByClienteId(clienteId, startDate, endDate);
+			@RequestParam(required = true) String startDate,
+			@RequestParam(required = true) String endDate,
+			@RequestParam(required = false) String estado ) {
+		try {  
+		    String europeanDatePattern = "yyyy-MM-dd HH:mm:ss";
+		    DateTimeFormatter europeanDateFormatter = DateTimeFormatter.ofPattern(europeanDatePattern);
+		    LocalDateTime start = europeanDateFormatter.parse(startDate, LocalDateTime::from);
+		    LocalDateTime end = europeanDateFormatter.parse(endDate, LocalDateTime::from);
+		    List<VentaResponse> listaReporte = ventaService.getAllMovimientoByClienteId(clienteId, start, end);
 			return new ResponseEntity<>(listaReporte, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
