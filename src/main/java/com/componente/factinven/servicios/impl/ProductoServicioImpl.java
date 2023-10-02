@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.componente.factinven.dto.ProductoRequest;
 import com.componente.factinven.dto.ProductoResponse;
 import com.componente.factinven.entidades.Producto;
+import com.componente.factinven.repositorios.ProductRepository;
 import com.componente.factinven.repositorios.ProductoRepositorio;
 import com.componente.factinven.servicios.interfaz.IProductoServicio;
 
@@ -22,6 +23,9 @@ public class ProductoServicioImpl implements IProductoServicio {
 
 	@Autowired
 	private ProductoRepositorio productoRepositorio;
+	
+	@Autowired
+	private ProductRepository productoRepository;
 
 	@Override
 	@Transactional
@@ -100,6 +104,14 @@ public class ProductoServicioImpl implements IProductoServicio {
 		prdocutoGuardar.setPrecioUnitario(producto.getPrecioUnitario());
 		prdocutoGuardar.setStock(producto.getStock());
 	    productoRepositorio.save(prdocutoGuardar);
+	}
+
+	@Override
+	public List<ProductoResponse> findAllP() {
+	
+		
+		
+		return null;
 	}
 
 //	@Override

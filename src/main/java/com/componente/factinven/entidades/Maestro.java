@@ -23,4 +23,6 @@ public class Maestro implements Serializable {
     private String nombre;
     @NotNull
     private String descripcion;
+    @NotNull
+    private String codigo;
 }

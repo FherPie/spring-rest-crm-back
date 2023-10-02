@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -17,13 +19,17 @@ import com.componente.factinven.dto.VentaRequest.DetalleVentaRequest;
 import com.componente.factinven.dto.VentaResponse;
 import com.componente.factinven.entidades.DetalleComprobante;
 import com.componente.factinven.entidades.DetalleVenta;
+import com.componente.factinven.entidades.Entrada;
+import com.componente.factinven.entidades.Salida;
 import com.componente.factinven.entidades.Venta;
 import com.componente.factinven.repositorios.AlmacenRepositorio;
 import com.componente.factinven.repositorios.ClienteRepositorio;
 import com.componente.factinven.repositorios.ComprobanteRepositorio;
 import com.componente.factinven.repositorios.DetalleComprobanteRepositorio;
 import com.componente.factinven.repositorios.EmpleadoRepositorio;
+import com.componente.factinven.repositorios.EntradasRespository;
 import com.componente.factinven.repositorios.ProductoRepositorio;
+import com.componente.factinven.repositorios.SalidasRespository;
 import com.componente.factinven.repositorios.VentaRepositorio;
 import com.componente.factinven.servicios.interfaz.IComprobanteServicio;
 
@@ -53,7 +59,15 @@ public class VentasServicioImpl implements IComprobanteServicio {
 	
 	@Autowired
 	ProductoRepositorio productoRespositorio;
+	
+	
+	@Autowired
+	EntradasRespository entradaRespositorio;
+	
+	@Autowired
+	SalidasRespository salidaRespositorio;
 
+	@Transactional
 	@Override
 	public ComprobanteResponse guardarComprobante(ComprobanteRequest comprobanteRequest) {
 		VentaRequest ventaRequest= (VentaRequest) comprobanteRequest;
@@ -75,9 +89,11 @@ public class VentasServicioImpl implements IComprobanteServicio {
 			DetalleVenta deta= new DetalleVenta();
 			deta.setProducto(productoRespositorio.findById(det.getProductoId()).orElse(null));
 			deta.setPrecioUnitario(new BigDecimal(det.getPrecioUnitario()));
-			deta.setUnidad(det.getNumeroItems());
+			deta.setCantidad(det.getNumeroItems());
+			deta.setUnidad(0);
 			deta.setVenta(venta);
-            detalleComprobanteRespositorio.save(deta);			
+            deta= detalleComprobanteRespositorio.save(deta);
+            guardarSalida(deta);
 		}
 		
 	    return new VentaResponse(comprobanteRespositorio.save(venta));
@@ -150,6 +166,21 @@ public class VentasServicioImpl implements IComprobanteServicio {
 			listaRetorna.add(venta);
 		});
 		return listaRetorna;
+	}
+
+	@Override
+	public Entrada guardarEntrada(DetalleComprobante detalle) {
+		Entrada entrada= new Entrada();
+		entrada.setDetalleComprobante(detalle);
+		return entrada= entradaRespositorio.save(entrada);
+	}
+
+	@Override
+	public Salida guardarSalida(DetalleComprobante detalle) {
+		// TODO Auto-generated method stub
+		Salida salida= new Salida();
+		salida.setDetalleComprobante(detalle);
+		return salida= salidaRespositorio.save(salida);
 	}
 	
 	

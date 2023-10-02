@@ -5,7 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,9 +23,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.componente.factinven.dto.ProductoRequest;
 import com.componente.factinven.dto.ProductoResponse;
+import com.componente.factinven.entidades.Producto;
 import com.componente.factinven.importers.ImporterExcelProducto;
 import com.componente.factinven.servicios.impl.ProductoServicioImpl;
 
@@ -96,6 +101,22 @@ public class ProductoController {
 
 		importerExcelProducto.LeerExcel(file);
 		return "You successfully uploaded " + file.getOriginalFilename() + "!";
+	}
+	
+	@GetMapping(params = { "page", "size" })
+	public List<ProductoResponse> findPaginated(@RequestParam("page") int page, 
+	  @RequestParam("size") int size, UriComponentsBuilder uriBuilder,
+	  HttpServletResponse response) throws Exception {
+	    Page<ProductoResponse> resultPage = productoService.listarProductos(page, size);
+	    if (page > resultPage.getTotalPages()) {
+	        throw new Exception();
+	    }
+		/*
+		 * eventPublisher.publishEvent(new
+		 * PaginatedResultsRetrievedEvent<ProductoResponse>( ProductoResponse.class,
+		 * uriBuilder, response, page, resultPage.getTotalPages(), size));
+		 */
+	    return resultPage.getContent();
 	}
 
 }

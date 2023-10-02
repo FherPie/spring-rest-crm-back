@@ -17,5 +17,40 @@ public class EntidadPadre {
 	
 	@Column(name="updated_by")
 	private Persona updatedBy;
+
+	public LocalDateTime getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(LocalDateTime createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Persona getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(Persona createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public LocalDateTime getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(LocalDateTime updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
+	public Persona getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(Persona updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+	
+	
+	
 	
 }

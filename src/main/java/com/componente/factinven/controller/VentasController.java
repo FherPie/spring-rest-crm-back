@@ -54,22 +54,22 @@ public class VentasController {
 	} 
 
 
-	@PutMapping("/venta")
+	@PutMapping("/Updateventa")
 	public ResponseEntity<ComprobanteResponse> actualizar(@RequestBody VentaRequest ventaRequest) {
 		return new ResponseEntity<ComprobanteResponse>(ventaService.editarComprobante(ventaRequest), HttpStatus.OK);
 	};
 
-	@DeleteMapping("/venta")
+	@DeleteMapping("/Deleteventa/")
 	public void delete(@RequestBody VentaRequest ventaRequest) {
 		ventaService.eliminarComprobante(ventaRequest);
 	};
 
-	@PostMapping("/venta")
+	@PostMapping("/guardarVenta")
 	public ResponseEntity<VentaResponse> crear(@RequestBody VentaRequest ventaRequest) {
 		return new ResponseEntity<VentaResponse>((VentaResponse) ventaService.guardarComprobante(ventaRequest), HttpStatus.OK);
 	};
 
-	@GetMapping("/venta")
+	@GetMapping("/listarVenta")
 	public List<VentaResponse> listarTodos() {
 		return ventaService.findAll();
 	}
@@ -80,12 +80,12 @@ public class VentasController {
 		return (VentaResponse) ventaService.buscarComprobanteCodigo(codigo);
 	}
 
-	@GetMapping("/venta/{id}")
+	@GetMapping("/obtenerVenta/{id}")
 	public VentaResponse findById(@PathVariable Integer id) {
 		return (VentaResponse) ventaService.findById(id);
 	}
 
-	@GetMapping("/reporteVentaxCliente")
+	@GetMapping("/reporteVentaxFechas")
 	public ResponseEntity<List<VentaResponse>> getAllMovimientosByClienteId(@RequestParam(required = false) Integer clienteId,
 			@RequestParam(required = true) String startDate,
 			@RequestParam(required = true) String endDate,

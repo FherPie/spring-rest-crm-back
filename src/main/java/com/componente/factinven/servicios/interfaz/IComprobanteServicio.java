@@ -7,6 +7,9 @@ import org.springframework.data.domain.Page;
 import com.componente.factinven.dto.ComprobanteRequest;
 import com.componente.factinven.dto.ComprobanteResponse;
 import com.componente.factinven.dto.VentaResponse;
+import com.componente.factinven.entidades.DetalleComprobante;
+import com.componente.factinven.entidades.Entrada;
+import com.componente.factinven.entidades.Salida;
 
 public interface IComprobanteServicio {
 
@@ -25,4 +28,7 @@ public interface IComprobanteServicio {
 	public List<VentaResponse> findAll();
 	
 	public ComprobanteResponse findById(Integer id);
+	
+	public Entrada guardarEntrada(DetalleComprobante detalle);
+	public Salida guardarSalida(DetalleComprobante detalle);
 }

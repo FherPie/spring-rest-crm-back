@@ -24,4 +24,6 @@ public interface IProductoServicio {
 	public abstract  Page<ProductoResponse> listarProductos(int page, int size);
 	
 	public List<ProductoResponse> findAll();
+	
+	public List<ProductoResponse> findAllP();
 }

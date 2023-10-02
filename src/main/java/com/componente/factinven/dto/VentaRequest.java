@@ -24,7 +24,7 @@ public class VentaRequest  extends ComprobanteRequest {
 		private double descuentoUnitario;
 		private double precioporDetalle;
 		private int numeroDetalle;
-		private int numeroItems;
+		private double numeroItems;
 		
 		
 		

@@ -20,6 +20,7 @@ public class Detalle implements Serializable
     private String nombre;
     private String parametros;
     private String descripcion;
+    private String codigo;
 
     @ManyToOne
     @JoinColumn(name = "id_maestro", insertable = false, updatable = false)
