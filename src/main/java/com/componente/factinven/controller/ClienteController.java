@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.componente.factinven.dto.ClienteRequest;
 import com.componente.factinven.dto.ClienteResponse;
 import com.componente.factinven.importers.ImporterExcelCliente;
-import com.componente.factinven.servicios.impl.ClienteServicioImpl;
+import com.componente.factinven.servicios.interfaz.IClienteServicio;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -29,7 +29,7 @@ import com.componente.factinven.servicios.impl.ClienteServicioImpl;
 public class ClienteController {
 
 	@Autowired
-	ClienteServicioImpl clienteService;
+	IClienteServicio clienteService;
 	
 
 	private final ImporterExcelCliente importerExcelCliente;

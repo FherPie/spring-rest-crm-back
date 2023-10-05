@@ -42,7 +42,7 @@ public class ClienteServicioImpl  implements IClienteServicio {
 		persona.setIdentificacion(cliente.getIdentificacion());
 		personaRepositorio.save(persona);
 		clienteGuardar.setPersona(persona);
-		clienteGuardar.setCategoria(cliente.getCategoria());
+		//clienteGuardar.setCategoria(cliente.getCategoria());
 	    return new ClienteResponse(clienteRepositorio.save(clienteGuardar));
 	}
 
