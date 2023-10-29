@@ -21,8 +21,10 @@ public class ComprobanteResponse  implements Serializable {
 	private String codigo;
 	private Integer idAlmacen;
 	private String formaPago;
-	private BigDecimal total;
+	private String total;
 	private String nombreCliente;
+	private String fechaFormat;
+	private String numeroFactura;
 	
 	
 	
@@ -36,7 +38,7 @@ public class ComprobanteResponse  implements Serializable {
 		this.codigo = comprobante.getCodigo();
 		this.idAlmacen = comprobante.getAlmacen().getId();
 		this.formaPago = comprobante.getFormaPago();
-		this.total = comprobante.getTotal();
+		this.total = comprobante.getTotal().toString();
 	}
 
 
@@ -58,7 +60,7 @@ public class ComprobanteResponse  implements Serializable {
 		this.codigo = comprobante.getCodigo();
 		this.idAlmacen = comprobante.getAlmacen().getId();
 		this.formaPago = comprobante.getFormaPago();
-		this.total = comprobante.getTotal();
+		this.total = comprobante.getTotal().toString();
 	}
 
 

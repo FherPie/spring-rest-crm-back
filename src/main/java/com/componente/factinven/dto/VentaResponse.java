@@ -10,7 +10,7 @@ public class VentaResponse extends ComprobanteResponse {
 		super();
 		this.setId(venta.getId());
 		this.setCodigo(venta.getCodigo());
-		this.setTotal(venta.getTotal());
+		this.setTotal(venta.getTotal().toString());
 		this.setFechayHora(venta.getFechayHora());
 		this.setEstado(venta.getEstado());
 		//this.setIdCliente(venta.getCliente().getId());
@@ -23,7 +23,7 @@ public class VentaResponse extends ComprobanteResponse {
 		Venta venta= (Venta)save;
 		this.setId(venta.getId());
 		this.setCodigo(venta.getCodigo());
-		this.setTotal(venta.getTotal());
+		this.setTotal(venta.getTotal().toString());
 		this.setFechayHora(venta.getFechayHora());
 		this.setEstado(venta.getEstado());
 		//this.setIdCliente(venta.getCliente().getId());

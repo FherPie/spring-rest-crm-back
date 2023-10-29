@@ -8,5 +8,5 @@ import com.componente.factinven.entidades.DetalleComprobante;
 @Repository
 public interface DetalleComprobanteRepositorio extends JpaRepository<DetalleComprobante, Integer> {
 
-	
+
 }

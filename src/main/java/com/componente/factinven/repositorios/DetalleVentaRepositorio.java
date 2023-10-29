@@ -1,7 +1,5 @@
 package com.componente.factinven.repositorios;
 
-import com.componente.factinven.entidades.Detalle;
-import com.componente.factinven.entidades.DetalleComprobante;
 import com.componente.factinven.entidades.DetalleVenta;
 import com.componente.factinven.entidades.Venta;
 
@@ -12,9 +10,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DetalleRepositorio extends JpaRepository<Detalle, Integer>
+public interface DetalleVentaRepositorio extends JpaRepository<DetalleVenta, Integer>
 {
 
 
+    @Query("select  d from DetalleVenta d where d.venta = ?1")
+	List<DetalleVenta>  listaDetallesVenta(Venta venta);
 
 }
