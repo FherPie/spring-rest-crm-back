@@ -37,7 +37,9 @@ public class Proveedor extends EntidadPadre implements Serializable {
 //	@OneToMany(cascade = CascadeType.ALL, mappedBy = "idProveedor")
 //	private List<OrdenCompra> ordencompraList;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "proveedor", fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "proveedor", fetch = FetchType.LAZY, orphanRemoval = true)
 	private Collection<Producto> productoList= new ArrayList<>();
+
+	
 
 }

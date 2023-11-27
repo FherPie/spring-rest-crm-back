@@ -27,7 +27,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.componente.factinven.dto.ProductoRequest;
 import com.componente.factinven.dto.ProductoResponse;
-import com.componente.factinven.entidades.Producto;
 import com.componente.factinven.importers.ImporterExcelProducto;
 import com.componente.factinven.servicios.impl.ProductoServicioImpl;
 

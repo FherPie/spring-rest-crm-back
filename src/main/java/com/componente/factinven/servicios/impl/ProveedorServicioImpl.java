@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.componente.factinven.entidades.Proveedor;
 import com.componente.factinven.repositorios.ProveedorRepositorio;
+import com.componente.factinven.repositorios.ProveedorRepositorio.ProveedorNameAdres;
 import com.componente.factinven.servicios.interfaz.IProveedorServicio;
 
 @Service
@@ -55,6 +56,12 @@ public class ProveedorServicioImpl  implements IProveedorServicio {
 	@Override
 	public List<Proveedor> buscarProveedorXNombre(String nombre) {
 	 return this.proveedorRepositorio.findByNombreContainingIgnoreCase(nombre);
+	}
+    
+	
+	@Override
+	public  List<ProveedorNameAdres> listarProveedor() {
+		return proveedorRepositorio.llenarLista();
 	}
 
 }
