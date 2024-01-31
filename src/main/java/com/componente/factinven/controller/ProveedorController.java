@@ -27,6 +27,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.componente.factinven.dto.ProductoRequest;
 import com.componente.factinven.dto.ProductoResponse;
+import com.componente.factinven.dto.ProveedorDto;
 import com.componente.factinven.importers.ImporterExcelProducto;
 import com.componente.factinven.repositorios.ProveedorRepositorio.ProveedorNameAdres;
 import com.componente.factinven.servicios.impl.ProductoServicioImpl;
@@ -56,16 +57,6 @@ public class ProveedorController {
 		this.importerExcelProducto=importerExcelProducto;
 	} 
 
-
-	@GetMapping("/resource2")
-	public Map<String, Object> home2() {
-		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("id", UUID.randomUUID().toString());
-		model.put("content", "Hello World");
-		return model;
-
-	}
-
 	// @PutMapping("/producto")
 	// public ResponseEntity<ProductoResponse> actualizar(@RequestBody ProductoRequest productoRequest) {
 	// 	return new ResponseEntity<ProductoResponse>(proveedorService.editarProducto(productoRequest), HttpStatus.OK);
@@ -76,10 +67,11 @@ public class ProveedorController {
 	// 	productoService.eliminarProducto(productoRequest);
 	// };
 
-	// @PostMapping("/producto")
-	// public ResponseEntity<ProductoResponse> crear(@RequestBody ProductoRequest productoRequest) {
-	// 	return new ResponseEntity<ProductoResponse>(productoService.guardarProducto(productoRequest), HttpStatus.OK);
-	// };
+	@PostMapping("/proveedor")
+	public ResponseEntity<ProductoResponse> crear(@RequestBody ProveedorDto productoRequest) {
+		return null;
+		// return new ResponseEntity<ProductoResponse>(proveedorService.guardarProducto(productoRequest), HttpStatus.OK);
+	};
 
 	@GetMapping("/proveedorName")
 	public List<ProveedorNameAdres> listarTodos() {
