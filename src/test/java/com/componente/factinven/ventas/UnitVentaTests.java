@@ -19,9 +19,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.componente.factinven.dto.ComprobanteResponse;
 import com.componente.factinven.dto.VentaRequest;
 import com.componente.factinven.dto.VentaRequest.DetalleVentaRequest;
+import com.componente.factinven.dto.VentaResponse;
 import com.componente.factinven.servicios.impl.VentasServicioImpl;
 
 @RunWith(SpringRunner.class)
@@ -62,7 +62,7 @@ public class UnitVentaTests {
 		
 		
 		
-		ComprobanteResponse venta=ventaServicio.guardarComprobante(ventita);
+		VentaResponse venta=ventaServicio.guardarComprobante(ventita);
 		System.out.println(venta.toString());
 		System.out.println(ventita.toString());
 	     assertNotEquals(venta.getId(), 0);

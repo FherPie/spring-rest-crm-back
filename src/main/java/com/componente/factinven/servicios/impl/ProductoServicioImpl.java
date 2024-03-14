@@ -11,8 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.componente.factinven.dto.ProductoRequest;
-import com.componente.factinven.dto.ProductoResponse;
+import com.componente.factinven.dto.ProductoDto;
 import com.componente.factinven.entidades.Producto;
 import com.componente.factinven.repositorios.ProductRepository;
 import com.componente.factinven.repositorios.ProductoRepositorio;
@@ -29,33 +28,33 @@ public class ProductoServicioImpl implements IProductoServicio {
 
 	@Override
 	@Transactional
-	public ProductoResponse guardarProducto(ProductoRequest producto) {
+	public ProductoDto guardarProducto(ProductoDto producto) {
 		Producto prdocutoGuardar = new Producto();
 		prdocutoGuardar.setNombre(producto.getNombre());
 		prdocutoGuardar.setPrecioCompra(producto.getPrecioCompra());
 		prdocutoGuardar.setPrecioUnitario(producto.getPrecioUnitario());
 		prdocutoGuardar.setStock(producto.getStock());
-	     return new ProductoResponse(productoRepositorio.save(prdocutoGuardar));
+	     return new ProductoDto(productoRepositorio.save(prdocutoGuardar));
 	}
 
 	@Override
 	@Transactional
-	public ProductoResponse editarProducto(ProductoRequest Producto) {
-         return new ProductoResponse(productoRepositorio.save(new Producto(Producto)));   
+	public ProductoDto editarProducto(ProductoDto Producto) {
+         return new ProductoDto(productoRepositorio.save(new Producto(Producto)));   
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<ProductoResponse> buscarProductoXNombre(String nombre) {
-		List<ProductoResponse> listaRetorno = productoRepositorio.findByNombreContainingIgnoreCase(nombre).stream().map(x -> {
-			return new ProductoResponse(x);
+	public List<ProductoDto> buscarProductoXNombre(String nombre) {
+		List<ProductoDto> listaRetorno = productoRepositorio.findByNombreContainingIgnoreCase(nombre).stream().map(x -> {
+			return new ProductoDto(x);
 		}).collect(Collectors.toList());
 		return listaRetorno;
 	}
 
 	@Override
 	@Transactional
-	public void eliminarProducto(ProductoRequest productor) {
+	public void eliminarProducto(ProductoDto productor) {
 		productoRepositorio.deleteById(productor.getIdProducto());
 	}
 
@@ -68,31 +67,31 @@ public class ProductoServicioImpl implements IProductoServicio {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Page<ProductoResponse> listarProductos(int page, int size) {
+	public Page<ProductoDto> listarProductos(int page, int size) {
 		Pageable pages = PageRequest.of(page, size);
-		List<ProductoResponse> listaRetorno = productoRepositorio.findAll(pages).stream().map(x -> {
-			return new ProductoResponse(x);
+		List<ProductoDto> listaRetorno = productoRepositorio.findAll(pages).stream().map(x -> {
+			return new ProductoDto(x);
 		}).collect(Collectors.toList());
-		return new PageImpl<ProductoResponse>(listaRetorno);
+		return new PageImpl<ProductoDto>(listaRetorno);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<ProductoResponse> findAll() {
-		List<ProductoResponse> listaRetorno = productoRepositorio.findAll().stream().map(x -> {
-			return new ProductoResponse(x);
+	public List<ProductoDto> findAll() {
+		List<ProductoDto> listaRetorno = productoRepositorio.findAll().stream().map(x -> {
+			return new ProductoDto(x);
 		}).collect(Collectors.toList());
 		return listaRetorno;
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public ProductoResponse findById(Integer idProducto) {
+	public ProductoDto findById(Integer idProducto) {
 		Producto prod = productoRepositorio.findById(idProducto).get();
 		if (prod == null) {
 			return null;
 		}
-		return new ProductoResponse(prod);
+		return new ProductoDto(prod);
 	}
 	
 	
@@ -107,7 +106,7 @@ public class ProductoServicioImpl implements IProductoServicio {
 	}
 
 	@Override
-	public List<ProductoResponse> findAllP() {
+	public List<ProductoDto> findAllP() {
 	
 		
 		

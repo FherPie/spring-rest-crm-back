@@ -12,7 +12,6 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import com.componente.factinven.controller.AlmacenController.AlmacenRequest;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,7 +34,7 @@ public class Salida extends EntidadPadre implements Serializable {
 	private int id;
 	//@NotNull
 	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-	private DetalleComprobante detalleComprobante;
+	private DetalleVenta detalleComprobante;
 	
 
 	

@@ -25,8 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.componente.factinven.dto.ProductoRequest;
-import com.componente.factinven.dto.ProductoResponse;
+import com.componente.factinven.dto.ProductoDto;
 import com.componente.factinven.dto.ProveedorDto;
 import com.componente.factinven.importers.ImporterExcelProducto;
 import com.componente.factinven.repositorios.ProveedorRepositorio.ProveedorNameAdres;
@@ -68,7 +67,7 @@ public class ProveedorController {
 	// };
 
 	@PostMapping("/proveedor")
-	public ResponseEntity<ProductoResponse> crear(@RequestBody ProveedorDto productoRequest) {
+	public ResponseEntity<ProductoDto> crear(@RequestBody ProveedorDto productoRequest) {
 		return null;
 		// return new ResponseEntity<ProductoResponse>(proveedorService.guardarProducto(productoRequest), HttpStatus.OK);
 	};

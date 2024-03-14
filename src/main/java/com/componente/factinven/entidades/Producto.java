@@ -13,7 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.componente.factinven.dto.ProductoRequest;
+import com.componente.factinven.dto.ProductoDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,7 +41,8 @@ public class Producto extends EntidadPadre implements Serializable {
 	private String unidad;
 	private Double precioCompra;
 	//private Double precioVenta;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
+	
+	@OneToMany(mappedBy="producto")
 	private List<DetalleVenta> detalleventaList;
 	
     @JoinColumn(name = "idProveedor", referencedColumnName = "id", nullable = true)
@@ -49,7 +50,7 @@ public class Producto extends EntidadPadre implements Serializable {
     private Proveedor proveedor;
 
     
-	public Producto(ProductoRequest productoRequest) {
+	public Producto(ProductoDto productoRequest) {
 	  this.idProducto=productoRequest.getIdProducto();
 	  this.nombre= productoRequest.getNombre();
 	  this.precioCompra= productoRequest.getPrecioCompra();

@@ -4,26 +4,25 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
-import com.componente.factinven.dto.ProductoRequest;
-import com.componente.factinven.dto.ProductoResponse;
+import com.componente.factinven.dto.ProductoDto;
 
 public interface IProductoServicio {
 
-	public abstract  ProductoResponse guardarProducto(ProductoRequest producto);
+	public abstract  ProductoDto guardarProducto(ProductoDto producto);
 	
-	public abstract  ProductoResponse editarProducto(ProductoRequest producto);
+	public abstract  ProductoDto editarProducto(ProductoDto producto);
 	
-	public abstract  List<ProductoResponse> buscarProductoXNombre(String nombre);
+	public abstract  List<ProductoDto> buscarProductoXNombre(String nombre);
 	
-	public ProductoResponse findById(Integer idProducto );
+	public ProductoDto findById(Integer idProducto );
 	
-	public abstract  void eliminarProducto(ProductoRequest producto);
+	public abstract  void eliminarProducto(ProductoDto producto);
 	
 	public abstract  void borrarProductos();
 
-	public abstract  Page<ProductoResponse> listarProductos(int page, int size);
+	public abstract  Page<ProductoDto> listarProductos(int page, int size);
 	
-	public List<ProductoResponse> findAll();
+	public List<ProductoDto> findAll();
 	
-	public List<ProductoResponse> findAllP();
+	public List<ProductoDto> findAllP();
 }

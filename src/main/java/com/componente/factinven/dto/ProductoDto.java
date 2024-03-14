@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import com.componente.factinven.entidades.Producto;
 
-public class ProductoResponse implements Serializable {
+public class ProductoDto implements Serializable {
 
 	private static final long serialVersionUID = 1703147611246372118L;
 	private Integer idProducto;
@@ -14,11 +14,11 @@ public class ProductoResponse implements Serializable {
 	private Double precioCompra;
 	
 		
-	public ProductoResponse() {
+	public ProductoDto() {
 
 	}
 
-	public  ProductoResponse (Producto producto) {
+	public  ProductoDto (Producto producto) {
 		this.idProducto= producto.getIdProducto();
 		this.nombre= producto.getNombre();
 		this.precioCompra= producto.getPrecioCompra();

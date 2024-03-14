@@ -15,22 +15,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.componente.factinven.dto.ComprobanteRequest;
-import com.componente.factinven.dto.ComprobanteResponse;
 import com.componente.factinven.dto.VentaRequest;
 import com.componente.factinven.dto.VentaRequest.DetalleVentaRequest;
 import com.componente.factinven.dto.VentaResponse;
-import com.componente.factinven.entidades.DetalleComprobante;
 import com.componente.factinven.entidades.DetalleVenta;
-import com.componente.factinven.entidades.Entrada;
-import com.componente.factinven.entidades.Salida;
 import com.componente.factinven.entidades.Venta;
 import com.componente.factinven.mappers.ClienteMapper;
 import com.componente.factinven.mappers.DetalleVentaMapper;
 import com.componente.factinven.mappers.VentaMapper;
 import com.componente.factinven.repositorios.AlmacenRepositorio;
 import com.componente.factinven.repositorios.ClienteRepositorio;
-import com.componente.factinven.repositorios.ComprobanteRepositorio;
-import com.componente.factinven.repositorios.DetalleComprobanteRepositorio;
 import com.componente.factinven.repositorios.DetalleVentaRepositorio;
 import com.componente.factinven.repositorios.EmpleadoRepositorio;
 import com.componente.factinven.repositorios.EntradasRespository;
@@ -42,8 +36,6 @@ import com.componente.factinven.servicios.interfaz.IComprobanteServicio;
 @Service
 public class VentasServicioImpl implements IComprobanteServicio {
 
-	@Autowired
-	ComprobanteRepositorio comprobanteRespositorio;
 
 	@Autowired
 	VentaRepositorio ventaRespositorio;
@@ -56,9 +48,6 @@ public class VentasServicioImpl implements IComprobanteServicio {
 
 	@Autowired
 	EmpleadoRepositorio empleadoRespositorio;
-
-	@Autowired
-	DetalleComprobanteRepositorio detalleComprobanteRespositorio;
 
 	@Autowired
 	DetalleVentaRepositorio detalleVentaRepositorio;
@@ -90,7 +79,7 @@ public class VentasServicioImpl implements IComprobanteServicio {
 
 	@Transactional
 	@Override
-	public ComprobanteResponse guardarComprobante(ComprobanteRequest comprobanteRequest) {
+	public VentaResponse guardarComprobante(ComprobanteRequest comprobanteRequest) {
 		VentaRequest ventaRequest = (VentaRequest) comprobanteRequest;
 		comprobanteRequest.setFechaEmision(LocalDateTime.now());
 		// System.out.println(ventaRequest);
@@ -106,7 +95,7 @@ public class VentasServicioImpl implements IComprobanteServicio {
 		venta.setFechayHora(ventaRequest.getFechaEmision());
 		BigDecimal total= calcularTotalComprobante(ventaRequest.getItemsFactura());
 		venta.setTotal(total);
-		venta = comprobanteRespositorio.save(venta);
+		venta = ventaRespositorio.save(venta);
        
 		for (DetalleVentaRequest det : ventaRequest.getItemsFactura()) {
 			DetalleVenta deta = new DetalleVenta();
@@ -115,11 +104,11 @@ public class VentasServicioImpl implements IComprobanteServicio {
 			deta.setCantidad(det.getNumeroItems());
 			deta.setUnidad(0);
 			deta.setVenta(venta);
-			deta = detalleComprobanteRespositorio.save(deta);
+			deta = detalleVentaRepositorio.save(deta);
 			//guardarSalida(deta);
 		}
 
-		return ventaMapper.toDto(comprobanteRespositorio.save(venta));
+		return ventaMapper.toDto(ventaRespositorio.save(venta));
 	}
 
 	private BigDecimal calcularTotalComprobante( List<DetalleVentaRequest> lista){
@@ -136,16 +125,16 @@ public class VentasServicioImpl implements IComprobanteServicio {
 	}
 
 	@Override
-	public ComprobanteResponse editarComprobante(ComprobanteRequest comprobante) {
+	public VentaResponse editarComprobante(ComprobanteRequest comprobante) {
 		Venta venta = new Venta();
 		venta.setCodigo(comprobante.getCodigo());
-		return ventaMapper.toDto(comprobanteRespositorio.save(venta));
+		return ventaMapper.toDto(ventaRespositorio.save(venta));
 
 	}
 
 	@Override
-	public ComprobanteResponse buscarComprobanteCodigo(String codigo) {
-		return new ComprobanteResponse();
+	public VentaResponse buscarComprobanteCodigo(String codigo) {
+		return new VentaResponse();
 	}
 
 	@Override
@@ -161,7 +150,7 @@ public class VentasServicioImpl implements IComprobanteServicio {
 	}
 
 	@Override
-	public Page<ComprobanteResponse> listarComprobantes(int page, int size) {
+	public Page<VentaResponse> listarComprobantes(int page, int size) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -191,11 +180,9 @@ public class VentasServicioImpl implements IComprobanteServicio {
 	}
 
 	@Override
-	public ComprobanteResponse findById(Integer id) {
-		Venta venta=(Venta)comprobanteRespositorio.findById(id).get();
-		VentaResponse vr= ventaMapper.toDto(venta);
-		vr.setDetallesVentaDto(detalleVentaMapper.toDto(venta.getDetallesVenta()));
-		return vr;
+	public VentaResponse findById(Integer id) {
+		Venta venta=(Venta)ventaRespositorio.findById(id).get();
+		return ventaMapper.toDto(venta);
 		//return new VentaResponse(comprobanteRespositorio.findById(id).get());
 	}
 
@@ -226,19 +213,5 @@ public class VentasServicioImpl implements IComprobanteServicio {
 		return listaRetorna;
 	}
 
-	@Override
-	public Entrada guardarEntrada(DetalleComprobante detalle) {
-		Entrada entrada = new Entrada();
-		entrada.setDetalleComprobante(detalle);
-		return entrada = entradaRespositorio.save(entrada);
-	}
-
-	@Override
-	public Salida guardarSalida(DetalleComprobante detalle) {
-		// TODO Auto-generated method stub
-		Salida salida = new Salida();
-		salida.setDetalleComprobante(detalle);
-		return salida = salidaRespositorio.save(salida);
-	}
 
 }

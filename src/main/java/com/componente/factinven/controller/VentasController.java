@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.componente.factinven.dto.ComprobanteResponse;
 import com.componente.factinven.dto.VentaRequest;
 import com.componente.factinven.dto.VentaResponse;
 import com.componente.factinven.importers.ImporterExcelVenta;
@@ -52,8 +51,8 @@ public class VentasController {
 
 
 	@PutMapping("/Updateventa")
-	public ResponseEntity<ComprobanteResponse> actualizar(@RequestBody VentaRequest ventaRequest) {
-		return new ResponseEntity<ComprobanteResponse>(ventaService.editarComprobante(ventaRequest), HttpStatus.OK);
+	public ResponseEntity<VentaResponse> actualizar(@RequestBody VentaRequest ventaRequest) {
+		return new ResponseEntity<VentaResponse>(ventaService.editarComprobante(ventaRequest), HttpStatus.OK);
 	};
 
 	@DeleteMapping("/Deleteventa/")
@@ -77,7 +76,7 @@ public class VentasController {
 		return (VentaResponse) ventaService.buscarComprobanteCodigo(codigo);
 	}
 
-	@GetMapping("/obtenerVenta/{id}")
+	@GetMapping("/getByIdVenta/{id}")
 	public ResponseEntity<VentaResponse> findById(@PathVariable Integer id) {
 		return new ResponseEntity<VentaResponse>((VentaResponse) ventaService.findById(id), HttpStatus.OK);
 	}

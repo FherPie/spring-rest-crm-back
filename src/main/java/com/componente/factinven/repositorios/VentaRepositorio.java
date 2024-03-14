@@ -9,14 +9,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.componente.factinven.entidades.Comprobante;
 import com.componente.factinven.entidades.Venta;
 
 @Repository
 public interface VentaRepositorio extends JpaRepository<Venta, Integer> {
 
 
-	public Comprobante findByCodigo(String codigo);
+	public Venta findByCodigo(String codigo);
 	
 	
     @Query("SELECT "

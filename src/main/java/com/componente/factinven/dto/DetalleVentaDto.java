@@ -26,5 +26,5 @@ public class DetalleVentaDto implements Serializable
 	private BigDecimal precioporDetalle;
 	private int numeroDetalle;
 
-	private Producto producto;
+	private ProductoDto producto;
 }

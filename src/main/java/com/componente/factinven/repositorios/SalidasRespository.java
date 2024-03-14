@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.componente.factinven.entidades.Comprobante;
 import com.componente.factinven.entidades.Entrada;
 import com.componente.factinven.entidades.Salida;
 import com.componente.factinven.entidades.Venta;

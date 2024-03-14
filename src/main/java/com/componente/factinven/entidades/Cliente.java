@@ -38,5 +38,5 @@ public class Cliente implements Serializable {
 	private String categoria;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Comprobante> listaComprobante;
+	private List<Venta> listaComprobante;
 }

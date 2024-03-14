@@ -25,8 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.componente.factinven.dto.ProductoRequest;
-import com.componente.factinven.dto.ProductoResponse;
+import com.componente.factinven.dto.ProductoDto;
 import com.componente.factinven.importers.ImporterExcelProducto;
 import com.componente.factinven.servicios.impl.ProductoServicioImpl;
 
@@ -65,33 +64,33 @@ public class ProductoController {
 	}
 
 	@PutMapping("/producto")
-	public ResponseEntity<ProductoResponse> actualizar(@RequestBody ProductoRequest productoRequest) {
-		return new ResponseEntity<ProductoResponse>(productoService.editarProducto(productoRequest), HttpStatus.OK);
+	public ResponseEntity<ProductoDto> actualizar(@RequestBody ProductoDto productoRequest) {
+		return new ResponseEntity<ProductoDto>(productoService.editarProducto(productoRequest), HttpStatus.OK);
 	};
 
 	@DeleteMapping("/producto")
-	public void delete(@RequestBody ProductoRequest productoRequest) {
+	public void delete(@RequestBody ProductoDto productoRequest) {
 		productoService.eliminarProducto(productoRequest);
 	};
 
 	@PostMapping("/producto")
-	public ResponseEntity<ProductoResponse> crear(@RequestBody ProductoRequest productoRequest) {
-		return new ResponseEntity<ProductoResponse>(productoService.guardarProducto(productoRequest), HttpStatus.OK);
+	public ResponseEntity<ProductoDto> crear(@RequestBody ProductoDto productoRequest) {
+		return new ResponseEntity<ProductoDto>(productoService.guardarProducto(productoRequest), HttpStatus.OK);
 	};
 
 	@GetMapping("/producto")
-	public List<ProductoResponse> listarTodos() {
+	public List<ProductoDto> listarTodos() {
 		return productoService.findAll();
 	}
 	
 	
 	@GetMapping("/productoConNombreContiene")
-	public List<ProductoResponse> listarTodosxNombreQueContenga(@RequestParam String nombre) {
+	public List<ProductoDto> listarTodosxNombreQueContenga(@RequestParam String nombre) {
 		return productoService.buscarProductoXNombre(nombre);
 	}
 
 	@GetMapping("/producto/{id}")
-	public ProductoResponse findById(@PathVariable Integer id) {
+	public ProductoDto findById(@PathVariable Integer id) {
 		return productoService.findById(id);
 	}
 
@@ -103,10 +102,10 @@ public class ProductoController {
 	}
 	
 	@GetMapping(params = { "page", "size" })
-	public List<ProductoResponse> findPaginated(@RequestParam("page") int page, 
+	public List<ProductoDto> findPaginated(@RequestParam("page") int page, 
 	  @RequestParam("size") int size, UriComponentsBuilder uriBuilder,
 	  HttpServletResponse response) throws Exception {
-	    Page<ProductoResponse> resultPage = productoService.listarProductos(page, size);
+	    Page<ProductoDto> resultPage = productoService.listarProductos(page, size);
 	    if (page > resultPage.getTotalPages()) {
 	        throw new Exception();
 	    }

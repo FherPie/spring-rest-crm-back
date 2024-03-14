@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.componente.factinven.dto.ClienteRequest;
 import com.componente.factinven.dto.ClienteResponse;
-import com.componente.factinven.dto.ProductoResponse;
+import com.componente.factinven.dto.ProductoDto;
 import com.componente.factinven.entidades.Cliente;
 import com.componente.factinven.entidades.Persona;
 import com.componente.factinven.entidades.Producto;

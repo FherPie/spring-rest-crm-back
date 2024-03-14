@@ -1,7 +1,6 @@
 package com.componente.factinven.repositorios;
 
 import com.componente.factinven.entidades.Detalle;
-import com.componente.factinven.entidades.DetalleComprobante;
 import com.componente.factinven.entidades.DetalleVenta;
 import com.componente.factinven.entidades.Venta;
 
