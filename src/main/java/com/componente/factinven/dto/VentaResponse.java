@@ -19,7 +19,7 @@ public class VentaResponse {
 	private Integer id;
 	private LocalDateTime fechayHora;
 	private Integer idEmpleado;	
-	private ClienteResponse idCliente;
+	private ClienteDto idCliente;
 	private String estado; 
 	private String codigo;
 	private Integer idAlmacen;

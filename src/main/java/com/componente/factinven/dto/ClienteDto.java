@@ -11,7 +11,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ClienteResponse implements Serializable{
+public class ClienteDto implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private String nombres;
@@ -24,11 +24,11 @@ public class ClienteResponse implements Serializable{
     private String pin;
     private String identificacion;
     private Integer idPersona;
-    private Integer idCliente;
+    private Integer id;
 	private String nombresCompletos;
     
     
-    public ClienteResponse(Cliente cliente) {	    
+    public ClienteDto(Cliente cliente) {	    
     	this.nombres=cliente.getPersona().getNombres();
     	this.apellidos=cliente.getPersona().getApellidos();
     	this.direccion=cliente.getPersona().getDireccion();
@@ -37,8 +37,13 @@ public class ClienteResponse implements Serializable{
     	this.email=cliente.getPersona().getEmail();
     	this.identificacion=cliente.getPersona().getIdentificacion();
     	this.idPersona=cliente.getPersona().getId();
-    	this.idCliente=cliente.getId();
+    	this.id=cliente.getId();
 		this.nombresCompletos = this.apellidos+ " " +this.nombres;
+	}
+
+
+	public ClienteDto() {
+		// TODO Auto-generated constructor stub
 	}
 
 }

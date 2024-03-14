@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.componente.factinven.dto.ClienteRequest;
+import com.componente.factinven.dto.ClienteDto;
 import com.componente.factinven.entidades.Producto;
 import com.componente.factinven.servicios.impl.ClienteServicioImpl;
 
@@ -54,7 +54,7 @@ public class ImporterExcelCliente implements ImporterExcelInterface {
 			
 			while(rowIterator.hasNext()) {
 				Row nextRow= rowIterator.next();
-				ClienteRequest clienteRequest= new ClienteRequest();
+				ClienteDto clienteRequest= new ClienteDto();
 				Iterator<Cell> cellIterador= nextRow.cellIterator();
 				while(cellIterador.hasNext()) {
 					Cell  nextCell= cellIterador.next();

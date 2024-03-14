@@ -6,7 +6,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class ProveedorDto  extends ComprobanteRequest {
+public class ProveedorDto  {
 
 	private static final long serialVersionUID = 1028409979983251377L;
 	private List<DetalleVentaRequest> itemsFactura= new ArrayList<>();

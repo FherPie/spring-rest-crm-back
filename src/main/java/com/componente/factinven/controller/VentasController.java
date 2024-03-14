@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.componente.factinven.dto.VentaRequest;
 import com.componente.factinven.dto.VentaResponse;
 import com.componente.factinven.importers.ImporterExcelVenta;
 import com.componente.factinven.servicios.impl.VentasServicioImpl;
@@ -51,17 +50,17 @@ public class VentasController {
 
 
 	@PutMapping("/Updateventa")
-	public ResponseEntity<VentaResponse> actualizar(@RequestBody VentaRequest ventaRequest) {
+	public ResponseEntity<VentaResponse> actualizar(@RequestBody VentaResponse ventaRequest) {
 		return new ResponseEntity<VentaResponse>(ventaService.editarComprobante(ventaRequest), HttpStatus.OK);
 	};
 
 	@DeleteMapping("/Deleteventa/")
-	public void delete(@RequestBody VentaRequest ventaRequest) {
+	public void delete(@RequestBody VentaResponse ventaRequest) {
 		ventaService.eliminarComprobante(ventaRequest);
 	};
 
 	@PostMapping("/guardarVenta")
-	public ResponseEntity<VentaResponse> crear(@RequestBody VentaRequest ventaRequest) {
+	public ResponseEntity<VentaResponse> crear(@RequestBody VentaResponse ventaRequest) {
 		return new ResponseEntity<VentaResponse>((VentaResponse) ventaService.guardarComprobante(ventaRequest), HttpStatus.OK);
 	};
 

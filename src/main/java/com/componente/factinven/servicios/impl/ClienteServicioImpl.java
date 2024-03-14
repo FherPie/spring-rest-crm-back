@@ -9,8 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.componente.factinven.dto.ClienteRequest;
-import com.componente.factinven.dto.ClienteResponse;
+import com.componente.factinven.dto.ClienteDto;
 import com.componente.factinven.dto.ProductoDto;
 import com.componente.factinven.entidades.Cliente;
 import com.componente.factinven.entidades.Persona;
@@ -31,7 +30,7 @@ public class ClienteServicioImpl  implements IClienteServicio {
 	
 	
 	@Override
-	public ClienteResponse guardarCliente(ClienteRequest cliente) {
+	public ClienteDto guardarCliente(ClienteDto cliente) {
 		Cliente clienteGuardar = new Cliente();
 		Persona persona= new Persona();
 		persona.setApellidos(cliente.getApellidos());
@@ -43,7 +42,7 @@ public class ClienteServicioImpl  implements IClienteServicio {
 		personaRepositorio.save(persona);
 		clienteGuardar.setPersona(persona);
 		//clienteGuardar.setCategoria(cliente.getCategoria());
-	    return new ClienteResponse(clienteRepositorio.save(clienteGuardar));
+	    return new ClienteDto(clienteRepositorio.save(clienteGuardar));
 	}
 
 
@@ -55,7 +54,7 @@ public class ClienteServicioImpl  implements IClienteServicio {
 
 
 	@Override
-	public void eliminarCliente(ClienteRequest Cliente) {
+	public void eliminarCliente(ClienteDto Cliente) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -69,7 +68,7 @@ public class ClienteServicioImpl  implements IClienteServicio {
 
 
 	@Override
-	public ClienteResponse editarCliente(ClienteRequest cliente) {
+	public ClienteDto editarCliente(ClienteDto cliente) {
 		Cliente clienteGuardar = new Cliente();
 		Persona persona= new Persona();
 		persona.setApellidos(cliente.getApellidos());
@@ -79,8 +78,7 @@ public class ClienteServicioImpl  implements IClienteServicio {
 		persona.setTelefono(cliente.getTelefono());
 		persona.setIdentificacion(cliente.getIdentificacion());
 		clienteGuardar.setPersona(persona);
-		clienteGuardar.setCategoria(cliente.getCategoria());
-	    return new ClienteResponse(clienteRepositorio.save(clienteGuardar));
+	    return new ClienteDto(clienteRepositorio.save(clienteGuardar));
 	}
 
 
@@ -92,28 +90,28 @@ public class ClienteServicioImpl  implements IClienteServicio {
 
 
 	@Override
-	public List<ClienteResponse> findAll() {
-		List<ClienteResponse> listaRetorno = this.clienteRepositorio.findAll().stream().map(x -> {
-			return new ClienteResponse(x);
+	public List<ClienteDto> findAll() {
+		List<ClienteDto> listaRetorno = this.clienteRepositorio.findAll().stream().map(x -> {
+			return new ClienteDto(x);
 		}).collect(Collectors.toList());
 		return listaRetorno;
 	}
 
 
 	@Override
-	public ClienteResponse findById(Integer idCliente) {
+	public ClienteDto findById(Integer idCliente) {
 		Cliente prod = this.clienteRepositorio.findById(idCliente).get();
 		if (prod == null) {
 			return null;
 		}
-		return new ClienteResponse(prod);
+		return new ClienteDto(prod);
 	}
 
 
 	@Override
-	public List<ClienteResponse> findAllPorApellidoContains(String apellidos) {
-		List<ClienteResponse> listaRetorno = this.clienteRepositorio.findByPersonaApellidosContainingIgnoreCase(apellidos).stream().map(x -> {
-			return new ClienteResponse(x);
+	public List<ClienteDto> findAllPorApellidoContains(String apellidos) {
+		List<ClienteDto> listaRetorno = this.clienteRepositorio.findByPersonaApellidosContainingIgnoreCase(apellidos).stream().map(x -> {
+			return new ClienteDto(x);
 		}).collect(Collectors.toList());
 		return listaRetorno;
 	}

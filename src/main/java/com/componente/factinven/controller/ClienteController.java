@@ -18,8 +18,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.componente.factinven.dto.ClienteRequest;
-import com.componente.factinven.dto.ClienteResponse;
+import com.componente.factinven.dto.ClienteDto;
 import com.componente.factinven.importers.ImporterExcelCliente;
 import com.componente.factinven.servicios.interfaz.IClienteServicio;
 
@@ -40,32 +39,32 @@ public class ClienteController {
 	} 
 
 	@PutMapping("/cliente")
-	public ResponseEntity<ClienteResponse> actualizar(@RequestBody ClienteRequest clienteRequest) {
-		return new ResponseEntity<ClienteResponse>(clienteService.editarCliente(clienteRequest), HttpStatus.OK);
+	public ResponseEntity<ClienteDto> actualizar(@RequestBody ClienteDto clienteRequest) {
+		return new ResponseEntity<ClienteDto>(clienteService.editarCliente(clienteRequest), HttpStatus.OK);
 	};
 
 	@DeleteMapping("/cliente")
-	public void delete(@RequestBody ClienteRequest clienteRequest) {
+	public void delete(@RequestBody ClienteDto clienteRequest) {
 		clienteService.eliminarCliente(clienteRequest);
 	};
 
 	@PostMapping("/cliente")
-	public ResponseEntity<ClienteResponse> crear(@RequestBody ClienteRequest clienteRequest) {
-		return new ResponseEntity<ClienteResponse>(clienteService.guardarCliente(clienteRequest), HttpStatus.OK);
+	public ResponseEntity<ClienteDto> crear(@RequestBody ClienteDto clienteRequest) {
+		return new ResponseEntity<ClienteDto>(clienteService.guardarCliente(clienteRequest), HttpStatus.OK);
 	};
 
 	@GetMapping("/cliente")
-	public List<ClienteResponse> listarTodos() {
+	public List<ClienteDto> listarTodos() {
 		return clienteService.findAll();
 	}
 	
 	@GetMapping("/clienteConNombreContiene")
-	public List<ClienteResponse> listarTodosViaNombre(@RequestParam String apellidos) {
+	public List<ClienteDto> listarTodosViaNombre(@RequestParam String apellidos) {
 		return clienteService.findAllPorApellidoContains(apellidos);
 	}
 
 	@GetMapping("/cliente/{id}")
-	public ClienteResponse findById(@PathVariable Integer id) {
+	public ClienteDto findById(@PathVariable Integer id) {
 		return clienteService.findById(id);
 	}
 

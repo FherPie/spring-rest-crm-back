@@ -2,7 +2,7 @@ package com.componente.factinven.mappers;
 
 
 import com.componente.factinven.entidades.Cliente;
-import com.componente.factinven.dto.ClienteResponse;
+import com.componente.factinven.dto.ClienteDto;
 import java.util.List;
 import java.util.Set;
 import org.mapstruct.Mapping;
@@ -10,10 +10,10 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface ClienteMapper extends EntityMapper<ClienteResponse, Cliente> {
+public interface ClienteMapper extends EntityMapper<ClienteDto, Cliente> {
 
 	@Override
-	Cliente toEntity(ClienteResponse dto);
+	Cliente toEntity(ClienteDto dto);
 	
 	@Override
 	@Mapping(target = "nombres", source = "persona.nombres")
@@ -22,14 +22,14 @@ public interface ClienteMapper extends EntityMapper<ClienteResponse, Cliente> {
 	@Mapping(target = "telefono", source = "persona.telefono")
 	@Mapping(target = "email", source = "persona.email")
 	@Mapping(target = "nombresCompletos", source = "persona.apellidos")
-	ClienteResponse toDto(Cliente entity);
+	ClienteDto toDto(Cliente entity);
 
 	@Override
-	List<Cliente> toEntity(List<ClienteResponse> dtoList);
+	List<Cliente> toEntity(List<ClienteDto> dtoList);
 
 	@Override
-	List<ClienteResponse> toDto(List<Cliente> entityList);
+	List<ClienteDto> toDto(List<Cliente> entityList);
 
 	@Override
-	Set<ClienteResponse> toDto(Set<Cliente> entityList);
+	Set<ClienteDto> toDto(Set<Cliente> entityList);
 }

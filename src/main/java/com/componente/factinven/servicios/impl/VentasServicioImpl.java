@@ -14,9 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.componente.factinven.dto.ComprobanteRequest;
-import com.componente.factinven.dto.VentaRequest;
-import com.componente.factinven.dto.VentaRequest.DetalleVentaRequest;
+import com.componente.factinven.dto.DetalleVentaDto;
 import com.componente.factinven.dto.VentaResponse;
 import com.componente.factinven.entidades.DetalleVenta;
 import com.componente.factinven.entidades.Venta;
@@ -79,69 +77,51 @@ public class VentasServicioImpl implements IComprobanteServicio {
 
 	@Transactional
 	@Override
-	public VentaResponse guardarComprobante(ComprobanteRequest comprobanteRequest) {
-		VentaRequest ventaRequest = (VentaRequest) comprobanteRequest;
-		comprobanteRequest.setFechaEmision(LocalDateTime.now());
-		// System.out.println(ventaRequest);
+	public VentaResponse guardarComprobante(VentaResponse comprobanteRequest) {
+		VentaResponse ventaRequest =  comprobanteRequest;
+		comprobanteRequest.setFechayHora(LocalDateTime.now());
 		Venta venta = new Venta();
 		venta.setCodigo(ventaRequest.getCodigo());
 		venta.setEstado(ventaRequest.getEstado());
-		// venta.setAlmacen(almacenRespositorio.findById(comprobanteRequest.getIdAlmacen()).orElse(null));
-		// System.out.println(clienteRespositorio.findById(ventaRequest.getIdCliente()).get());
-		venta.setCliente(clienteRespositorio.findById(ventaRequest.getIdCliente()).orElse(null));
-		// venta.setEmpleado(empleadoRespositorio.findById(comprobanteRequest.getIdEmpleado()).orElse(null));
-		venta.setTotal(ventaRequest.getTotal());
+		venta.setCliente(clienteRespositorio.findById(ventaRequest.getIdCliente().getId()).orElse(null));
 		venta.setFormaPago(ventaRequest.getFormaPago());
-		venta.setFechayHora(ventaRequest.getFechaEmision());
-		BigDecimal total= calcularTotalComprobante(ventaRequest.getItemsFactura());
+		venta.setFechayHora(ventaRequest.getFechayHora());
+		armarDetalles(ventaRequest.getDetallesVentaDto(), venta);
+		BigDecimal total= calcularTotalComprobante(ventaRequest.getDetallesVentaDto());
 		venta.setTotal(total);
 		venta = ventaRespositorio.save(venta);
-       
-		for (DetalleVentaRequest det : ventaRequest.getItemsFactura()) {
-			DetalleVenta deta = new DetalleVenta();
-			deta.setProducto(productoRespositorio.findById(det.getProductoId()).orElse(null));
-			deta.setPrecioUnitario(new BigDecimal(det.getPrecioUnitario()));
-			deta.setCantidad(det.getNumeroItems());
-			deta.setUnidad(0);
-			deta.setVenta(venta);
-			deta = detalleVentaRepositorio.save(deta);
-			//guardarSalida(deta);
-		}
-
 		return ventaMapper.toDto(ventaRespositorio.save(venta));
 	}
 
-	private BigDecimal calcularTotalComprobante( List<DetalleVentaRequest> lista){
+	private BigDecimal calcularTotalComprobante( List<DetalleVentaDto> lista){
 		BigDecimal total= new BigDecimal(0);
-		for (DetalleVentaRequest det : lista) {
-			DetalleVenta deta = new DetalleVenta();
-			deta.setProducto(productoRespositorio.findById(det.getProductoId()).orElse(null));
-			deta.setPrecioUnitario(new BigDecimal(det.getPrecioUnitario()));
-			deta.setCantidad(det.getNumeroItems());
-			deta.setUnidad(0);
+		for (DetalleVentaDto det : lista) {
+			DetalleVenta deta =detalleVentaMapper.toEntity(det);
 			total= deta.getPrecioUnitario().multiply(new BigDecimal(deta.getCantidad()));
 		}
+		
         return total;
 	}
-
-	@Override
-	public VentaResponse editarComprobante(ComprobanteRequest comprobante) {
-		Venta venta = new Venta();
-		venta.setCodigo(comprobante.getCodigo());
-		return ventaMapper.toDto(ventaRespositorio.save(venta));
-
+	
+	
+	private void armarDetalles( List<DetalleVentaDto> lista, Venta venta){
+		BigDecimal total= new BigDecimal(0);
+		for (DetalleVentaDto det : lista) {
+			DetalleVenta deta =detalleVentaMapper.toEntity(det);
+			venta.addDetail(deta);
+		}
 	}
+	
+	
+	
+
+
 
 	@Override
 	public VentaResponse buscarComprobanteCodigo(String codigo) {
 		return new VentaResponse();
 	}
 
-	@Override
-	public void eliminarComprobante(ComprobanteRequest comprobante) {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public void borrarComprobantes() {
@@ -211,6 +191,19 @@ public class VentasServicioImpl implements IComprobanteServicio {
 			listaRetorna.add(venta);
 		});
 		return listaRetorna;
+	}
+
+	@Override
+	public VentaResponse editarComprobante(VentaResponse comprobante) {
+		Venta venta = new Venta();
+		venta.setCodigo(comprobante.getCodigo());
+		return ventaMapper.toDto(ventaRespositorio.save(venta));
+	}
+
+	@Override
+	public void eliminarComprobante(VentaResponse comprobante) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

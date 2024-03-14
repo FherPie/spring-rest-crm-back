@@ -3,6 +3,8 @@ package com.componente.factinven.entidades;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -59,6 +61,30 @@ public class Venta  implements Serializable {
 	private BigDecimal total;
 	//@NotEmpty
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="venta", orphanRemoval = true)
-	private List<DetalleVenta> detallesVenta;
+	private List<DetalleVenta> detallesVenta= new ArrayList<>();
+	
+	
+	public void addDetail(DetalleVenta detalleVenta) {
+		this.detallesVenta.add(detalleVenta);
+		detalleVenta.setVenta(this);
+	}
+	
+	public void removeDetail(DetalleVenta detalleVenta) {
+		this.detallesVenta.remove(detalleVenta);
+		detalleVenta.setVenta(null);
+	}
+	
+	public void removeDetails() {
+		
+		Iterator<DetalleVenta> iterator= this.detallesVenta.iterator();
+		
+		while(iterator.hasNext()) {
+			DetalleVenta detalleVenta= iterator.next();
+			detalleVenta.setVenta(null);
+			iterator.remove();
+		}
+		
+
+	}
 
 }

@@ -19,12 +19,11 @@ public class DetalleVentaDto implements Serializable
 	private static final long serialVersionUID = -9023718735110319902L;
 
 	private int id;
-	private int unidad;
 	private Double cantidad;
-	private Articulo articulo;
 	private BigDecimal precioUnitario;
 	private BigDecimal precioporDetalle;
+	private int descuentoUnitario;
 	private int numeroDetalle;
 
-	private ProductoDto producto;
+	private ProductoDto productoDto;
 }
