@@ -10,7 +10,7 @@ import org.mapstruct.Mapping;
 
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",uses = {ClienteMapper.class, DetalleVentaMapper.class})
 public interface VentaMapper extends EntityMapper<VentaResponse, Venta> {
 
 	@Override

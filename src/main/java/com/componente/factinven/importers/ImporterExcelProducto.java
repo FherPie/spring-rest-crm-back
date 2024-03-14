@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.componente.factinven.entidades.Producto;
 import com.componente.factinven.repositorios.ProductoRepositorio;
 import com.componente.factinven.servicios.impl.ProductoServicioImpl;
-import com.componente.factinven.servicios.interfaz.IProductoServicio;
 
 @Service
 public class ImporterExcelProducto implements ImporterExcelInterface{
@@ -79,21 +78,6 @@ public class ImporterExcelProducto implements ImporterExcelInterface{
 						precioUnitario=(double) nextCell.getNumericCellValue();
 						productoguardar.setPrecioUnitario(precioUnitario);
 						System.out.println(precioUnitario);
-						break;
-					case 3:
-						stock=(int) nextCell.getNumericCellValue();
-						productoguardar.setStock(stock);
-						System.out.println(stock);
-						break;
-					case 4:
-						unidad= nextCell.getStringCellValue();
-						productoguardar.setUnidad(unidad);
-						System.out.println(unidad);
-						break;
-					case 5:
-						precioCompra= (double) nextCell.getNumericCellValue();
-						productoguardar.setPrecioCompra(precioCompra);
-						System.out.println(precioCompra);
 						break;
 					default:
 						break;

@@ -16,9 +16,11 @@ import org.mapstruct.Mapper;
 public interface DetalleVentaMapper extends EntityMapper<DetalleVentaDto, DetalleVenta> {
 
 	@Override
+	@Mapping(target = "producto", source = "productoDto")
 	DetalleVenta toEntity(DetalleVentaDto dto);
 
 	@Override
+	@Mapping(target = "productoDto", source = "producto")
 	DetalleVentaDto toDto(DetalleVenta entity);
 
 	@Override

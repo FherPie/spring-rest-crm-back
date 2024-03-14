@@ -21,6 +21,7 @@ public interface ClienteMapper extends EntityMapper<ClienteDto, Cliente> {
 	@Mapping(target = "direccion", source = "persona.direccion")
 	@Mapping(target = "telefono", source = "persona.telefono")
 	@Mapping(target = "email", source = "persona.email")
+	@Mapping(target = "identificacion", source = "persona.identificacion")
 	@Mapping(target = "nombresCompletos", source = "persona.apellidos")
 	ClienteDto toDto(Cliente entity);
 

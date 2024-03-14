@@ -37,6 +37,7 @@ public class Cliente implements Serializable {
 	private Persona persona;
 	private String categoria;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY)
 	private List<Venta> listaComprobante;
+
 }

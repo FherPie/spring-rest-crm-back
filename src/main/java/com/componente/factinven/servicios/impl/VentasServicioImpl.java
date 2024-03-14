@@ -81,10 +81,10 @@ public class VentasServicioImpl implements IComprobanteServicio {
 		VentaResponse ventaRequest =  comprobanteRequest;
 		comprobanteRequest.setFechayHora(LocalDateTime.now());
 		Venta venta = new Venta();
-		venta.setCodigo(ventaRequest.getCodigo());
-		venta.setEstado(ventaRequest.getEstado());
+		venta.setFormaPago("EFECTIVO");
+		venta.setCodigo("001");
+		venta.setEstado("VALIDO");
 		venta.setCliente(clienteRespositorio.findById(ventaRequest.getIdCliente().getId()).orElse(null));
-		venta.setFormaPago(ventaRequest.getFormaPago());
 		venta.setFechayHora(ventaRequest.getFechayHora());
 		armarDetalles(ventaRequest.getDetallesVentaDto(), venta);
 		BigDecimal total= calcularTotalComprobante(ventaRequest.getDetallesVentaDto());
@@ -161,7 +161,7 @@ public class VentasServicioImpl implements IComprobanteServicio {
 
 	@Override
 	public VentaResponse findById(Integer id) {
-		Venta venta=(Venta)ventaRespositorio.findById(id).get();
+		Venta venta=ventaRespositorio.findById(id).get();
 		return ventaMapper.toDto(venta);
 		//return new VentaResponse(comprobanteRespositorio.findById(id).get());
 	}

@@ -37,10 +37,6 @@ public class Producto extends EntidadPadre implements Serializable {
 	private Integer idProducto;
 	private String nombre;
 	private Double precioUnitario;
-	private Integer stock;
-	private String unidad;
-	private Double precioCompra;
-	//private Double precioVenta;
 	
 	@OneToMany(mappedBy="producto")
 	private List<DetalleVenta> detalleventaList;
@@ -53,9 +49,7 @@ public class Producto extends EntidadPadre implements Serializable {
 	public Producto(ProductoDto productoRequest) {
 	  this.idProducto=productoRequest.getIdProducto();
 	  this.nombre= productoRequest.getNombre();
-	  this.precioCompra= productoRequest.getPrecioCompra();
 	  this.precioUnitario= productoRequest.getPrecioUnitario();
-	  this.stock= productoRequest.getStock();
      }
     
 	
@@ -90,18 +84,6 @@ public class Producto extends EntidadPadre implements Serializable {
 	}
 	public void setPrecioUnitario(Double precioUnitario) {
 		this.precioUnitario = precioUnitario;
-	}
-	public Integer getStock() {
-		return stock;
-	}
-	public void setStock(Integer stock) {
-		this.stock = stock;
-	}
-	public Double getPrecioCompra() {
-		return precioCompra;
-	}
-	public void setPrecioCompra(Double precioCompra) {
-		this.precioCompra = precioCompra;
 	}
 //	public Double getPrecioVenta() {
 //		return precioVenta;

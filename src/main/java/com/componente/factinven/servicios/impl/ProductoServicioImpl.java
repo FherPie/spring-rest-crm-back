@@ -31,9 +31,7 @@ public class ProductoServicioImpl implements IProductoServicio {
 	public ProductoDto guardarProducto(ProductoDto producto) {
 		Producto prdocutoGuardar = new Producto();
 		prdocutoGuardar.setNombre(producto.getNombre());
-		prdocutoGuardar.setPrecioCompra(producto.getPrecioCompra());
 		prdocutoGuardar.setPrecioUnitario(producto.getPrecioUnitario());
-		prdocutoGuardar.setStock(producto.getStock());
 	     return new ProductoDto(productoRepositorio.save(prdocutoGuardar));
 	}
 
@@ -99,9 +97,7 @@ public class ProductoServicioImpl implements IProductoServicio {
 	public void guardarProductoDesdeExcel(Producto producto) {
 		Producto prdocutoGuardar = new Producto();
 		prdocutoGuardar.setNombre(producto.getNombre());
-		prdocutoGuardar.setPrecioCompra(producto.getPrecioCompra());
 		prdocutoGuardar.setPrecioUnitario(producto.getPrecioUnitario());
-		prdocutoGuardar.setStock(producto.getStock());
 	    productoRepositorio.save(prdocutoGuardar);
 	}
 

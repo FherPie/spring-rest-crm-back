@@ -18,7 +18,6 @@ public class ProveedorDto  {
 		
 		
 		private int id;
-		private int unidad;
 		private Integer productoId;
 		private double precioUnitario;
 		private double descuentoUnitario;
@@ -34,7 +33,6 @@ public class ProveedorDto  {
 				double descuentoUnitario, double precioporDetalle, int numeroDetalle, int numeroItems) {
 			super();
 			this.id = id;
-			this.unidad = unidad;
 			this.productoId = idProducto;
 			this.precioUnitario = precioUnitario;
 			this.descuentoUnitario = descuentoUnitario;

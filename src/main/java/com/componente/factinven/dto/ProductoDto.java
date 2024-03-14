@@ -10,8 +10,6 @@ public class ProductoDto implements Serializable {
 	private Integer idProducto;
 	private String nombre;
 	private Double precioUnitario;
-	private Integer stock;
-	private Double precioCompra;
 	
 		
 	public ProductoDto() {
@@ -21,9 +19,7 @@ public class ProductoDto implements Serializable {
 	public  ProductoDto (Producto producto) {
 		this.idProducto= producto.getIdProducto();
 		this.nombre= producto.getNombre();
-		this.precioCompra= producto.getPrecioCompra();
 		this.precioUnitario= producto.getPrecioUnitario();
-		this.stock= producto.getStock();
 	}
 	
 	public Integer getIdProducto() {
@@ -44,18 +40,5 @@ public class ProductoDto implements Serializable {
 	public void setPrecioUnitario(Double precioUnitario) {
 		this.precioUnitario = precioUnitario;
 	}
-	public Integer getStock() {
-		return stock;
-	}
-	public void setStock(Integer stock) {
-		this.stock = stock;
-	}
-	public Double getPrecioCompra() {
-		return precioCompra;
-	}
-	public void setPrecioCompra(Double precioCompra) {
-		this.precioCompra = precioCompra;
-	}
-	
 
 }
