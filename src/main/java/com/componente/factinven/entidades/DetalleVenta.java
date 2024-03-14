@@ -8,6 +8,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -21,8 +22,6 @@ import lombok.ToString;
 @PrimaryKeyJoinColumn(referencedColumnName = "id")
 public class DetalleVenta extends DetalleComprobante{
 
-	
-
 	@NotNull	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Venta venta;
@@ -31,5 +30,7 @@ public class DetalleVenta extends DetalleComprobante{
 	public void intentoRegistroDetalle() {
 		
 	}
+
+	
 
 }

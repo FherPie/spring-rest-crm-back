@@ -25,6 +25,7 @@ public class ClienteResponse implements Serializable{
     private String identificacion;
     private Integer idPersona;
     private Integer idCliente;
+	private String nombresCompletos;
     
     
     public ClienteResponse(Cliente cliente) {	    
@@ -37,6 +38,7 @@ public class ClienteResponse implements Serializable{
     	this.identificacion=cliente.getPersona().getIdentificacion();
     	this.idPersona=cliente.getPersona().getId();
     	this.idCliente=cliente.getId();
+		this.nombresCompletos = this.apellidos+ " " +this.nombres;
 	}
 
 }

@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
@@ -42,7 +43,7 @@ public class Comprobante implements Serializable {
 	@Column(columnDefinition = "TIMESTAMP")
 	private LocalDateTime fechayHora;
 	private Empleado empleado;
-	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Cliente cliente;
 	@NotBlank
 	private String estado;  //Borrador, Cerrado
@@ -52,6 +53,5 @@ public class Comprobante implements Serializable {
 	private Almacen almacen;
 	@NotEmpty
 	private String formaPago;
-	@Transient
 	private BigDecimal total;
 }

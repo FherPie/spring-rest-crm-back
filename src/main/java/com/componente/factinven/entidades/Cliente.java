@@ -1,6 +1,7 @@
 package com.componente.factinven.entidades;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
@@ -34,4 +36,7 @@ public class Cliente implements Serializable {
 	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	private Persona persona;
 	private String categoria;
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Comprobante> listaComprobante;
 }

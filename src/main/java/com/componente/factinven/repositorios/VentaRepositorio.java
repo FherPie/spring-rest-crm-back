@@ -22,13 +22,16 @@ public interface VentaRepositorio extends JpaRepository<Venta, Integer> {
     @Query("SELECT "
             + " (venta) from Venta venta "
             + "WHERE "
-            + "cliente.id = :clienteId  and fechayHora BETWEEN :startDate AND :endDate")
+            + "cliente.id = :clienteId  and fechayHora BETWEEN :startDate AND :endDate order by venta.id desc")
     List<Venta> fecthVentaBetweenDatesAndClientID(@Param("startDate")LocalDateTime startDate,@Param("endDate")LocalDateTime endDate, Integer clienteId);
     
     @Query("SELECT "
             + " (venta) from Venta venta "
             + "WHERE "
-            + "cliente.id = :clienteId  and fechayHora BETWEEN :startDate AND :endDate")
+            + "cliente.id = :clienteId  and fechayHora BETWEEN :startDate AND :endDate order  by venta.id desc")
     List<Venta> fecthVentaOrderByDate(@Param("startDate")LocalDateTime startDate,@Param("endDate")LocalDateTime endDate, Integer clienteId);
+
+
+    public List<Venta> findAllByOrderByIdDesc();
 
 }

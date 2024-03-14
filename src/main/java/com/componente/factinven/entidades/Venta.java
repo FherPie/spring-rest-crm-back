@@ -26,7 +26,7 @@ public class Venta extends Comprobante {
 	
 	private static final long serialVersionUID = -158044866183889173L;
 	//@NotEmpty
-	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy="venta", orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="venta", orphanRemoval = true)
 	private List<DetalleVenta> detallesVenta;
 
 }

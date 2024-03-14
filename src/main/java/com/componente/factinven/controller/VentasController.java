@@ -78,8 +78,8 @@ public class VentasController {
 	}
 
 	@GetMapping("/obtenerVenta/{id}")
-	public VentaResponse findById(@PathVariable Integer id) {
-		return (VentaResponse) ventaService.findById(id);
+	public ResponseEntity<VentaResponse> findById(@PathVariable Integer id) {
+		return new ResponseEntity<VentaResponse>((VentaResponse) ventaService.findById(id), HttpStatus.OK);
 	}
 
 	@GetMapping("/reporteVentaxFechas")

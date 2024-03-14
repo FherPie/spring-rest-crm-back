@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -25,6 +24,9 @@ import com.componente.factinven.entidades.DetalleVenta;
 import com.componente.factinven.entidades.Entrada;
 import com.componente.factinven.entidades.Salida;
 import com.componente.factinven.entidades.Venta;
+import com.componente.factinven.mappers.ClienteMapper;
+import com.componente.factinven.mappers.DetalleVentaMapper;
+import com.componente.factinven.mappers.VentaMapper;
 import com.componente.factinven.repositorios.AlmacenRepositorio;
 import com.componente.factinven.repositorios.ClienteRepositorio;
 import com.componente.factinven.repositorios.ComprobanteRepositorio;
@@ -69,6 +71,15 @@ public class VentasServicioImpl implements IComprobanteServicio {
 
 	@Autowired
 	SalidasRespository salidaRespositorio;
+	
+	@Autowired
+	private ClienteMapper clienteMapper;
+	
+	@Autowired
+	private VentaMapper ventaMapper;
+	
+	@Autowired
+	private DetalleVentaMapper detalleVentaMapper;
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
@@ -93,8 +104,10 @@ public class VentasServicioImpl implements IComprobanteServicio {
 		venta.setTotal(ventaRequest.getTotal());
 		venta.setFormaPago(ventaRequest.getFormaPago());
 		venta.setFechayHora(ventaRequest.getFechaEmision());
+		BigDecimal total= calcularTotalComprobante(ventaRequest.getItemsFactura());
+		venta.setTotal(total);
 		venta = comprobanteRespositorio.save(venta);
-		System.out.println("DETALLE");
+       
 		for (DetalleVentaRequest det : ventaRequest.getItemsFactura()) {
 			DetalleVenta deta = new DetalleVenta();
 			deta.setProducto(productoRespositorio.findById(det.getProductoId()).orElse(null));
@@ -103,23 +116,36 @@ public class VentasServicioImpl implements IComprobanteServicio {
 			deta.setUnidad(0);
 			deta.setVenta(venta);
 			deta = detalleComprobanteRespositorio.save(deta);
-			guardarSalida(deta);
+			//guardarSalida(deta);
 		}
 
-		return new VentaResponse(comprobanteRespositorio.save(venta));
+		return ventaMapper.toDto(comprobanteRespositorio.save(venta));
+	}
+
+	private BigDecimal calcularTotalComprobante( List<DetalleVentaRequest> lista){
+		BigDecimal total= new BigDecimal(0);
+		for (DetalleVentaRequest det : lista) {
+			DetalleVenta deta = new DetalleVenta();
+			deta.setProducto(productoRespositorio.findById(det.getProductoId()).orElse(null));
+			deta.setPrecioUnitario(new BigDecimal(det.getPrecioUnitario()));
+			deta.setCantidad(det.getNumeroItems());
+			deta.setUnidad(0);
+			total= deta.getPrecioUnitario().multiply(new BigDecimal(deta.getCantidad()));
+		}
+        return total;
 	}
 
 	@Override
 	public ComprobanteResponse editarComprobante(ComprobanteRequest comprobante) {
 		Venta venta = new Venta();
 		venta.setCodigo(comprobante.getCodigo());
-		return new VentaResponse(comprobanteRespositorio.save(venta));
+		return ventaMapper.toDto(comprobanteRespositorio.save(venta));
 
 	}
 
 	@Override
 	public ComprobanteResponse buscarComprobanteCodigo(String codigo) {
-		return new ComprobanteResponse(comprobanteRespositorio.findByCodigo(codigo));
+		return new ComprobanteResponse();
 	}
 
 	@Override
@@ -143,8 +169,9 @@ public class VentasServicioImpl implements IComprobanteServicio {
 	@Override
 	public List<VentaResponse> findAll() {
 		List<VentaResponse> listaRetorna = new ArrayList<>();
-		ventaRespositorio.findAll().forEach((n) -> {
+		ventaRespositorio.findAllByOrderByIdDesc().forEach((n) -> {
 			VentaResponse venta = new VentaResponse();
+			venta.setId(n.getId());
 			venta.setEstado(n.getEstado());
 			venta.setFechaFormat(n.getFechayHora().format(formatter));
 			venta.setFormaPago(n.getFormaPago());
@@ -165,7 +192,11 @@ public class VentasServicioImpl implements IComprobanteServicio {
 
 	@Override
 	public ComprobanteResponse findById(Integer id) {
-		return new ComprobanteResponse(comprobanteRespositorio.findById(id).get());
+		Venta venta=(Venta)comprobanteRespositorio.findById(id).get();
+		VentaResponse vr= ventaMapper.toDto(venta);
+		vr.setDetallesVentaDto(detalleVentaMapper.toDto(venta.getDetallesVenta()));
+		return vr;
+		//return new VentaResponse(comprobanteRespositorio.findById(id).get());
 	}
 
 	public List<VentaResponse> getAllMovimientoByClienteId(Integer clienteId, LocalDateTime startDate,
@@ -179,6 +210,15 @@ public class VentasServicioImpl implements IComprobanteServicio {
 			venta.setNombreCliente(
 					n.getCliente().getPersona().getNombres() + " " + n.getCliente().getPersona().getApellidos());
 			venta.setId(n.getId());
+			venta.setFechaFormat(n.getFechayHora().format(formatter));
+			String formattedNumeroFactura = String.format("%06d", n.getId());
+			venta.setNumeroFactura(formattedNumeroFactura);
+			BigDecimal total = new BigDecimal(0);
+			List<DetalleVenta> listaDetalles = detalleVentaRepositorio.listaDetallesVenta(n);
+			for (DetalleVenta detalle : listaDetalles) {
+				total = total.add(new BigDecimal(detalle.getCantidad()).multiply(detalle.getPrecioUnitario()));
+			}
+			venta.setTotal(df.format(total));
 			//venta.setTotal(new BigDecimal(1000));
 			// List<Detalle> lista= detalleComprobanteRespositorio.fin;
 			listaRetorna.add(venta);
