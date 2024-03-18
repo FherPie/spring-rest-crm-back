@@ -14,6 +14,8 @@ import org.mapstruct.Mapper;
 public interface VentaMapper extends EntityMapper<VentaResponse, Venta> {
 
 	@Override
+	@Mapping(target = "cliente", source = "idCliente")
+	@Mapping(target = "detallesVenta", source = "detallesVentaDto")
 	Venta toEntity(VentaResponse dto);
 
 	@Override

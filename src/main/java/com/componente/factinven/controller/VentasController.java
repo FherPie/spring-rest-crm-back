@@ -49,9 +49,9 @@ public class VentasController {
 	} 
 
 
-	@PutMapping("/Updateventa")
+	@PutMapping("/actualizarVenta")
 	public ResponseEntity<VentaResponse> actualizar(@RequestBody VentaResponse ventaRequest) {
-		return new ResponseEntity<VentaResponse>(ventaService.editarComprobante(ventaRequest), HttpStatus.OK);
+		return new ResponseEntity<VentaResponse>(ventaService.actualizarComprobante(ventaRequest), HttpStatus.OK);
 	};
 
 	@DeleteMapping("/Deleteventa/")
@@ -107,5 +107,27 @@ public class VentasController {
 		importerExcelVenta.LeerExcel(file);
 		return "You successfully uploaded " + file.getOriginalFilename() + "!";
 	}
+	
+	
+	@GetMapping("/getVenta")
+	public ResponseEntity<VentaResponse> getVenta() {
+		return new ResponseEntity<VentaResponse>((VentaResponse) ventaService.getVenta(), HttpStatus.OK);
+	}
+	
+	
+	@PostMapping("/addDetalle")
+	public ResponseEntity<VentaResponse> addDetalle(@RequestBody VentaResponse ventaRequest) {
+		return new ResponseEntity<VentaResponse>((VentaResponse) ventaService.addDetalle(ventaRequest), HttpStatus.OK);
+	}
+	
+	@GetMapping("/editDetalle")
+	public ResponseEntity<VentaResponse> editDetalle(@RequestBody VentaResponse ventaRequest) {
+		return new ResponseEntity<VentaResponse>((VentaResponse) ventaService.getVenta(), HttpStatus.OK);
+	}
 
+	
+	@GetMapping("/deleteDetalle")
+	public ResponseEntity<VentaResponse> deleteDetalle(@RequestBody VentaResponse ventaRequest) {
+		return new ResponseEntity<VentaResponse>((VentaResponse) ventaService.getVenta(), HttpStatus.OK);
+	}
 }

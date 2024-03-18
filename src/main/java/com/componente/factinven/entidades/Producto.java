@@ -73,12 +73,8 @@ public class Producto extends EntidadPadre implements Serializable {
 	public void setIdProducto(Integer idProducto) {
 		this.idProducto = idProducto;
 	}
-	public String getNombre() {
-		return nombre;
-	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+
+
 	public Double getPrecioUnitario() {
 		return precioUnitario;
 	}

@@ -23,6 +23,8 @@ import com.componente.factinven.servicios.impl.AlmacenServicioImpl;
 import com.componente.factinven.servicios.impl.EmpleadoServicioImpl;
 import com.componente.factinven.servicios.impl.PersonaServicioImpl;
 
+import com.componente.factinven.unittests.persona.UtilPersona;
+
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
 @SpringBootTest

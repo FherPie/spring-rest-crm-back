@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.componente.factinven.dto.DetalleVentaDto;
+import com.componente.factinven.dto.ProductoDto;
 import com.componente.factinven.dto.VentaResponse;
 import com.componente.factinven.entidades.DetalleVenta;
 import com.componente.factinven.entidades.Venta;
@@ -114,6 +115,18 @@ public class VentasServicioImpl implements IComprobanteServicio {
 	
 	
 	
+	
+	@Transactional
+	public VentaResponse actualizarComprobante(VentaResponse comprobanteRequest) {
+		VentaResponse ventaRequest =  comprobanteRequest;
+		Venta venta= ventaMapper.toEntity(ventaRequest);
+		venta.removeDetails();
+		armarDetalles(ventaRequest.getDetallesVentaDto(), venta);
+		BigDecimal total= calcularTotalComprobante(ventaRequest.getDetallesVentaDto());
+		venta.setTotal(total);
+		venta = ventaRespositorio.save(venta);
+		return ventaMapper.toDto(ventaRespositorio.save(venta));
+	}
 
 
 
@@ -162,7 +175,7 @@ public class VentasServicioImpl implements IComprobanteServicio {
 	@Override
 	public VentaResponse findById(Integer id) {
 		Venta venta=ventaRespositorio.findById(id).get();
-		return ventaMapper.toDto(venta);
+		return ventaMapper.toDto(venta).setNumeroFactura(numeroVentaFormateado(venta.getId()));
 		//return new VentaResponse(comprobanteRespositorio.findById(id).get());
 	}
 
@@ -178,8 +191,7 @@ public class VentasServicioImpl implements IComprobanteServicio {
 					n.getCliente().getPersona().getNombres() + " " + n.getCliente().getPersona().getApellidos());
 			venta.setId(n.getId());
 			venta.setFechaFormat(n.getFechayHora().format(formatter));
-			String formattedNumeroFactura = String.format("%06d", n.getId());
-			venta.setNumeroFactura(formattedNumeroFactura);
+			venta.setNumeroFactura(numeroVentaFormateado(n.getId()));
 			BigDecimal total = new BigDecimal(0);
 			List<DetalleVenta> listaDetalles = detalleVentaRepositorio.listaDetallesVenta(n);
 			for (DetalleVenta detalle : listaDetalles) {
@@ -204,6 +216,28 @@ public class VentasServicioImpl implements IComprobanteServicio {
 	public void eliminarComprobante(VentaResponse comprobante) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	
+	public VentaResponse getVenta() {
+		Venta venta= new Venta();
+		venta.setFechayHora(LocalDateTime.now());
+		venta.setCodigo(null);
+		return ventaMapper.toDto(venta);
+		//return new VentaResponse(comprobanteRespositorio.findById(id).get());
+	}
+	
+	private String numeroVentaFormateado(Integer id) {
+		return String.format("%06d", id); 
+	}
+
+	
+	public VentaResponse addDetalle(VentaResponse comprobanteRequest) {
+		DetalleVentaDto detalleAgregado= new DetalleVentaDto();
+		detalleAgregado.setEdit(true);
+		detalleAgregado.setProductoDto(new ProductoDto());
+		comprobanteRequest.addDetailOnTop(detalleAgregado);
+		return comprobanteRequest;
 	}
 
 

@@ -19,6 +19,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.componente.factinven.entidades.Persona;
 import com.componente.factinven.servicios.impl.PersonaServicioImpl;
+import com.componente.factinven.unittests.persona.UtilPersona;
+
 
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
