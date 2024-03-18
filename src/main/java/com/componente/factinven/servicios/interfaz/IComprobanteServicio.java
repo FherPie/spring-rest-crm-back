@@ -16,7 +16,7 @@ public interface IComprobanteServicio {
 	
 	public abstract  VentaResponse buscarComprobanteCodigo(String codigo);
 	
-	public abstract  void eliminarComprobante(VentaResponse comprobante);
+	public abstract  void eliminarComprobante(Integer id);
 	
 	public abstract  void borrarComprobantes();
 

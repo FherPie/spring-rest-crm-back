@@ -54,9 +54,9 @@ public class VentasController {
 		return new ResponseEntity<VentaResponse>(ventaService.actualizarComprobante(ventaRequest), HttpStatus.OK);
 	};
 
-	@DeleteMapping("/Deleteventa/")
-	public void delete(@RequestBody VentaResponse ventaRequest) {
-		ventaService.eliminarComprobante(ventaRequest);
+	@DeleteMapping("/borrarVenta/{id}")
+	public void delete(@PathVariable Integer id) {
+		ventaService.eliminarComprobante(id);
 	};
 
 	@PostMapping("/guardarVenta")
