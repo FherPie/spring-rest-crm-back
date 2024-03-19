@@ -1,8 +1,8 @@
 package com.componente.factinven.servicios.impl;
 
-import com.componente.factinven.dto.DetalleRequest;
-import com.componente.factinven.dto.DetalleResponse;
+import com.componente.factinven.dto.DetalleDto;
 import com.componente.factinven.entidades.Detalle;
+import com.componente.factinven.mappers.DetalleMapper;
 import com.componente.factinven.repositorios.DetalleRepositorio;
 import com.componente.factinven.servicios.interfaz.IDetalleServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,48 +15,40 @@ public class DetalleServicioImpl implements IDetalleServicio
 {
     @Autowired
     private DetalleRepositorio detalleRepositorio;
+    
+    
+    @Autowired
+    private DetalleMapper detalleMapper;
 
     @Override
-    public List<DetalleResponse> listarDetalles() {
+    public List<DetalleDto> listarDetalles() {
 
-        List<DetalleResponse> data = this.detalleRepositorio.findAll().stream().map(DetalleResponse::new).collect(java.util.stream.Collectors.toList());
-
+        List<DetalleDto> data = detalleMapper.toDto(this.detalleRepositorio.findAll()); 
         return data;
     }
 
     @Override
-    public DetalleResponse findById(int id)
+    public DetalleDto findById(int id)
     {
         Detalle detalle = this.detalleRepositorio.findById(id).get();
 
-        return new DetalleResponse(detalle);
+        return  detalleMapper.toDto(detalle);
     }
 
     @Override
-    public DetalleResponse create(DetalleRequest detalle)
+    public DetalleDto create(DetalleDto detalle)
     {
-        Detalle detalleGuardar = new Detalle();
+        Detalle detalleGuardar = detalleMapper.toEntity(detalle);
 
-        detalleGuardar.setId_maestro(detalle.getId_maestro());
-        detalleGuardar.setNombre(detalle.getNombre());
-        detalleGuardar.setParametros(detalle.getParametros());
-        detalleGuardar.setDescripcion(detalle.getDescripcion());
-
-        return new DetalleResponse(this.detalleRepositorio.save(detalleGuardar));
+        return detalleMapper.toDto(this.detalleRepositorio.save(detalleGuardar));
     }
 
     @Override
-    public DetalleResponse update(DetalleRequest detalle)
+    public DetalleDto update(DetalleDto detalle)
     {
-        Detalle detalleGuardar = this.detalleRepositorio.findById(detalle.getId()).get();
+        Detalle detalleGuardar = detalleMapper.toEntity(detalle);
 
-        detalleGuardar.setId(detalle.getId());
-        detalleGuardar.setId_maestro(detalle.getId_maestro());
-        detalleGuardar.setNombre(detalle.getNombre());
-        detalleGuardar.setParametros(detalle.getParametros());
-        detalleGuardar.setDescripcion(detalle.getDescripcion());
-
-        return new DetalleResponse(this.detalleRepositorio.save(detalleGuardar));
+        return detalleMapper.toDto(this.detalleRepositorio.save(detalleGuardar));
     }
 
     @Override

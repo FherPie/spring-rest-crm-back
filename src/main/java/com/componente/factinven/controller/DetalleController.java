@@ -1,7 +1,7 @@
 package com.componente.factinven.controller;
 
-import com.componente.factinven.dto.DetalleRequest;
-import com.componente.factinven.dto.DetalleResponse;
+import com.componente.factinven.dto.DetalleDto;
+import com.componente.factinven.dto.DetalleDto;
 import com.componente.factinven.servicios.impl.DetalleServicioImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,25 +17,25 @@ public class DetalleController
     DetalleServicioImpl detalleServicio;
 
     @GetMapping("/detalle")
-    public List<DetalleResponse> listar()
+    public List<DetalleDto> listar()
     {
         return detalleServicio.listarDetalles();
     }
 
     @GetMapping("/detalle/{id}")
-    public DetalleResponse findById(@PathVariable int id)
+    public DetalleDto findById(@PathVariable int id)
     {
         return detalleServicio.findById(id);
     }
 
     @PostMapping("/detalle")
-    public DetalleResponse create(@RequestBody DetalleRequest detalleResponse)
+    public DetalleDto create(@RequestBody DetalleDto detalleResponse)
     {
         return detalleServicio.create(detalleResponse);
     }
 
     @PutMapping("/detalle")
-    public DetalleResponse update(@RequestBody DetalleRequest detalleResponse)
+    public DetalleDto update(@RequestBody DetalleDto detalleResponse)
     {
         return detalleServicio.update(detalleResponse);
     }

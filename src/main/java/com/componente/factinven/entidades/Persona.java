@@ -23,8 +23,8 @@ import lombok.ToString;
 
 @Entity
 @Table(uniqueConstraints=
-{@UniqueConstraint(columnNames = "identificacion"),
-@UniqueConstraint(columnNames = "nombreUsuario")})
+{@UniqueConstraint(columnNames = "identificacion", name = "IdentificacionUnica"),
+@UniqueConstraint(columnNames = "nombreUsuario", name = "NombreUsuarioUnico")})
 @Data
 @Builder
 @AllArgsConstructor

@@ -20,7 +20,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.componente.factinven.dto.ClienteDto;
 import com.componente.factinven.importers.ImporterExcelCliente;
+import com.componente.factinven.responses.ResponseGenerico;
+import com.componente.factinven.servicios.impl.ClienteServicioImpl;
 import com.componente.factinven.servicios.interfaz.IClienteServicio;
+import com.componente.factinven.utils.ControllersUtils;
+
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -28,7 +32,7 @@ import com.componente.factinven.servicios.interfaz.IClienteServicio;
 public class ClienteController {
 
 	@Autowired
-	IClienteServicio clienteService;
+	ClienteServicioImpl clienteService;
 	
 
 	private final ImporterExcelCliente importerExcelCliente;
@@ -49,8 +53,10 @@ public class ClienteController {
 	};
 
 	@PostMapping("/cliente")
-	public ResponseEntity<ClienteDto> crear(@RequestBody ClienteDto clienteRequest) {
-		return new ResponseEntity<ClienteDto>(clienteService.guardarCliente(clienteRequest), HttpStatus.OK);
+	public ResponseEntity<?> crear(@RequestBody ClienteDto clienteRequest) {
+        ResponseGenerico<ClienteDto> response = new ResponseGenerico<>();
+        ClienteDto dto = clienteService.guardarCliente(clienteRequest);
+        return ControllersUtils.repuestaGenericoExitoObject(response, dto);
 	};
 
 	@GetMapping("/cliente")
@@ -72,6 +78,12 @@ public class ClienteController {
 	public String handleFileUpload(@RequestPart(required = true) MultipartFile file, @PathVariable String pathName) {
 		importerExcelCliente.LeerExcel(file);
 		return "You successfully uploaded " + file.getOriginalFilename() + "!";
+	}
+	
+	
+	@GetMapping("/instanciarCliente")
+	public ClienteDto instanciarCliente() {
+		return clienteService.instanciarCliente();
 	}
 
 }

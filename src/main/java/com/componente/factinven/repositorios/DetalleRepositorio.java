@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DetalleRepositorio extends JpaRepository<Detalle, Integer>
 {
-
-
+	    List<Detalle> findByMaestroId(Integer idMaestro);
+	   	List<Detalle> findByMaestroCodigo(String codigoMaestro);
 
 }

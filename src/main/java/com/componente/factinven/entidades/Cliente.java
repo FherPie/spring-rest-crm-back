@@ -32,12 +32,19 @@ public class Cliente implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	
+	
 	@NotNull
-	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Persona persona;
+	
+	
 	private String categoria;
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY,mappedBy="cliente")
 	private List<Venta> listaComprobante;
+	
+	@OneToMany(cascade= CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="cliente", orphanRemoval = true)
+	private List<ClienteRespuestas> listaClienteRepuestas;
 
 }

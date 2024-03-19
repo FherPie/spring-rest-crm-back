@@ -1,5 +1,6 @@
 package com.componente.factinven.servicios.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,9 +13,13 @@ import org.springframework.stereotype.Service;
 import com.componente.factinven.dto.ClienteDto;
 import com.componente.factinven.dto.ProductoDto;
 import com.componente.factinven.entidades.Cliente;
+import com.componente.factinven.entidades.Detalle;
 import com.componente.factinven.entidades.Persona;
 import com.componente.factinven.entidades.Producto;
+import com.componente.factinven.mappers.ClienteMapper;
+import com.componente.factinven.mappers.DetalleMapper;
 import com.componente.factinven.repositorios.ClienteRepositorio;
+import com.componente.factinven.repositorios.DetalleRepositorio;
 import com.componente.factinven.repositorios.PersonaRepositorio;
 import com.componente.factinven.servicios.interfaz.IClienteServicio;
 
@@ -28,21 +33,25 @@ public class ClienteServicioImpl  implements IClienteServicio {
 	@Autowired
 	private PersonaRepositorio personaRepositorio;
 	
+	@Autowired
+	private ClienteMapper clienteMapper;
+	
+	@Autowired
+	private DetalleRepositorio detalleRepositorio;
+	
+	@Autowired
+	private DetalleMapper detalleMapper;
+	
 	
 	@Override
-	public ClienteDto guardarCliente(ClienteDto cliente) {
-		Cliente clienteGuardar = new Cliente();
-		Persona persona= new Persona();
-		persona.setApellidos(cliente.getApellidos());
-		persona.setNombres(cliente.getNombres());
-		persona.setDireccion(cliente.getDireccion());
-		persona.setEmail(cliente.getEmail());
-		persona.setTelefono(cliente.getTelefono());
-		persona.setIdentificacion(cliente.getIdentificacion());
-		personaRepositorio.save(persona);
-		clienteGuardar.setPersona(persona);
+	public ClienteDto guardarCliente(ClienteDto clienteDto) {
+//		String identificacion= clienteDto.getIdentificacion();
+//		if(clienteDto.getIdentificacion()) {
+//			
+//		}		
+		Cliente cliente = clienteMapper.toEntity(clienteDto);
 		//clienteGuardar.setCategoria(cliente.getCategoria());
-	    return new ClienteDto(clienteRepositorio.save(clienteGuardar));
+	    return new ClienteDto(clienteRepositorio.save(cliente));
 	}
 
 
@@ -114,6 +123,17 @@ public class ClienteServicioImpl  implements IClienteServicio {
 			return new ClienteDto(x);
 		}).collect(Collectors.toList());
 		return listaRetorno;
+	}
+	
+	
+	public ClienteDto instanciarCliente() {
+		ClienteDto cliente = new ClienteDto();
+		List<Detalle> listDetalle= new ArrayList<>();
+		listDetalle.addAll(detalleRepositorio.findByMaestroCodigo("ANTF"));
+		listDetalle.addAll(detalleRepositorio.findByMaestroCodigo("ANHOSP"));
+	    cliente.setListaPreguntas(detalleMapper.toDto(listDetalle));
+		//clienteGuardar.setCategoria(cliente.getCategoria());
+	    return cliente;
 	}
 
 }

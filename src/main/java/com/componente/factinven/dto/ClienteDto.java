@@ -2,6 +2,7 @@ package com.componente.factinven.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 import com.componente.factinven.entidades.Cliente;
 
@@ -18,6 +19,8 @@ public class ClienteDto implements Serializable{
 	private String apellidos;
 	private String direccion;
     private String telefono;
+    private String telefono2;
+    private String referido;
     private String email;
 	public LocalDate fechaNacimiento;
     private String nombreUsuario;
@@ -26,6 +29,7 @@ public class ClienteDto implements Serializable{
     private Integer idPersona;
     private Integer id;
 	private String nombresCompletos;
+	private List<DetalleDto> listaPreguntas;
     
     
     public ClienteDto(Cliente cliente) {	    

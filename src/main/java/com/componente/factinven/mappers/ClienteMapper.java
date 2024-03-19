@@ -13,6 +13,12 @@ import org.mapstruct.Mapper;
 public interface ClienteMapper extends EntityMapper<ClienteDto, Cliente> {
 
 	@Override
+	@Mapping(target = "persona.nombres", source = "nombres")
+	@Mapping(target = "persona.apellidos", source = "apellidos")
+	@Mapping(target = "persona.direccion", source = "direccion")
+	@Mapping(target = "persona.telefono", source = "telefono")
+	@Mapping(target = "persona.email", source = "email")
+	@Mapping(target = "persona.identificacion", source = "identificacion")
 	Cliente toEntity(ClienteDto dto);
 	
 	@Override

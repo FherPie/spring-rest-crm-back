@@ -1,7 +1,7 @@
 package com.componente.factinven.controller;
 
-import com.componente.factinven.dto.MaestroRequest;
-import com.componente.factinven.dto.MaestroResponse;
+import com.componente.factinven.dto.MaestroDto;
+import com.componente.factinven.dto.MaestroDto;
 import com.componente.factinven.servicios.impl.MaestroServicioImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,25 +17,25 @@ public class MaestroController
     MaestroServicioImpl maestroServicio;
 
     @GetMapping("/maestro")
-    public List<MaestroResponse> listar()
+    public List<MaestroDto> listar()
     {
         return maestroServicio.listarMaestros();
     }
 
     @GetMapping("/maestro/{id}")
-    public MaestroResponse findById(@PathVariable int id)
+    public MaestroDto findById(@PathVariable int id)
     {
         return maestroServicio.findById(id);
     }
 
     @PostMapping("/maestro")
-    public MaestroResponse create(@RequestBody MaestroRequest maestroRequest)
+    public MaestroDto create(@RequestBody MaestroDto maestroRequest)
     {
         return maestroServicio.create(maestroRequest);
     }
 
     @PutMapping("/maestro")
-    public MaestroResponse update(@RequestBody MaestroRequest maestroRequest)
+    public MaestroDto update(@RequestBody MaestroDto maestroRequest)
     {
         return maestroServicio.update(maestroRequest);
     }
