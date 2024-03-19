@@ -45,7 +45,7 @@ public class ClienteServicioImpl  implements IClienteServicio {
 	
 	@Override
 	public ClienteDto guardarCliente(ClienteDto clienteDto) {
-//		String identificacion= clienteDto.getIdentificacion();
+		String identificacion= clienteDto.getIdentificacion();
 //		if(clienteDto.getIdentificacion()) {
 //			
 //		}		

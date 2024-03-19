@@ -38,13 +38,13 @@ public class CustomErrorHandler {
 	        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 		}
 	   
-	   @ExceptionHandler(Exception.class)
-	   @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-	   public ResponseEntity<?> globalExceptionHandler(Exception ex, WebRequest request) {
-		    ResponseGenerico<?> response = new ResponseGenerico<>();
-	        response.setCodigoRespuestaName(HttpStatus.BAD_REQUEST.name());
-	        response.setCodigoRespuestaValue(HttpStatus.BAD_REQUEST.value());
-	        response.setMensaje(EnumMessages.ERROR.name() + ":" + ex.getMessage());
-	        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);	   
-	   }
+//	   @ExceptionHandler(Exception.class)
+//	   @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+//	   public ResponseEntity<?> globalExceptionHandler(Exception ex, WebRequest request) {
+//		    ResponseGenerico<?> response = new ResponseGenerico<>();
+//	        response.setCodigoRespuestaName(HttpStatus.BAD_REQUEST.name());
+//	        response.setCodigoRespuestaValue(HttpStatus.BAD_REQUEST.value());
+//	        response.setMensaje(EnumMessages.ERROR.name() + ":" + ex.getMessage());
+//	        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);	   
+//	   }
 	}
