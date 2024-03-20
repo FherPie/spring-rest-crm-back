@@ -34,7 +34,7 @@ public class CustomErrorHandler {
 	        ResponseGenerico<?> response = new ResponseGenerico<>();
 	        response.setCodigoRespuestaName(HttpStatus.BAD_REQUEST.name());
 	        response.setCodigoRespuestaValue(HttpStatus.BAD_REQUEST.value());
-	        response.setMensaje(EnumMessages.ERROR.name() + ":" + e.getMessage());
+	        response.setMensaje(EnumMessages.ERROR.name() + " Cédula : " + e.getMessage());
 	        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 		}
 	   

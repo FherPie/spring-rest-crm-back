@@ -43,8 +43,11 @@ public class ClienteController {
 	} 
 
 	@PutMapping("/cliente")
-	public ResponseEntity<ClienteDto> actualizar(@RequestBody ClienteDto clienteRequest) {
-		return new ResponseEntity<ClienteDto>(clienteService.editarCliente(clienteRequest), HttpStatus.OK);
+	public ResponseEntity<?> actualizar(@RequestBody ClienteDto clienteRequest) throws Exception {
+	     ResponseGenerico<ClienteDto> response = new ResponseGenerico<>();
+	      ClienteDto dto = clienteService.editarCliente(clienteRequest);
+	     return ControllersUtils.repuestaGenericoExitoObject(response, dto);
+		
 	};
 
 	@DeleteMapping("/cliente")
@@ -53,7 +56,7 @@ public class ClienteController {
 	};
 
 	@PostMapping("/cliente")
-	public ResponseEntity<?> crear(@RequestBody ClienteDto clienteRequest) {
+	public ResponseEntity<?> crear(@RequestBody ClienteDto clienteRequest) throws Exception {
         ResponseGenerico<ClienteDto> response = new ResponseGenerico<>();
         ClienteDto dto = clienteService.guardarCliente(clienteRequest);
         return ControllersUtils.repuestaGenericoExitoObject(response, dto);

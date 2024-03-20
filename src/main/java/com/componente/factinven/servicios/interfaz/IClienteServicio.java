@@ -9,9 +9,9 @@ import com.componente.factinven.entidades.Cliente;
 
 public interface IClienteServicio {
 
-	public abstract  ClienteDto guardarCliente(ClienteDto cliente);
+	public abstract  ClienteDto guardarCliente(ClienteDto cliente)  throws Exception ;
 	
-	public abstract  ClienteDto editarCliente(ClienteDto cliente);
+	public abstract  ClienteDto editarCliente(ClienteDto cliente) throws Exception;
 	
 	public abstract  void buscarClienteApellido(String apellido);
 	

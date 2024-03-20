@@ -16,12 +16,16 @@ import com.componente.factinven.entidades.Cliente;
 import com.componente.factinven.entidades.Detalle;
 import com.componente.factinven.entidades.Persona;
 import com.componente.factinven.entidades.Producto;
+import com.componente.factinven.exceptions.CedulaEcException;
 import com.componente.factinven.mappers.ClienteMapper;
 import com.componente.factinven.mappers.DetalleMapper;
 import com.componente.factinven.repositorios.ClienteRepositorio;
 import com.componente.factinven.repositorios.DetalleRepositorio;
 import com.componente.factinven.repositorios.PersonaRepositorio;
 import com.componente.factinven.servicios.interfaz.IClienteServicio;
+import com.componente.factinven.utils.ValidadorResponse;
+import com.componente.factinven.utils.ValidarIdenttificacion;
+
 
 @Service
 public class ClienteServicioImpl  implements IClienteServicio {
@@ -44,14 +48,23 @@ public class ClienteServicioImpl  implements IClienteServicio {
 	
 	
 	@Override
-	public ClienteDto guardarCliente(ClienteDto clienteDto) {
+	public ClienteDto guardarCliente(ClienteDto clienteDto) throws Exception {
 		String identificacion= clienteDto.getIdentificacion();
-//		if(clienteDto.getIdentificacion()) {
-//			
-//		}		
+		validarCedulaCliente(identificacion);
 		Cliente cliente = clienteMapper.toEntity(clienteDto);
 		//clienteGuardar.setCategoria(cliente.getCategoria());
 	    return new ClienteDto(clienteRepositorio.save(cliente));
+	}
+	
+	
+	//Con este validador se puede validar la cedula natural, ruc persona natural y empresa
+	private void validarCedulaCliente(String cedula) throws Exception {
+		 ValidarIdenttificacion validador = new ValidarIdenttificacion();
+	     ValidadorResponse validarValorresponse = new ValidadorResponse();
+         validarValorresponse = validador.validarCedula(cedula);
+         if(!validarValorresponse.getValid()) {
+        	 throw new CedulaEcException(validarValorresponse.getMensaje());
+         }
 	}
 
 
@@ -77,17 +90,13 @@ public class ClienteServicioImpl  implements IClienteServicio {
 
 
 	@Override
-	public ClienteDto editarCliente(ClienteDto cliente) {
-		Cliente clienteGuardar = new Cliente();
-		Persona persona= new Persona();
-		persona.setApellidos(cliente.getApellidos());
-		persona.setNombres(cliente.getNombres());
-		persona.setDireccion(cliente.getDireccion());
-		persona.setEmail(cliente.getEmail());
-		persona.setTelefono(cliente.getTelefono());
-		persona.setIdentificacion(cliente.getIdentificacion());
-		clienteGuardar.setPersona(persona);
-	    return new ClienteDto(clienteRepositorio.save(clienteGuardar));
+	public ClienteDto editarCliente(ClienteDto clienteDto) throws Exception {
+		String identificacion= clienteDto.getIdentificacion();
+		validarCedulaCliente(identificacion);
+		clienteDto.setListaPreguntas(new ArrayList<>());
+		Cliente cliente = clienteMapper.toEntity(clienteDto);
+		//clienteGuardar.setCategoria(cliente.getCategoria());
+	    return new ClienteDto(clienteRepositorio.save(cliente));
 	}
 
 
@@ -109,11 +118,8 @@ public class ClienteServicioImpl  implements IClienteServicio {
 
 	@Override
 	public ClienteDto findById(Integer idCliente) {
-		Cliente prod = this.clienteRepositorio.findById(idCliente).get();
-		if (prod == null) {
-			return null;
-		}
-		return new ClienteDto(prod);
+		Cliente cliente = this.clienteRepositorio.findById(idCliente).get();
+		return clienteMapper.toDto(cliente);
 	}
 
 

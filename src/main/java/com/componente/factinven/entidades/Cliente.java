@@ -40,11 +40,18 @@ public class Cliente implements Serializable {
 	
 	
 	private String categoria;
+	
+	@NotNull(message = "Motivo consulta obligatorio")
+	private String motivoConsulta;
+	
+	private String referidoPor;
+	
+	private String ocupacion;
 
 	@OneToMany(fetch = FetchType.LAZY,mappedBy="cliente")
 	private List<Venta> listaComprobante;
 	
-	@OneToMany(cascade= CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="cliente", orphanRemoval = true)
+	@OneToMany(cascade= CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="cliente")
 	private List<ClienteRespuestas> listaClienteRepuestas;
 
 }
