@@ -2,6 +2,8 @@ package com.componente.factinven.controller;
 
 import java.util.List;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,9 +52,9 @@ public class ClienteController {
 		
 	};
 
-	@DeleteMapping("/cliente")
-	public void delete(@RequestBody ClienteDto clienteRequest) {
-		clienteService.eliminarCliente(clienteRequest);
+	@DeleteMapping("/cliente/{id}")
+	public void delete(@PathVariable Integer id) {
+		clienteService.eliminarCliente(id);
 	};
 
 	@PostMapping("/cliente")

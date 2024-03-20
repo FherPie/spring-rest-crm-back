@@ -76,9 +76,8 @@ public class ClienteServicioImpl  implements IClienteServicio {
 
 
 	@Override
-	public void eliminarCliente(ClienteDto Cliente) {
-		// TODO Auto-generated method stub
-		
+	public void eliminarCliente(Integer id) {
+		clienteRepositorio.deleteById(id);
 	}
 
 

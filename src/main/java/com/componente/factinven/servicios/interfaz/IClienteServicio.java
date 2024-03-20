@@ -15,7 +15,7 @@ public interface IClienteServicio {
 	
 	public abstract  void buscarClienteApellido(String apellido);
 	
-	public abstract  void eliminarCliente(ClienteDto cliente);
+	public abstract  void eliminarCliente(Integer id);
 	
 	public abstract  void borrarClientes();
 	

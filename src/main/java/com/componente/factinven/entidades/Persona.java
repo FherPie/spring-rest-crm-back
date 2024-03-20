@@ -43,9 +43,7 @@ public class Persona implements Serializable {
 	private String nombres;
     @NotBlank
 	private String apellidos;
-    @NotNull
 	private String direccion;
-    @NotBlank
     private String telefono;
     private String telefono2;
     @Email

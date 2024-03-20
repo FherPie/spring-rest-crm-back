@@ -41,7 +41,6 @@ public class Cliente implements Serializable {
 	
 	private String categoria;
 	
-	@NotNull(message = "Motivo consulta obligatorio")
 	private String motivoConsulta;
 	
 	private String referidoPor;
