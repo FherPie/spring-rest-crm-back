@@ -37,6 +37,7 @@ public class Producto extends EntidadPadre implements Serializable {
 	private Integer idProducto;
 	private String nombre;
 	private Double precioUnitario;
+	private Double precioCompra;
 	
 	@OneToMany(mappedBy="producto")
 	private List<DetalleVenta> detalleventaList;

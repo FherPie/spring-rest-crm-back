@@ -10,7 +10,7 @@ public class ProductoDto implements Serializable {
 	private Integer idProducto;
 	private String nombre;
 	private Double precioUnitario;
-	
+	private Double precioCompra;
 		
 	public ProductoDto() {
 
