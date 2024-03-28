@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.componente.factinven.dto.ProductoDto;
 import com.componente.factinven.entidades.Producto;
+import com.componente.factinven.mappers.ProductoMapper;
 import com.componente.factinven.repositorios.ProductRepository;
 import com.componente.factinven.repositorios.ProductoRepositorio;
 import com.componente.factinven.servicios.interfaz.IProductoServicio;
@@ -25,20 +26,22 @@ public class ProductoServicioImpl implements IProductoServicio {
 	
 	@Autowired
 	private ProductRepository productoRepository;
+	
+	@Autowired
+	private ProductoMapper productoMapper;
 
 	@Override
 	@Transactional
-	public ProductoDto guardarProducto(ProductoDto producto) {
-		Producto prdocutoGuardar = new Producto();
-		prdocutoGuardar.setNombre(producto.getNombre());
-		prdocutoGuardar.setPrecioUnitario(producto.getPrecioUnitario());
-	     return new ProductoDto(productoRepositorio.save(prdocutoGuardar));
+	public ProductoDto guardarProducto(ProductoDto productoDto) {
+		Producto prdocutoGuardar = productoMapper.toEntity(productoDto);
+	     return productoMapper.toDto(productoRepositorio.save(prdocutoGuardar));
 	}
 
 	@Override
 	@Transactional
-	public ProductoDto editarProducto(ProductoDto Producto) {
-         return new ProductoDto(productoRepositorio.save(new Producto(Producto)));   
+	public ProductoDto editarProducto(ProductoDto productoDto) {
+		Producto prdocutoGuardar = productoMapper.toEntity(productoDto);
+	     return productoMapper.toDto(productoRepositorio.save(prdocutoGuardar)); 
 	}
 
 	@Override
@@ -52,8 +55,9 @@ public class ProductoServicioImpl implements IProductoServicio {
 
 	@Override
 	@Transactional
-	public void eliminarProducto(ProductoDto productor) {
-		productoRepositorio.deleteById(productor.getIdProducto());
+	public boolean eliminarProducto(Integer id) {
+		productoRepositorio.deleteById(id);
+		return true;
 	}
 
 	@Override
@@ -76,20 +80,18 @@ public class ProductoServicioImpl implements IProductoServicio {
 	@Override
 	@Transactional(readOnly = true)
 	public List<ProductoDto> findAll() {
-		List<ProductoDto> listaRetorno = productoRepositorio.findAll().stream().map(x -> {
-			return new ProductoDto(x);
-		}).collect(Collectors.toList());
+		List<ProductoDto> listaRetorno = productoMapper.toDto(productoRepositorio.findAll());
+//		.stream().map(x -> {
+//			return new ProductoDto(x);
+//		}).collect(Collectors.toList());
 		return listaRetorno;
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public ProductoDto findById(Integer idProducto) {
-		Producto prod = productoRepositorio.findById(idProducto).get();
-		if (prod == null) {
-			return null;
-		}
-		return new ProductoDto(prod);
+		Producto prod = productoRepositorio.findById(idProducto).get();        
+		return productoMapper.toDto(prod);
 	}
 	
 	

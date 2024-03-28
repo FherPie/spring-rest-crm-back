@@ -1,15 +1,11 @@
 package com.componente.factinven.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,7 +23,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.componente.factinven.dto.ProductoDto;
 import com.componente.factinven.importers.ImporterExcelProducto;
+import com.componente.factinven.responses.ResponseGenerico;
 import com.componente.factinven.servicios.impl.ProductoServicioImpl;
+import com.componente.factinven.utils.ControllersUtils;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -54,28 +52,25 @@ public class ProductoController {
 	} 
 
 
-	@GetMapping("/resource")
-	public Map<String, Object> home() {
-		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("id", UUID.randomUUID().toString());
-		model.put("content", "Hello World");
-		return model;
-
-	}
-
 	@PutMapping("/producto")
-	public ResponseEntity<ProductoDto> actualizar(@RequestBody ProductoDto productoRequest) {
-		return new ResponseEntity<ProductoDto>(productoService.editarProducto(productoRequest), HttpStatus.OK);
+	public ResponseEntity<?> actualizar(@RequestBody ProductoDto productoRequest) {
+		 ResponseGenerico<ProductoDto> response = new ResponseGenerico<>();
+	     ProductoDto dto = productoService.guardarProducto(productoRequest);
+	     return ControllersUtils.repuestaGenericoExitoObject(response, dto);
 	};
 
-	@DeleteMapping("/producto")
-	public void delete(@RequestBody ProductoDto productoRequest) {
-		productoService.eliminarProducto(productoRequest);
+	@DeleteMapping("/producto/{id}")
+	public  ResponseEntity<?> delete(@PathVariable Integer id) {
+	    ResponseGenerico<Boolean> response = new ResponseGenerico<>();
+	     Boolean eliminado= productoService.eliminarProducto(id);
+		return ControllersUtils.repuestaGenericoExitoObject(response, eliminado);
 	};
 
 	@PostMapping("/producto")
-	public ResponseEntity<ProductoDto> crear(@RequestBody ProductoDto productoRequest) {
-		return new ResponseEntity<ProductoDto>(productoService.guardarProducto(productoRequest), HttpStatus.OK);
+	public ResponseEntity<?> crear(@RequestBody ProductoDto productoRequest) {
+        ResponseGenerico<ProductoDto> response = new ResponseGenerico<>();
+        ProductoDto dto = productoService.guardarProducto(productoRequest);
+        return ControllersUtils.repuestaGenericoExitoObject(response, dto);
 	};
 
 	@GetMapping("/producto")

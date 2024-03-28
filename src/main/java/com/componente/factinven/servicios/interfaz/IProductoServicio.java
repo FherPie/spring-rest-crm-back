@@ -16,7 +16,7 @@ public interface IProductoServicio {
 	
 	public ProductoDto findById(Integer idProducto );
 	
-	public abstract  void eliminarProducto(ProductoDto producto);
+	public abstract  boolean eliminarProducto(Integer id);
 	
 	public abstract  void borrarProductos();
 

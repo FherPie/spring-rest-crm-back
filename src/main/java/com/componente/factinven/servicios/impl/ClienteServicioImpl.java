@@ -76,8 +76,9 @@ public class ClienteServicioImpl  implements IClienteServicio {
 
 
 	@Override
-	public void eliminarCliente(Integer id) {
-		clienteRepositorio.deleteById(id);
+	public Boolean eliminarCliente(Integer id) {
+		 clienteRepositorio.deleteById(id);
+		 return true;
 	}
 
 

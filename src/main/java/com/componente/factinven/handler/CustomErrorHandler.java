@@ -28,20 +28,12 @@ public class CustomErrorHandler {
 	        ResponseGenerico<?> response = new ResponseGenerico<>();
 	        response.setCodigoRespuestaName(HttpStatus.BAD_REQUEST.name());
 	        response.setCodigoRespuestaValue(HttpStatus.BAD_REQUEST.value());
-	        response.setMensaje(EnumMessages.ERROR.name() + ":" + e.getMessage());
+	        response.setMensaje(EnumMessages.ERROR.getValor() + "Hay un problema con los dtos ingresados debe revisarlos o comuniquese con el administrador del sistema" );
 	        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 		}
 	   
 	   
-	   @ResponseStatus(HttpStatus.BAD_REQUEST)  
-	    @ExceptionHandler(DataIntegrityViolationException.class)
-	    public ResponseEntity<?> DataIntegrityViolationException( DataIntegrityViolationException e, WebRequest request) {
-	        ResponseGenerico<?> response = new ResponseGenerico<>();
-	        response.setCodigoRespuestaName(HttpStatus.BAD_REQUEST.name());
-	        response.setCodigoRespuestaValue(HttpStatus.BAD_REQUEST.value());
-	        response.setMensaje(EnumMessages.ERROR.name() + " Registro Relacionado : " + e.getMessage());
-	        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-		}
+
 	   
 //	    for (ConstraintViolation cv : e.getConstraintViolations()) {
 //	        report.addConstraintViolation(new RestConstraintViolation(
@@ -64,7 +56,7 @@ public class CustomErrorHandler {
 		   ResponseGenerico<?> response = new ResponseGenerico<>();
 	        response.setCodigoRespuestaName(HttpStatus.BAD_REQUEST.name());
 	        response.setCodigoRespuestaValue(HttpStatus.BAD_REQUEST.value());
-	        response.setMensaje(EnumMessages.ERROR.name() + " Data Incorrecta : " + violaciones.toString());
+	        response.setMensaje(EnumMessages.ERROR.getValor() + " Los datos son incorrectos o no tienen el formato adecuado ");
 	        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 		}
 	   
@@ -74,8 +66,19 @@ public class CustomErrorHandler {
 	        ResponseGenerico<?> response = new ResponseGenerico<>();
 	        response.setCodigoRespuestaName(HttpStatus.BAD_REQUEST.name());
 	        response.setCodigoRespuestaValue(HttpStatus.BAD_REQUEST.value());
-	        response.setMensaje(EnumMessages.ERROR.name() + " Cédula : " + e.getMessage());
+	        response.setMensaje(EnumMessages.ERROR.getValor() + " La Cédula no es correcta");
 	        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+		}
+	   
+	   @ResponseStatus(HttpStatus.BAD_REQUEST)  
+	    @ExceptionHandler(DataIntegrityViolationException.class)
+	    public ResponseEntity<?> DataIntegrityViolationException( DataIntegrityViolationException e, WebRequest request) {
+	        ResponseGenerico<?> response = new ResponseGenerico<>();
+	        response.setCodigoRespuestaName(HttpStatus.BAD_REQUEST.name());
+	        response.setCodigoRespuestaValue(HttpStatus.BAD_REQUEST.value());
+	       // response.setMensaje(EnumMessages.ERROR.getValor() + " Registro Relacionado : " + e.getMessage());
+	        response.setMensaje(EnumMessages.ERROR.getValor() + " Registro relacionado ");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 		}
 	   
 //	   @ExceptionHandler(Exception.class)
@@ -84,7 +87,7 @@ public class CustomErrorHandler {
 //		    ResponseGenerico<?> response = new ResponseGenerico<>();
 //	        response.setCodigoRespuestaName(HttpStatus.BAD_REQUEST.name());
 //	        response.setCodigoRespuestaValue(HttpStatus.BAD_REQUEST.value());
-//	        response.setMensaje(EnumMessages.ERROR.name() + ":" + ex.getMessage());
+//	        response.setMensaje(EnumMessages.ERROR.getValor() + ":" + ex.getMessage());
 //	        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);	   
 //	   }
 	}

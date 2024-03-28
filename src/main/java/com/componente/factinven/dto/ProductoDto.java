@@ -41,4 +41,12 @@ public class ProductoDto implements Serializable {
 		this.precioUnitario = precioUnitario;
 	}
 
+	public Double getPrecioCompra() {
+		return precioCompra;
+	}
+
+	public void setPrecioCompra(Double precioCompra) {
+		this.precioCompra = precioCompra;
+	}
+	
 }

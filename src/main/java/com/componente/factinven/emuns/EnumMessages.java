@@ -4,7 +4,7 @@ public enum EnumMessages {
 
    SUCCESS_SAVE("Guardado con Éxito"),
    DELETE_SAVE("Eliminado con Éxito"),
-   ERROR("ERROR SERVICE");
+   ERROR("Hubo un problema ");
 
    private String valor;
 

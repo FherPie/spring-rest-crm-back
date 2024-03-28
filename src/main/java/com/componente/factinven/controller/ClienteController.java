@@ -2,10 +2,7 @@ package com.componente.factinven.controller;
 
 import java.util.List;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,7 +21,6 @@ import com.componente.factinven.dto.ClienteDto;
 import com.componente.factinven.importers.ImporterExcelCliente;
 import com.componente.factinven.responses.ResponseGenerico;
 import com.componente.factinven.servicios.impl.ClienteServicioImpl;
-import com.componente.factinven.servicios.interfaz.IClienteServicio;
 import com.componente.factinven.utils.ControllersUtils;
 
 
@@ -53,8 +49,10 @@ public class ClienteController {
 	};
 
 	@DeleteMapping("/cliente/{id}")
-	public void delete(@PathVariable Integer id) {
-		clienteService.eliminarCliente(id);
+	public ResponseEntity<?> delete(@PathVariable Integer id) {
+	       ResponseGenerico<Boolean> response = new ResponseGenerico<>();
+		   Boolean eliminado= clienteService.eliminarCliente(id);
+	       return ControllersUtils.repuestaGenericoExitoObject(response, eliminado);
 	};
 
 	@PostMapping("/cliente")
