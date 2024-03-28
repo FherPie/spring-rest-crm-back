@@ -5,8 +5,6 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 
 import com.componente.factinven.dto.VentaResponse;
-import com.componente.factinven.entidades.Entrada;
-import com.componente.factinven.entidades.Salida;
 
 public interface IComprobanteServicio {
 
@@ -16,7 +14,7 @@ public interface IComprobanteServicio {
 	
 	public abstract  VentaResponse buscarComprobanteCodigo(String codigo);
 	
-	public abstract  void eliminarComprobante(Integer id);
+	public abstract  boolean eliminarComprobante(Integer id);
 	
 	public abstract  void borrarComprobantes();
 

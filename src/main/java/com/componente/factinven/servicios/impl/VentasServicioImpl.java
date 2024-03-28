@@ -213,10 +213,11 @@ public class VentasServicioImpl implements IComprobanteServicio {
 	}
 
 	@Override
-	public void eliminarComprobante(Integer id) {
+	public boolean eliminarComprobante(Integer id) {
          Venta venta= ventaRespositorio.findById(id).get();
          venta.removeDetails();
          ventaRespositorio.delete(venta);
+         return true;
 	}
 	
 	

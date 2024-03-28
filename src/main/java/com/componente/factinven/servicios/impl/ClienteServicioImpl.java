@@ -11,17 +11,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.componente.factinven.dto.ClienteDto;
-import com.componente.factinven.dto.ProductoDto;
 import com.componente.factinven.entidades.Cliente;
 import com.componente.factinven.entidades.Detalle;
-import com.componente.factinven.entidades.Persona;
-import com.componente.factinven.entidades.Producto;
 import com.componente.factinven.exceptions.CedulaEcException;
 import com.componente.factinven.mappers.ClienteMapper;
 import com.componente.factinven.mappers.DetalleMapper;
 import com.componente.factinven.repositorios.ClienteRepositorio;
 import com.componente.factinven.repositorios.DetalleRepositorio;
-import com.componente.factinven.repositorios.PersonaRepositorio;
 import com.componente.factinven.servicios.interfaz.IClienteServicio;
 import com.componente.factinven.utils.ValidadorResponse;
 import com.componente.factinven.utils.ValidarIdenttificacion;
@@ -32,11 +28,7 @@ public class ClienteServicioImpl  implements IClienteServicio {
 
 	@Autowired
 	private ClienteRepositorio clienteRepositorio;
-	
 
-	@Autowired
-	private PersonaRepositorio personaRepositorio;
-	
 	@Autowired
 	private ClienteMapper clienteMapper;
 	

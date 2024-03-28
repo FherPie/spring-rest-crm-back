@@ -22,7 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.componente.factinven.dto.VentaResponse;
 import com.componente.factinven.importers.ImporterExcelVenta;
+import com.componente.factinven.responses.ResponseGenerico;
 import com.componente.factinven.servicios.impl.VentasServicioImpl;
+import com.componente.factinven.utils.ControllersUtils;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -47,27 +49,70 @@ public class VentasController {
 	public VentasController(ImporterExcelVenta importerExcelVenta) {
 		this.importerExcelVenta=importerExcelVenta;
 	} 
+	
+	@PostMapping("/guardarVenta")
+	public ResponseEntity<?> crear(@RequestBody VentaResponse ventaRequest) {
+        ResponseGenerico<VentaResponse> response = new ResponseGenerico<>();
+        VentaResponse dto = ventaService.guardarComprobante(ventaRequest);
+        return ControllersUtils.repuestaGenericoExitoObject(response, dto);
+      };
 
 
 	@PutMapping("/actualizarVenta")
-	public ResponseEntity<VentaResponse> actualizar(@RequestBody VentaResponse ventaRequest) {
-		return new ResponseEntity<VentaResponse>(ventaService.actualizarComprobante(ventaRequest), HttpStatus.OK);
+	public ResponseEntity<?> actualizar(@RequestBody VentaResponse ventaRequest) {
+        ResponseGenerico<VentaResponse> response = new ResponseGenerico<>();
+        VentaResponse dto = ventaService.actualizarComprobante(ventaRequest);
+        return ControllersUtils.repuestaGenericoExitoObject(response, dto);
+		//return new ResponseEntity<VentaResponse>(ventaService.actualizarComprobante(ventaRequest), HttpStatus.OK);
 	};
 
 	@DeleteMapping("/borrarVenta/{id}")
-	public void delete(@PathVariable Integer id) {
-		ventaService.eliminarComprobante(id);
+	public ResponseEntity<?> delete(@PathVariable Integer id) {
+	     ResponseGenerico<Boolean> response = new ResponseGenerico<>();
+		 Boolean eliminado= ventaService.eliminarComprobante(id);
+	     return ControllersUtils.repuestaGenericoExitoObject(response, eliminado);
 	};
 
-	@PostMapping("/guardarVenta")
-	public ResponseEntity<VentaResponse> crear(@RequestBody VentaResponse ventaRequest) {
-		return new ResponseEntity<VentaResponse>((VentaResponse) ventaService.guardarComprobante(ventaRequest), HttpStatus.OK);
-	};
+
 
 	@GetMapping("/listarVenta")
-	public List<VentaResponse> listarTodos() {
-		return ventaService.findAll();
+	public ResponseEntity<?> listarTodos() {
+	     ResponseGenerico<List<VentaResponse>> response = new ResponseGenerico<>();
+	     List<VentaResponse> ventasListado= ventaService.findAll();
+		 return ControllersUtils.repuestaGenericoExitoList(response, ventasListado);
 	}
+	
+	
+	@PostMapping("/addDetalle")
+	public ResponseEntity<?> addDetalle(@RequestBody VentaResponse ventaRequest) {
+	     ResponseGenerico<VentaResponse> response = new ResponseGenerico<>();
+	     VentaResponse venta= ventaService.addDetalle(ventaRequest);
+		 return ControllersUtils.repuestaGenericoExitoObject(response, venta);
+		//return new ResponseEntity<VentaResponse>((VentaResponse) ventaService.addDetalle(ventaRequest), HttpStatus.OK);
+	}
+	
+	@GetMapping("/editDetalle")
+	public ResponseEntity<?> editDetalle(@RequestBody VentaResponse ventaRequest) {
+		 ResponseGenerico<VentaResponse> response = new ResponseGenerico<>();
+	     VentaResponse venta= ventaService.getVenta();
+		 return ControllersUtils.repuestaGenericoExitoObject(response, venta);
+		 
+		//return new ResponseEntity<VentaResponse>((VentaResponse) ventaService.getVenta(), HttpStatus.OK);
+	}
+
+	
+	@GetMapping("/deleteDetalle")
+	public ResponseEntity<?> deleteDetalle(@RequestBody VentaResponse ventaRequest) {
+		 ResponseGenerico<VentaResponse> response = new ResponseGenerico<>();
+	     VentaResponse venta= ventaService.getVenta();
+		 return ControllersUtils.repuestaGenericoExitoObject(response, venta);
+		//return new ResponseEntity<VentaResponse>((VentaResponse) ventaService.getVenta(), HttpStatus.OK);
+	}
+	
+	
+	
+	
+	
 	
 	
 	@GetMapping("/ventaConCodigoContiene")
@@ -115,19 +160,5 @@ public class VentasController {
 	}
 	
 	
-	@PostMapping("/addDetalle")
-	public ResponseEntity<VentaResponse> addDetalle(@RequestBody VentaResponse ventaRequest) {
-		return new ResponseEntity<VentaResponse>((VentaResponse) ventaService.addDetalle(ventaRequest), HttpStatus.OK);
-	}
-	
-	@GetMapping("/editDetalle")
-	public ResponseEntity<VentaResponse> editDetalle(@RequestBody VentaResponse ventaRequest) {
-		return new ResponseEntity<VentaResponse>((VentaResponse) ventaService.getVenta(), HttpStatus.OK);
-	}
 
-	
-	@GetMapping("/deleteDetalle")
-	public ResponseEntity<VentaResponse> deleteDetalle(@RequestBody VentaResponse ventaRequest) {
-		return new ResponseEntity<VentaResponse>((VentaResponse) ventaService.getVenta(), HttpStatus.OK);
-	}
 }

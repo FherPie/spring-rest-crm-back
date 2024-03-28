@@ -39,6 +39,13 @@ public class ClienteController {
 	public ClienteController(ImporterExcelCliente importerExcelCliente) {
 		this.importerExcelCliente=importerExcelCliente;
 	} 
+	
+	@PostMapping("/cliente")
+	public ResponseEntity<?> crear(@RequestBody ClienteDto clienteRequest) throws Exception {
+        ResponseGenerico<ClienteDto> response = new ResponseGenerico<>();
+        ClienteDto dto = clienteService.guardarCliente(clienteRequest);
+        return ControllersUtils.repuestaGenericoExitoObject(response, dto);
+	};
 
 	@PutMapping("/cliente")
 	public ResponseEntity<?> actualizar(@RequestBody ClienteDto clienteRequest) throws Exception {
@@ -55,17 +62,13 @@ public class ClienteController {
 	       return ControllersUtils.repuestaGenericoExitoObject(response, eliminado);
 	};
 
-	@PostMapping("/cliente")
-	public ResponseEntity<?> crear(@RequestBody ClienteDto clienteRequest) throws Exception {
-        ResponseGenerico<ClienteDto> response = new ResponseGenerico<>();
-        ClienteDto dto = clienteService.guardarCliente(clienteRequest);
-        return ControllersUtils.repuestaGenericoExitoObject(response, dto);
-	};
 
 	@GetMapping("/cliente")
 	public List<ClienteDto> listarTodos() {
 		return clienteService.findAll();
 	}
+	
+	
 	
 	@GetMapping("/clienteConNombreContiene")
 	public List<ClienteDto> listarTodosViaNombre(@RequestParam String apellidos) {
