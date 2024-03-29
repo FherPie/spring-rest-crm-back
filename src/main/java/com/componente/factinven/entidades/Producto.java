@@ -28,7 +28,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Producto extends EntidadPadre implements Serializable {
+public class Producto extends AuditedEntity implements Serializable {
 
 	private static final long serialVersionUID = -7823071596492058940L;
 	

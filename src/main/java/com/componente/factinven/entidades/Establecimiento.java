@@ -1,16 +1,11 @@
 package com.componente.factinven.entidades;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,10 +20,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Establecimiento extends EntidadPadre implements Serializable {
+public class Establecimiento extends AuditedEntity implements Serializable {
 
 	private static final long serialVersionUID = -3238892727484412795L;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
@@ -40,5 +34,4 @@ public class Establecimiento extends EntidadPadre implements Serializable {
 	private String codPostal;
 	private String email;
 	private String webSite;
-	private Integer userId;
 }

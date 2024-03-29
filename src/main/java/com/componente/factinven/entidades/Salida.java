@@ -25,7 +25,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Salida extends EntidadPadre implements Serializable {
+public class Salida extends AuditedEntity implements Serializable {
 
 	private static final long serialVersionUID = 4664298389131326855L;
 
