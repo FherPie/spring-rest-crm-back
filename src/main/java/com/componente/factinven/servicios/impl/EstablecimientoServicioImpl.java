@@ -41,8 +41,8 @@ public class EstablecimientoServicioImpl  {
 	}
 
 	
-	public EstablecimientoDto findById(Integer id) {
-		return establecimientoMapper.toDto(establecimientoRespositorio.findById(id).get());
+	public EstablecimientoDto findByUserId(Integer id) {
+		return establecimientoMapper.toDto(establecimientoRespositorio.findByCreatedBy(id));
 		//return new VentaResponse(comprobanteRespositorio.findById(id).get());
 	}
 	

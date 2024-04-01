@@ -1,6 +1,7 @@
 package com.componente.factinven.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +28,7 @@ public class EstablecimientoController {
 	EstablecimientoServicioImpl establecimientoService;
 	
 	
-	@PostMapping("/establecimiento")
+	@PostMapping("/establishment")
 	public ResponseEntity<?> guardar(@RequestBody EstablecimientoDto establecimientoDto) {
         ResponseGenerico<EstablecimientoDto> response = new ResponseGenerico<>();
         EstablecimientoDto dto = establecimientoService.guardar(establecimientoDto);
@@ -34,14 +36,14 @@ public class EstablecimientoController {
       };
 
 
-	@PutMapping("/establecimiento")
+	@PutMapping("/establishment")
 	public ResponseEntity<?> actualizar(@RequestBody EstablecimientoDto establecimientoDto) {
         ResponseGenerico<EstablecimientoDto> response = new ResponseGenerico<>();
         EstablecimientoDto dto = establecimientoService.actualizar(establecimientoDto);
         return ControllersUtils.repuestaGenericoExitoObject(response, dto);
 	};
 
-	@DeleteMapping("/establecimiento/{id}")
+	@DeleteMapping("/establishment/{id}")
 	public ResponseEntity<?> borrar(@PathVariable Integer id) {
 	     ResponseGenerico<Boolean> response = new ResponseGenerico<>();
 		 Boolean eliminado= establecimientoService.eliminar(id);
@@ -50,7 +52,7 @@ public class EstablecimientoController {
 
 
 
-	@GetMapping("/establecimiento")
+	@GetMapping("/establishment")
 	public ResponseEntity<?> listar() {
 	     ResponseGenerico<List<EstablecimientoDto>> response = new ResponseGenerico<>();
 	     List<EstablecimientoDto> ventasListado= establecimientoService.findAll();
@@ -60,10 +62,11 @@ public class EstablecimientoController {
 	
 	
 
-	@GetMapping("/establecimiento/{id}")
-	public ResponseEntity<?> findById(@PathVariable Integer id) {
+	@GetMapping("/establishmentuser")
+	public ResponseEntity<?> findById(@RequestHeader(name = "userId", required = false) Integer userId) {
         ResponseGenerico<EstablecimientoDto> response = new ResponseGenerico<>();
-        EstablecimientoDto dto = establecimientoService.findById(id);
+       System.out.println("Hello"+userId);
+        EstablecimientoDto dto = establecimientoService.findByUserId(userId);
         return ControllersUtils.repuestaGenericoExitoObject(response, dto);		
 	}
 

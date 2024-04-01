@@ -27,6 +27,7 @@ public class Establecimiento extends AuditedEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String nombre;
+	private String identificacion;
 	private String direccion;
 	private String ciudad;
 	private String telefono;

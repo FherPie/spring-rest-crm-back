@@ -9,6 +9,9 @@ import com.componente.factinven.entidades.Establecimiento;
 public interface EstablecimientoRepositorio extends JpaRepository<Establecimiento, Integer> {
 
 
+	
+	Establecimiento findByCreatedBy(Integer userId);
+	
 //    @Transactional(readOnly = true)
 //	public List<Proveedor> findByNombreContainingIgnoreCase(String nombre);
 //
