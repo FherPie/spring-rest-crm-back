@@ -1,9 +1,13 @@
 package com.componente.factinven.controller;
 
+import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +17,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.componente.factinven.dto.EstablecimientoDto;
+import com.componente.factinven.entidades.ImageModel;
 import com.componente.factinven.responses.ResponseGenerico;
 import com.componente.factinven.servicios.impl.EstablecimientoServicioImpl;
 import com.componente.factinven.utils.ControllersUtils;
@@ -28,14 +35,15 @@ public class EstablecimientoController {
 	EstablecimientoServicioImpl establecimientoService;
 	
 	
-	@PostMapping("/establishment")
-	public ResponseEntity<?> guardar(@RequestBody EstablecimientoDto establecimientoDto) {
+	@PostMapping(value="/establishmentuser", consumes= {MediaType.MULTIPART_FORM_DATA_VALUE})
+	public ResponseEntity<?> guardar(@RequestPart("establecimientoDto") EstablecimientoDto establecimientoDto,
+			@RequestPart("imageFile") MultipartFile[] file ) {
         ResponseGenerico<EstablecimientoDto> response = new ResponseGenerico<>();
-        EstablecimientoDto dto = establecimientoService.guardar(establecimientoDto);
+        EstablecimientoDto dto = establecimientoService.guardar(establecimientoDto, file);
         return ControllersUtils.repuestaGenericoExitoObject(response, dto);
       };
 
-
+     
 	@PutMapping("/establishment")
 	public ResponseEntity<?> actualizar(@RequestBody EstablecimientoDto establecimientoDto) {
         ResponseGenerico<EstablecimientoDto> response = new ResponseGenerico<>();

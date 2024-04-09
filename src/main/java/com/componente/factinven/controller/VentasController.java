@@ -109,12 +109,6 @@ public class VentasController {
 		//return new ResponseEntity<VentaResponse>((VentaResponse) ventaService.getVenta(), HttpStatus.OK);
 	}
 	
-	
-	
-	
-	
-	
-	
 	@GetMapping("/ventaConCodigoContiene")
 	public VentaResponse listarTodosxNombreQueContenga(@RequestParam String codigo) {
 		return (VentaResponse) ventaService.buscarComprobanteCodigo(codigo);
@@ -148,7 +142,6 @@ public class VentasController {
 
 	@PostMapping("/venta/uploadFile/{pathName}")
 	public String handleFileUpload(@RequestPart(required = true) MultipartFile file, @PathVariable String pathName) {
-
 		importerExcelVenta.LeerExcel(file);
 		return "You successfully uploaded " + file.getOriginalFilename() + "!";
 	}

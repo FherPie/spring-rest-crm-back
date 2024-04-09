@@ -1,6 +1,7 @@
 package com.componente.factinven.dto;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import lombok.Data;
 import lombok.Getter;
@@ -21,4 +22,5 @@ public class EstablecimientoDto  implements Serializable {
 	private String codPostal;
 	private String email;
 	private String webSite;
+	private Set<FileHandle>  imageEstablishment;
 }

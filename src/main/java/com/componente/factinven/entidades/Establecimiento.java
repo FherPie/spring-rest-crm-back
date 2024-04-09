@@ -1,11 +1,17 @@
 package com.componente.factinven.entidades;
 
 import java.io.Serializable;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,4 +41,14 @@ public class Establecimiento extends AuditedEntity implements Serializable {
 	private String codPostal;
 	private String email;
 	private String webSite;
+	
+	@ManyToMany(fetch= FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name="establishment_images",
+	  joinColumns = {
+			  @JoinColumn(name="establishment_id")
+	  }, 
+	  inverseJoinColumns ={
+		  @JoinColumn(name="image_id")	  
+	  })
+	private Set<ImageModel> imageEstablishment;
 }
