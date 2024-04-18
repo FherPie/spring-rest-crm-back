@@ -1,10 +1,6 @@
 package com.componente.factinven.controller;
 
-import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -22,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.componente.factinven.dto.EstablecimientoDto;
-import com.componente.factinven.entidades.ImageModel;
 import com.componente.factinven.responses.ResponseGenerico;
 import com.componente.factinven.servicios.impl.EstablecimientoServicioImpl;
 import com.componente.factinven.utils.ControllersUtils;
