@@ -25,5 +25,6 @@ public class EstablecimientoDto  implements Serializable {
 	private String codPostal;
 	private String email;
 	private String webSite;
+	private String identificacion;
 	private Set<FileHandle>  imageEstablishment;
 }

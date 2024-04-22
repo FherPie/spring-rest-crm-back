@@ -9,5 +9,5 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public abstract class IDedDTO extends AuditedDTO{
 
-    private Long id;
+    private Integer id;
 }

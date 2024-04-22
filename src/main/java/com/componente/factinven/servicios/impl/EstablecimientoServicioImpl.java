@@ -13,9 +13,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.componente.factinven.dto.EstablecimientoDto;
 import com.componente.factinven.entidades.Establecimiento;
 import com.componente.factinven.entidades.ImageModel;
-import com.componente.factinven.entidades.Venta;
 import com.componente.factinven.mappers.EstablecimientoMapper;
 import com.componente.factinven.repositorios.EstablecimientoRepositorio;
+import com.componente.factinven.utils.ServiciosUtils;
+
+
 
 @Service
 @Transactional
@@ -27,8 +29,10 @@ public class EstablecimientoServicioImpl  {
 	
 	@Autowired
 	private EstablecimientoMapper establecimientoMapper;
+	
 
-	public EstablecimientoDto guardar(EstablecimientoDto establecimientoDto, MultipartFile[] files ) {	
+	public EstablecimientoDto guardar(EstablecimientoDto establecimientoDto, MultipartFile[] files ) {
+		
 		Establecimiento establecimiento =establecimientoMapper.toEntity(establecimientoDto);
         try {
 			Set<ImageModel> images= uploadImage(files);
@@ -63,8 +67,8 @@ public class EstablecimientoServicioImpl  {
 
 	
 	public EstablecimientoDto findByUserId(Integer id) {
+		id= ServiciosUtils.userLoggedId();
 		return establecimientoMapper.toDto(establecimientoRespositorio.findByCreatedBy(id));
-		//return new VentaResponse(comprobanteRespositorio.findById(id).get());
 	}
 	
 	

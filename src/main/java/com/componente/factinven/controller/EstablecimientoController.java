@@ -68,7 +68,7 @@ public class EstablecimientoController {
 	@GetMapping("/establishmentuser")
 	public ResponseEntity<?> findById(@RequestHeader(name = "userId", required = false) Integer userId) {
         ResponseGenerico<EstablecimientoDto> response = new ResponseGenerico<>();
-       System.out.println("Hello"+userId);
+       //System.out.println("Hello"+userId);
         EstablecimientoDto dto = establecimientoService.findByUserId(userId);
         return ControllersUtils.repuestaGenericoExitoObject(response, dto);		
 	}
