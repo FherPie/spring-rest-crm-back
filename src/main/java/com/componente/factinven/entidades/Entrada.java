@@ -1,14 +1,10 @@
 package com.componente.factinven.entidades;
 
-import java.io.Serializable;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,17 +18,13 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Entrada extends AuditedEntity implements Serializable {
-
-	private static final long serialVersionUID = 4664298389131326855L;
+public class Entrada extends AuditedEntity  {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	//@NotNull
-	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-	private DetalleVenta detalleComprobante;
-	
-
+	@NotNull
+	private Double precio;
+    private String concepto;
 
 }

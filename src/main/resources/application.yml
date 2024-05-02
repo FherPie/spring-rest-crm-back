@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/factInventdb?allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
     username: root
-    password: root
+    password:
     driver-class-name: com.mysql.cj.jdbc.Driver
   main:
    allow-bean-definition-overriding: true
