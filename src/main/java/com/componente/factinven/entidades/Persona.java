@@ -25,9 +25,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Table(uniqueConstraints=
-{@UniqueConstraint(columnNames = "identificacion", name = "IdentificacionUnica"),
-@UniqueConstraint(columnNames = "nombreUsuario", name = "NombreUsuarioUnico")})
+@Table
 @Data
 @Builder
 @AllArgsConstructor

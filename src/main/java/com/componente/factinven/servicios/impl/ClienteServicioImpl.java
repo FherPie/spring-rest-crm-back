@@ -41,8 +41,8 @@ public class ClienteServicioImpl  implements IClienteServicio {
 	
 	@Override
 	public ClienteDto guardarCliente(ClienteDto clienteDto) throws Exception {
-		String identificacion= clienteDto.getIdentificacion();
-		validarCedulaCliente(identificacion);
+		//String identificacion= clienteDto.getIdentificacion();
+		//validarCedulaCliente(identificacion);
 		Cliente cliente = clienteMapper.toEntity(clienteDto);
 		//clienteGuardar.setCategoria(cliente.getCategoria());
 	    return new ClienteDto(clienteRepositorio.save(cliente));
@@ -83,8 +83,8 @@ public class ClienteServicioImpl  implements IClienteServicio {
 
 	@Override
 	public ClienteDto editarCliente(ClienteDto clienteDto) throws Exception {
-		String identificacion= clienteDto.getIdentificacion();
-		validarCedulaCliente(identificacion);
+		//String identificacion= clienteDto.getIdentificacion();
+		//validarCedulaCliente(identificacion);
 		clienteDto.setListaPreguntas(new ArrayList<>());
 		Cliente cliente = clienteMapper.toEntity(clienteDto);
 		//clienteGuardar.setCategoria(cliente.getCategoria());
