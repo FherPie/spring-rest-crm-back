@@ -17,6 +17,7 @@ public interface EntradasRespository extends JpaRepository<Entrada, Integer> {
     List<Entrada> entradasMes(@Param("createdMonth") int createdMonth);
     
     
-    
+    @Query("Select (entrada) from Entrada entrada where entrada.cliente.id = :idCliente")
+    List<Entrada> pagosCliente(@Param("idCliente") int createdMonth);
     
 }

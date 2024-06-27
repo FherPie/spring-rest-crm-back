@@ -3,6 +3,7 @@ package com.componente.factinven.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.componente.factinven.dto.ClienteDto;
+import com.componente.factinven.dto.EntradaDto;
+import com.componente.factinven.dto.VentaResponse;
 import com.componente.factinven.importers.ImporterExcelCliente;
 import com.componente.factinven.responses.ResponseGenerico;
 import com.componente.factinven.servicios.impl.ClienteServicioImpl;
@@ -46,6 +49,22 @@ public class ClienteController {
         ClienteDto dto = clienteService.guardarCliente(clienteRequest);
         return ControllersUtils.repuestaGenericoExitoObject(response, dto);
 	};
+	
+
+	@PostMapping("/crearEntradaCliente")
+	public ResponseEntity<?> crear(@RequestBody EntradaDto entradaDto){
+		EntradaDto dto= clienteService.crearEntradaCliente(entradaDto);
+		return new ResponseEntity<EntradaDto>(dto, HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("/listarPagosCliente")
+	public ResponseEntity<?> listarPagosdeClientes(@PathVariable Integer id){
+		  ResponseGenerico<List<EntradaDto>> response = new ResponseGenerico<>();
+		  List<EntradaDto> ventasListado= clienteService.listarPagostClientes(id);
+		return ControllersUtils.repuestaGenericoExitoList(response, ventasListado);
+	}; 
+	
 
 	@PutMapping("/cliente")
 	public ResponseEntity<?> actualizar(@RequestBody ClienteDto clienteRequest) throws Exception {

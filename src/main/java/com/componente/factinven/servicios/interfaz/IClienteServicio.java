@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 
 import com.componente.factinven.dto.ClienteDto;
+import com.componente.factinven.dto.EntradaDto;
 import com.componente.factinven.entidades.Cliente;
 
 public interface IClienteServicio {
@@ -26,4 +27,8 @@ public interface IClienteServicio {
 	public ClienteDto findById(Integer idCliente );
 
 	public abstract  Page<Cliente> listarClientes(int page, int size);
+	
+	public EntradaDto crearEntradaCliente(EntradaDto entradaBody);
+	
+	public List<EntradaDto> listarPagostClientes(Integer id);
 }

@@ -1,6 +1,7 @@
 package com.componente.factinven.servicios.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,13 +12,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.componente.factinven.dto.ClienteDto;
+import com.componente.factinven.dto.EntradaDto;
 import com.componente.factinven.entidades.Cliente;
 import com.componente.factinven.entidades.Detalle;
+import com.componente.factinven.entidades.Entrada;
 import com.componente.factinven.exceptions.CedulaEcException;
 import com.componente.factinven.mappers.ClienteMapper;
 import com.componente.factinven.mappers.DetalleMapper;
+import com.componente.factinven.mappers.EntradaMapper;
 import com.componente.factinven.repositorios.ClienteRepositorio;
 import com.componente.factinven.repositorios.DetalleRepositorio;
+import com.componente.factinven.repositorios.EntradasRespository;
 import com.componente.factinven.servicios.interfaz.IClienteServicio;
 import com.componente.factinven.utils.ValidadorResponse;
 import com.componente.factinven.utils.ValidarIdenttificacion;
@@ -37,6 +42,12 @@ public class ClienteServicioImpl  implements IClienteServicio {
 	
 	@Autowired
 	private DetalleMapper detalleMapper;
+	
+	@Autowired
+	private EntradasRespository entradaRepositorio;
+	
+	@Autowired
+	private EntradaMapper entradaMapper;
 	
 	
 	@Override
@@ -133,5 +144,25 @@ public class ClienteServicioImpl  implements IClienteServicio {
 		//clienteGuardar.setCategoria(cliente.getCategoria());
 	    return cliente;
 	}
+
+
+	//Pagos de Clientes
+	
+	@Override
+	public EntradaDto crearEntradaCliente(EntradaDto entradaDto) {
+		Entrada entrada = entradaMapper.toEntity(entradaDto);
+		entrada.setCreatedDate(new Date());
+		return entradaMapper.toDto(entradaRepositorio.save(entrada));
+	}
+
+
+	@Override
+	public List<EntradaDto> listarPagostClientes(Integer id) {
+		List<EntradaDto> lista=entradaMapper.toDto(entradaRepositorio.pagosCliente(id));
+		return lista;
+	}
+	
+	
+	
 
 }
