@@ -58,7 +58,7 @@ public class ClienteController {
 	}
 	
 	
-	@GetMapping("/listarPagosCliente")
+	@GetMapping("/listarPagosCliente/{id}")
 	public ResponseEntity<?> listarPagosdeClientes(@PathVariable Integer id){
 		  ResponseGenerico<List<EntradaDto>> response = new ResponseGenerico<>();
 		  List<EntradaDto> ventasListado= clienteService.listarPagostClientes(id);
