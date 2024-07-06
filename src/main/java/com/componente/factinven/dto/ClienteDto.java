@@ -30,7 +30,7 @@ public class ClienteDto implements Serializable{
     private Integer idPersona;
     private Integer id;
 	private String nombresCompletos;
-	private List<DetalleDto> listaPreguntas;
+	private List<ClienteRespuestasDto> listaClienteRespuestasDto;
 	private String referidoPor;
 	private String ocupacion;
     

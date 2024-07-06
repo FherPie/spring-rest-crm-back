@@ -106,9 +106,9 @@ public class ClienteController {
 	}
 	
 	
-	@GetMapping("/instanciarCliente")
-	public ClienteDto instanciarCliente() {
-		return clienteService.instanciarCliente();
-	}
+//	@GetMapping("/obtenerPreguntasCliente")
+//	public ClienteDto instanciarCliente() {
+//		return clienteService.instanciarPreguntasCliente();
+//	}
 
 }

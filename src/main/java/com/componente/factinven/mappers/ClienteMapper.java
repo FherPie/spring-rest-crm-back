@@ -22,6 +22,7 @@ public interface ClienteMapper extends EntityMapper<ClienteDto, Cliente> {
 	@Mapping(target = "persona.identificacion", source = "identificacion")
 	@Mapping(target = "persona.id", source = "idPersona")
 	@Mapping(target = "persona.fechaNacimiento", source = "fechaNacimiento")
+	@Mapping(target = "listaClienteRepuestas", source="listaClienteRespuestasDto")
 	Cliente toEntity(ClienteDto dto);
 	
 	@Override
@@ -35,6 +36,7 @@ public interface ClienteMapper extends EntityMapper<ClienteDto, Cliente> {
 	@Mapping(target = "nombresCompletos", source = "persona.apellidos")
 	@Mapping(target = "idPersona", source = "persona.id")
 	@Mapping(target = "fechaNacimiento", source = "persona.fechaNacimiento")
+	@Mapping(target="listaClienteRespuestasDto", source="listaClienteRepuestas")
 	ClienteDto toDto(Cliente entity);
 
 	@Override
