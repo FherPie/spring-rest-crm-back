@@ -143,7 +143,10 @@ public class ClienteServicioImpl  implements IClienteServicio {
 	@Override
 	public ClienteDto findById(Integer idCliente) {
 		Cliente cliente = this.clienteRepositorio.findById(idCliente).get();
-		return clienteMapper.toDto(cliente);
+		//cliente.getListaClienteRepuestas();
+		ClienteDto clienteDto= clienteMapper.toDto(cliente);
+		clienteDto = instanciarPreguntasCliente(clienteDto);
+		return clienteDto;
 	}
 
 
@@ -158,7 +161,7 @@ public class ClienteServicioImpl  implements IClienteServicio {
 	
 	//Preguntas Cliente
 	public ClienteDto instanciarPreguntasCliente(ClienteDto clienteDto) {
-		ClienteDto cliente = new ClienteDto();
+		ClienteDto clienteuyhh = new ClienteDto();
 		List<ClienteRespuestasDto> listRespuestaDto= new ArrayList<>();
 		List<Detalle> listDetalle= new ArrayList<>();
 		listDetalle.addAll(detalleRepositorio.findByMaestroCodigo("ANTF"));
@@ -169,7 +172,7 @@ public class ClienteServicioImpl  implements IClienteServicio {
 		    clienteDto.setListaClienteRespuestasDto(this.clienteRepuestasDtoNuevas(listDetalle));
 		}else {//preguntas respondidas
 			//Preguntas de clientes respondida con anterioridad.
-			listaClientesRespuestaDto= clienteRespuestasMapper.toDto(clienteRespuestaRepositorio.encontrarClientesRepuestas(cliente.getId()));
+			listaClientesRespuestaDto= clienteRespuestasMapper.toDto(clienteRespuestaRepositorio.encontrarClientesRepuestas(clienteDto.getId()));
 			//Preguntas de clientes respondida con anterioridad ID
 			List<Integer> preguntasdelCliente=  listaClientesRespuestaDto.stream().map(element -> element.getPregunta().getId()).collect(Collectors.toList());
             
@@ -178,11 +181,12 @@ public class ClienteServicioImpl  implements IClienteServicio {
 				//iterar sobre las preguntas del cliente y eliminar del array de preguntas existentes
 			  	for (Iterator iterator = preguntasdelCliente.iterator(); iterator.hasNext();) {
 					Integer integer = (Integer) iterator.next();
-					Integer preguntaEliminar= preguntasdelCliente.get(integer);
-				    listDetalle.removeIf(element-> element.getId()==preguntaEliminar);
+					//Integer preguntaEliminar= preguntasdelCliente.stream().filter(element -> element==integer).findFirst().get();
+				    listDetalle.removeIf(element-> element.getId()==integer);
 				}
+			  	clienteDto.setListaClienteRespuestasDto(this.clienteRepuestasDtoNuevas(listDetalle));
 			}
-		    clienteDto.setListaClienteRespuestasDto(this.clienteRepuestasDtoNuevas(listDetalle));
+ 		    //clienteDto.getListaClienteRespuestasDto().addAll(listaClientesRespuestaDto);
 		}
 		return clienteDto;
 	}
