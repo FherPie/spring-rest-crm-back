@@ -105,6 +105,12 @@ public class ClienteController {
 		return "You successfully uploaded " + file.getOriginalFilename() + "!";
 	}
 	
+	@GetMapping("/presupuestosCliente/{clienteId}")
+	public List<VentaResponse> presupuestosByClienteId(@PathVariable Integer clienteId){
+	   return clienteService.listarPresupuestoCliente(clienteId);
+	}
+	 
+	
 	
 //	@GetMapping("/obtenerPreguntasCliente")
 //	public ClienteDto instanciarCliente() {

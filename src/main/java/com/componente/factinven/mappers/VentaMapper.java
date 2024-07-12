@@ -22,7 +22,7 @@ public interface VentaMapper extends EntityMapper<VentaResponse, Venta> {
 	@Mapping(target = "idCliente", source = "cliente")
 	@Mapping(target = "detallesVentaDto", source = "detallesVenta")
 	VentaResponse toDto(Venta entity);
-
+  
 	@Override
 	List<Venta> toEntity(List<VentaResponse> dtoList);
 

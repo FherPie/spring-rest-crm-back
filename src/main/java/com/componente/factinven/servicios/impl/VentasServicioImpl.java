@@ -166,7 +166,7 @@ public class VentasServicioImpl implements IComprobanteServicio {
 			for (DetalleVenta detalle : listaDetalles) {
 				total = total.add(new BigDecimal(detalle.getCantidad()).multiply(detalle.getPrecioUnitario()));
 			}
-			venta.setTotal(df.format(total));
+			//venta.setTotal(df.format(total));
 			listaRetorna.add(venta);
 		});
 		return listaRetorna;
@@ -197,7 +197,7 @@ public class VentasServicioImpl implements IComprobanteServicio {
 			for (DetalleVenta detalle : listaDetalles) {
 				total = total.add(new BigDecimal(detalle.getCantidad()).multiply(detalle.getPrecioUnitario()));
 			}
-			venta.setTotal(df.format(total));
+			//venta.setTotal(df.format(total));
 			//venta.setTotal(new BigDecimal(1000));
 			// List<Detalle> lista= detalleComprobanteRespositorio.fin;
 			listaRetorna.add(venta);

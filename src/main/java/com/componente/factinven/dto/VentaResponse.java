@@ -1,5 +1,6 @@
 package com.componente.factinven.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -19,7 +20,7 @@ public class VentaResponse {
 	private String codigo;
 	private Integer idAlmacen;
 	private String formaPago;
-	private String total;
+	private BigDecimal total;
 	private String nombreCliente;
 	private String fechaFormat;
 	private String numeroFactura;
@@ -29,6 +30,22 @@ public class VentaResponse {
 	public VentaResponse() {}
 	
 	
+	
+	
+	public VentaResponse(Integer id, LocalDateTime fechayHora, String estado, String codigo,
+			String formaPago, BigDecimal total) {
+		super();
+		this.id = id;
+		this.fechayHora = fechayHora;
+		this.estado = estado;
+		this.codigo = codigo;
+		this.formaPago = formaPago;
+		this.total = total;
+	}
+
+
+
+
 	public void addDetail(DetalleVentaDto detalleVenta) {
 		this.detallesVentaDto.add(detalleVenta);
 		detalleVenta.setVenta(this);
@@ -107,10 +124,10 @@ public class VentaResponse {
 	public void setFormaPago(String formaPago) {
 		this.formaPago = formaPago;
 	}
-	public String getTotal() {
+	public BigDecimal getTotal() {
 		return total;
 	}
-	public void setTotal(String total) {
+	public void setTotal(BigDecimal total) {
 		this.total = total;
 	}
 	public String getNombreCliente() {

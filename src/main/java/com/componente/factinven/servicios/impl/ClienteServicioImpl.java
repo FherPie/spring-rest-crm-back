@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.componente.factinven.dto.ClienteDto;
 import com.componente.factinven.dto.ClienteRespuestasDto;
 import com.componente.factinven.dto.EntradaDto;
+import com.componente.factinven.dto.VentaResponse;
 import com.componente.factinven.entidades.Cliente;
 import com.componente.factinven.entidades.ClienteRespuestas;
 import com.componente.factinven.entidades.Detalle;
@@ -25,10 +26,12 @@ import com.componente.factinven.mappers.ClienteMapper;
 import com.componente.factinven.mappers.ClienteRespuestasMapper;
 import com.componente.factinven.mappers.DetalleMapper;
 import com.componente.factinven.mappers.EntradaMapper;
+import com.componente.factinven.mappers.VentaMapper;
 import com.componente.factinven.repositorios.ClienteRepositorio;
 import com.componente.factinven.repositorios.ClienteRespuestasRepositorio;
 import com.componente.factinven.repositorios.DetalleRepositorio;
 import com.componente.factinven.repositorios.EntradasRespository;
+import com.componente.factinven.repositorios.VentaRepositorio;
 import com.componente.factinven.servicios.interfaz.IClienteServicio;
 import com.componente.factinven.utils.ValidadorResponse;
 import com.componente.factinven.utils.ValidarIdenttificacion;
@@ -61,6 +64,12 @@ public class ClienteServicioImpl  implements IClienteServicio {
 	
 	@Autowired
 	private ClienteRespuestasMapper clienteRespuestasMapper;
+	
+	@Autowired
+	private VentaRepositorio ventaRepositorio;
+	
+	@Autowired
+	private VentaMapper ventaMapper;
 	
 	
 	@Override
@@ -190,9 +199,23 @@ public class ClienteServicioImpl  implements IClienteServicio {
 		}
 		return clienteDto;
 	}
-	
-	
 	//Preguntas
+	
+	
+	//Odontologia Cliente
+	
+	
+	//Odontologia Cliente
+	
+	
+	
+	//Presupuesto Cliente
+	public List<VentaResponse> listarPresupuestoCliente(Integer clienteId){
+		return ventaRepositorio.fetchVentaByClientId(clienteId);
+	}
+	
+	//Presupuesto Cliente
+	
 	
 	private List<ClienteRespuestasDto> clienteRepuestasDtoNuevas(List<Detalle> listaPreguntasSistema) {
 		List<ClienteRespuestasDto> listRespuestaDto= new ArrayList<>();
@@ -224,5 +247,10 @@ public class ClienteServicioImpl  implements IClienteServicio {
 	}
 	
 	//Pagos de Clientes
+	
+	//PresupuestoClientes
+	
+	
+	//Presupuestos Clientes
 
 }
