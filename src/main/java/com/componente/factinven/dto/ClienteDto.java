@@ -31,6 +31,7 @@ public class ClienteDto implements Serializable{
     private Integer id;
 	private String nombresCompletos;
 	private List<ClienteRespuestasDto> listaClienteRespuestasDto;
+	private List<OdontogramaRespuestasDto> listaOdontogramaRespuestasDto;
 	private String referidoPor;
 	private String ocupacion;
     

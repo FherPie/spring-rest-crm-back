@@ -16,22 +16,26 @@ import org.springframework.transaction.annotation.Transactional;
 import com.componente.factinven.dto.ClienteDto;
 import com.componente.factinven.dto.ClienteRespuestasDto;
 import com.componente.factinven.dto.EntradaDto;
+import com.componente.factinven.dto.OdontogramaRespuestasDto;
 import com.componente.factinven.dto.VentaResponse;
 import com.componente.factinven.entidades.Cliente;
 import com.componente.factinven.entidades.ClienteRespuestas;
 import com.componente.factinven.entidades.Detalle;
 import com.componente.factinven.entidades.Entrada;
+import com.componente.factinven.entidades.OdontogramaRespuestas;
 import com.componente.factinven.exceptions.CedulaEcException;
 import com.componente.factinven.mappers.ClienteMapper;
 import com.componente.factinven.mappers.ClienteRespuestasMapper;
 import com.componente.factinven.mappers.DetalleMapper;
 import com.componente.factinven.mappers.EntradaMapper;
+import com.componente.factinven.mappers.OdontogramaRespuestasMapper;
 import com.componente.factinven.mappers.VentaMapper;
 import com.componente.factinven.repositorios.ClienteRepositorio;
 import com.componente.factinven.repositorios.ClienteRespuestasRepositorio;
 import com.componente.factinven.repositorios.DetalleRepositorio;
 import com.componente.factinven.repositorios.EntradasRespository;
 import com.componente.factinven.repositorios.VentaRepositorio;
+import com.componente.factinven.repositorios.OdontogramaRespuestasRepositorio;
 import com.componente.factinven.servicios.interfaz.IClienteServicio;
 import com.componente.factinven.utils.ValidadorResponse;
 import com.componente.factinven.utils.ValidarIdenttificacion;
@@ -70,6 +74,12 @@ public class ClienteServicioImpl  implements IClienteServicio {
 	
 	@Autowired
 	private VentaMapper ventaMapper;
+	
+	@Autowired
+	private OdontogramaRespuestasMapper odontogramaRespuestasMapper;
+	
+	@Autowired
+	private OdontogramaRespuestasRepositorio odontogramaRespuestasRespository;
 	
 	
 	@Override
@@ -202,7 +212,26 @@ public class ClienteServicioImpl  implements IClienteServicio {
 	//Preguntas
 	
 	
+	
+	
 	//Odontologia Cliente
+	public ClienteDto instanciarOdontogramaRepsuestas(ClienteDto clienteDto) {
+		if(clienteDto.getId()==null) {
+			clienteDto.setListaOdontogramaRespuestasDto(obtenerOdontograma());
+		}else {
+			
+			
+		}
+		
+		return clienteDto;
+	}
+	
+	
+	public List<OdontogramaRespuestasDto> obtenerOdontograma(){
+		OdontogramaRespuestas odontogramaRespuestas= new OdontogramaRespuestas();
+		List<OdontogramaRespuestas> listadePiezas=  odontogramaRespuestas.new PiezaDental().retornarPiezas();
+		return odontogramaRespuestasMapper.toDto(listadePiezas);
+	}
 	
 	
 	//Odontologia Cliente

@@ -52,5 +52,8 @@ public class Cliente implements Serializable {
 	
 	@OneToMany(cascade= CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="cliente")
 	private List<ClienteRespuestas> listaClienteRepuestas;
+	
+	@OneToMany(cascade= CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="cliente")
+	private List<OdontogramaRespuestas> listaOdontogramaRespuestas;
 
 }
