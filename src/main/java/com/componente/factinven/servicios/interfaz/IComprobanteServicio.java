@@ -10,6 +10,8 @@ public interface IComprobanteServicio {
 
 	public abstract  VentaResponse guardarComprobante(VentaResponse comprobante);
 	
+	public abstract  VentaResponse guardaryCerrarComprobante(VentaResponse comprobante);
+	
 	public abstract  VentaResponse editarComprobante(VentaResponse comprobante);
 	
 	public abstract  VentaResponse buscarComprobanteCodigo(String codigo);
@@ -23,5 +25,8 @@ public interface IComprobanteServicio {
 	public List<VentaResponse> findAll();
 	
 	public VentaResponse findById(Integer id);
+
+	
+	public List<VentaResponse> listarOrdernesConSaldo();
 
 }

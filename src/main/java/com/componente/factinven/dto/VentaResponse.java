@@ -1,12 +1,9 @@
 package com.componente.factinven.dto;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
-import com.componente.factinven.entidades.DetalleVenta;
 
 
 public class VentaResponse {
@@ -20,10 +17,13 @@ public class VentaResponse {
 	private String codigo;
 	private Integer idAlmacen;
 	private String formaPago;
-	private BigDecimal total;
+	private Double total;
+	private Double totalSinDescuento;
+	private Double totalDescuento;
 	private String nombreCliente;
 	private String fechaFormat;
 	private String numeroFactura;
+	private String motivoConsulta;
 	//private List<DetalleVentaDto> detallesVentaDto;
 	private List<DetalleVentaDto> detallesVentaDto = new LinkedList<>();
 	
@@ -33,7 +33,7 @@ public class VentaResponse {
 	
 	
 	public VentaResponse(Integer id, LocalDateTime fechayHora, String estado, String codigo,
-			String formaPago, BigDecimal total) {
+			String formaPago, Double total) {
 		super();
 		this.id = id;
 		this.fechayHora = fechayHora;
@@ -124,10 +124,10 @@ public class VentaResponse {
 	public void setFormaPago(String formaPago) {
 		this.formaPago = formaPago;
 	}
-	public BigDecimal getTotal() {
+	public Double getTotal() {
 		return total;
 	}
-	public void setTotal(BigDecimal total) {
+	public void setTotal(Double total) {
 		this.total = total;
 	}
 	public String getNombreCliente() {
@@ -161,6 +161,36 @@ public class VentaResponse {
 	public void setDetallesVentaDto(List<DetalleVentaDto> detallesVentaDto) {
 		this.detallesVentaDto = detallesVentaDto;
 	}
+
+
+
+
+	public Double getTotalSinDescuento() {
+		return totalSinDescuento;
+	}
+
+
+
+
+	public void setTotalSinDescuento(Double totalSinDescuento) {
+		this.totalSinDescuento = totalSinDescuento;
+	}
+
+
+
+
+	public Double getTotalDescuento() {
+		return totalDescuento;
+	}
+
+
+
+
+	public void setTotalDescuento(Double totalDescuento) {
+		this.totalDescuento = totalDescuento;
+	}
+	
+	
 
 	
 

@@ -11,6 +11,7 @@ public class ProductoDto implements Serializable {
 	private String nombre;
 	private Double precioUnitario;
 	private Double precioCompra;
+	private Boolean servdeOdontograma;
 		
 	public ProductoDto() {
 
@@ -48,5 +49,12 @@ public class ProductoDto implements Serializable {
 	public void setPrecioCompra(Double precioCompra) {
 		this.precioCompra = precioCompra;
 	}
-	
+
+	public Boolean getServdeOdontograma() {
+		return servdeOdontograma;
+	}
+
+	public void setServdeOdontograma(Boolean servdeOdontograma) {
+		this.servdeOdontograma = servdeOdontograma;
+	}
 }

@@ -2,15 +2,9 @@ package com.componente.factinven.entidades;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -46,6 +40,8 @@ public class Cliente implements Serializable {
 	private String referidoPor;
 	
 	private String ocupacion;
+	
+	private String nombreCompletos;
 
 	@OneToMany(fetch = FetchType.LAZY,mappedBy="cliente")
 	private List<Venta> listaComprobante;
@@ -56,4 +52,25 @@ public class Cliente implements Serializable {
 	@OneToMany(cascade= CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="cliente")
 	private List<OdontogramaRespuestas> listaOdontogramaRespuestas;
 
+	@OneToMany(cascade= CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="cliente")
+	private List<ConsultaCliente> listaConsultaCLiente;
+	
+	public String getnombreCompletos() {
+		return persona.getApellidos()+" "+persona.getNombres();
+	}
+	
+	public String getnombreCompletosFolder() {
+		return persona.getApellidos()+"_"+persona.getNombres();
+	}
+
+
+	@ManyToMany(fetch= FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name="client_files",
+			joinColumns = {
+					@JoinColumn(name="client_id")
+			},
+			inverseJoinColumns ={
+					@JoinColumn(name="file_id")
+			})
+	private Set<ImageModel> clientFiles;
 }

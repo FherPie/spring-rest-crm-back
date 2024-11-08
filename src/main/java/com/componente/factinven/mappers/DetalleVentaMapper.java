@@ -1,16 +1,14 @@
 package com.componente.factinven.mappers;
 
 
-import com.componente.factinven.entidades.DetalleVenta;
-import com.componente.factinven.entidades.Venta;
-import com.componente.factinven.dto.DetalleVentaDto;
-import com.componente.factinven.dto.VentaResponse;
-
 import java.util.List;
 import java.util.Set;
-import org.mapstruct.Mapping;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
+import com.componente.factinven.dto.DetalleVentaDto;
+import com.componente.factinven.entidades.DetalleVenta;
 
 @Mapper(componentModel = "spring")
 public interface DetalleVentaMapper extends EntityMapper<DetalleVentaDto, DetalleVenta> {

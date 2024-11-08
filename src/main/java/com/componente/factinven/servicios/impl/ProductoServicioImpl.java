@@ -111,6 +111,12 @@ public class ProductoServicioImpl implements IProductoServicio {
 		return null;
 	}
 
+	@Override
+	public List<ProductoDto> findProductoOdonto() {
+		List<ProductoDto> listaRetorno = productoMapper.toDto(productoRepositorio.findByServdeOdontogramaTrue());
+		return listaRetorno;
+	}
+
 //	@Override
 //	public void guardarProducto(Producto Producto) {
 //

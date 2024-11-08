@@ -23,10 +23,11 @@ public class DetalleVentaDto implements Serializable
 	private Double cantidad=0.0;
 	private Double precioUnitario=0.0;
 	private Double precioporDetalle=0.0;
-	private int descuentoUnitario=0;
+	private Double descuentoUnitario=0.0;
 	private int numeroDetalle;
 	private boolean isEdit;
 	private VentaResponse venta;
+	private Double saldo;
 
 
 	private ProductoDto productoDto;

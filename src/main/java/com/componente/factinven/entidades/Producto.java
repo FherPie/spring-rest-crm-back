@@ -3,15 +3,7 @@ package com.componente.factinven.entidades;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import com.componente.factinven.dto.ProductoDto;
 
@@ -38,6 +30,7 @@ public class Producto extends AuditedEntity implements Serializable {
 	private String nombre;
 	private Double precioUnitario;
 	private Double precioCompra;
+	private Boolean servdeOdontograma;
 	
 	@OneToMany(mappedBy="producto")
 	private List<DetalleVenta> detalleventaList;
@@ -45,6 +38,9 @@ public class Producto extends AuditedEntity implements Serializable {
     @JoinColumn(name = "idProveedor", referencedColumnName = "id", nullable = true)
     @ManyToOne(optional =true, fetch = FetchType.LAZY)
     private Proveedor proveedor;
+
+	@ManyToMany(cascade = CascadeType.ALL, mappedBy="tratamientosPieza")
+	private List<OdontogramaRespuestas> tratamientosPieza;
 
     
 	public Producto(ProductoDto productoRequest) {

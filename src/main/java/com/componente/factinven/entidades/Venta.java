@@ -1,12 +1,9 @@
 package com.componente.factinven.entidades;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -19,9 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -37,14 +32,12 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@PrimaryKeyJoinColumn(referencedColumnName = "id")
-public class Venta  implements Serializable {
+@Table(name="venta")
+public class Venta   {
 	
-	
-	private static final long serialVersionUID1 = 5422395194141514163L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@NotNull
 	@Column(columnDefinition = "TIMESTAMP")
@@ -52,18 +45,22 @@ public class Venta  implements Serializable {
 	private Empleado empleado;
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Cliente cliente;
-	@NotBlank
-	private String estado;  //Borrador, Cerrado
-	@NotBlank
+	private String estado;  //1 proforma 2 finalizado
 	private String codigo;
 	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	private Almacen almacen;
-	@NotEmpty
 	private String formaPago;
-	private BigDecimal total;
+	private Double total;
+	private Double totalSinDescuento;
+	private Double totalDescuento;
+	private String motivoConsulta;
 	//@NotEmpty
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="venta", orphanRemoval = true)
 	private List<DetalleVenta> detallesVenta= new ArrayList<>();
+	
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="venta", orphanRemoval = false)
+	private List<Entrada> pagos= new ArrayList<>();
 	
 	
 	public void addDetail(DetalleVenta detalleVenta) {
@@ -85,8 +82,9 @@ public class Venta  implements Serializable {
 			detalleVenta.setVenta(null);
 			iterator.remove();
 		}
-		
-
 	}
+	
+	
+
 
 }

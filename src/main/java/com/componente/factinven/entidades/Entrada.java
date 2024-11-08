@@ -1,11 +1,11 @@
 package com.componente.factinven.entidades;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -24,11 +24,13 @@ public class Entrada extends AuditedEntity  {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 	@NotNull
 	private Double precio;
     private String concepto;
-    @ManyToOne()
-    private Cliente cliente;
-  
+	@ManyToOne(fetch = FetchType.LAZY)
+    private Venta venta;
+	@ManyToOne(fetch = FetchType.LAZY)
+    private DetalleVenta detalleVenta;
+	
 }

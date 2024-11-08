@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -22,7 +23,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@PrimaryKeyJoinColumn(referencedColumnName = "id")
 public class DetalleVenta {
 
 	
@@ -30,15 +30,16 @@ public class DetalleVenta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@NotNull
 	private Double cantidad;
 //	@ManyToOne(fetch = FetchType.LAZY)
 //	private Articulo articulo;
-	@NotNull
-	private BigDecimal precioUnitario;
+	private Double precioUnitario;
 	private BigDecimal precioporDetalle;
-	@NotNull
+	private Double descuentoUnitario;
 	private int numeroDetalle;
+	
+	@Transient
+	private Double saldo;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Producto producto;

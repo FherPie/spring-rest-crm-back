@@ -35,6 +35,8 @@ public class ClienteController {
 	@Autowired
 	ClienteServicioImpl clienteService;
 	
+	
+	
 
 	private final ImporterExcelCliente importerExcelCliente;
 
@@ -61,8 +63,9 @@ public class ClienteController {
 	@GetMapping("/listarPagosCliente/{id}")
 	public ResponseEntity<?> listarPagosdeClientes(@PathVariable Integer id){
 		  ResponseGenerico<List<EntradaDto>> response = new ResponseGenerico<>();
-		  List<EntradaDto> ventasListado= clienteService.listarPagostClientes(id);
-		return ControllersUtils.repuestaGenericoExitoList(response, ventasListado);
+		  //List<EntradaDto> ventasListado= clienteService.listarPagostClientes(id);
+//		return ControllersUtils.repuestaGenericoExitoList(response, ventasListado);
+		  return null;
 	}; 
 	
 
@@ -110,6 +113,13 @@ public class ClienteController {
 	   return clienteService.listarPresupuestoCliente(clienteId);
 	}
 	 
+	
+	
+	@PostMapping(value="/cliente/uploadandSaveFileClient/{pathName}/{idCliente}", consumes= {"multipart/form-data"} )
+	public String clienString(@RequestPart(required = true) MultipartFile file, @PathVariable String pathName, @PathVariable Integer idCliente) {
+		clienteService.uploadandSaveFile(file, pathName, idCliente);
+		return "You successfully uploaded " + file.getOriginalFilename() + "!";
+	}
 	
 	
 //	@GetMapping("/obtenerPreguntasCliente")

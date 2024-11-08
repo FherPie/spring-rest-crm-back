@@ -56,6 +56,14 @@ public class VentasController {
         VentaResponse dto = ventaService.guardarComprobante(ventaRequest);
         return ControllersUtils.repuestaGenericoExitoObject(response, dto);
       };
+      
+      
+  	@PostMapping("/guardarCerrarVenta")
+  	public ResponseEntity<?> guardarCerrarVenta(@RequestBody VentaResponse ventaRequest) {
+          ResponseGenerico<VentaResponse> response = new ResponseGenerico<>();
+          VentaResponse dto = ventaService.guardaryCerrarComprobante(ventaRequest);
+          return ControllersUtils.repuestaGenericoExitoObject(response, dto);
+        };
 
 
 	@PutMapping("/actualizarVenta")
@@ -82,6 +90,22 @@ public class VentasController {
 		 return ControllersUtils.repuestaGenericoExitoList(response, ventasListado);
 	}
 	
+	@GetMapping("/listarOrdenes")
+	public ResponseEntity<?> listarOrdenes() {
+	     ResponseGenerico<List<VentaResponse>> response = new ResponseGenerico<>();
+	     List<VentaResponse> ventasListado= ventaService.findAllOrdenes();
+		 return ControllersUtils.repuestaGenericoExitoList(response, ventasListado);
+	}
+	
+	
+	@GetMapping("/listarOrdenesConSaldo")
+	public ResponseEntity<?> listarOrdenesConSaldo() {
+	     ResponseGenerico<List<VentaResponse>> response = new ResponseGenerico<>();
+	     List<VentaResponse> ventasListado= ventaService.listarOrdernesConSaldo();
+		 return ControllersUtils.repuestaGenericoExitoList(response, ventasListado);
+	}
+	
+	
 	
 	@PostMapping("/addDetalle")
 	public ResponseEntity<?> addDetalle(@RequestBody VentaResponse ventaRequest) {
@@ -96,15 +120,23 @@ public class VentasController {
 		 ResponseGenerico<VentaResponse> response = new ResponseGenerico<>();
 	     VentaResponse venta= ventaService.getVenta();
 		 return ControllersUtils.repuestaGenericoExitoObject(response, venta);
-		 
 		//return new ResponseEntity<VentaResponse>((VentaResponse) ventaService.getVenta(), HttpStatus.OK);
 	}
+	
+	@PostMapping("/doneDetalle")
+	public ResponseEntity<?> doneDetalle(@RequestBody VentaResponse ventaRequest) {
+		 ResponseGenerico<VentaResponse> response = new ResponseGenerico<>();
+	     VentaResponse venta= ventaService.doneDetalle(ventaRequest);
+		 return ControllersUtils.repuestaGenericoExitoObject(response, venta);
+		//return new ResponseEntity<VentaResponse>((VentaResponse) ventaService.getVenta(), HttpStatus.OK);
+	}
+	
 
 	
-	@GetMapping("/deleteDetalle")
+	@PostMapping("/deleteDetalle")
 	public ResponseEntity<?> deleteDetalle(@RequestBody VentaResponse ventaRequest) {
 		 ResponseGenerico<VentaResponse> response = new ResponseGenerico<>();
-	     VentaResponse venta= ventaService.getVenta();
+	     VentaResponse venta= ventaService.removeDetalle(ventaRequest);
 		 return ControllersUtils.repuestaGenericoExitoObject(response, venta);
 		//return new ResponseEntity<VentaResponse>((VentaResponse) ventaService.getVenta(), HttpStatus.OK);
 	}

@@ -1,6 +1,10 @@
 server:
   port: 8092
 spring:
+  servlet: 
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
   datasource:
     url: jdbc:mysql://localhost:3306/factInventdb?allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
     username: root
@@ -24,8 +28,17 @@ spring:
 
 jwt:
   secret: lLz0wjFXoLhdj4xfGX4gc192O29JBRkcSF9DmPkyYVOn6gCAUa
-  expiry: 1800000
+  expiry: 18000000
   authority:
             key: role
+            
+            
+ftp:
+    host: localhost
+    user: andres
+    port: 21
+    password: ftpserver77
+    hostDir: C:\Users\LENOVO\Documents\ftp\
+
 
    

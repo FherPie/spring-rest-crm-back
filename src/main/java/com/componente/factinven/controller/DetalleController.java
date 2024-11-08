@@ -45,4 +45,10 @@ public class DetalleController
     {
         detalleServicio.delete(id);
     }
+    
+    @GetMapping("/detalle/formasPago")
+    public List<DetalleDto>  formasPago()
+    {
+        return detalleServicio.formasPago();
+    }
 }

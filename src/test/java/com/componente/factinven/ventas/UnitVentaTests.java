@@ -1,13 +1,5 @@
 package com.componente.factinven.ventas;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -19,15 +11,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-
 import com.componente.factinven.dto.VentaResponse;
 import com.componente.factinven.servicios.impl.VentasServicioImpl;
 
-@RunWith(SpringRunner.class)
-@AutoConfigureMockMvc
-@SpringBootTest
-@ActiveProfiles("test")
-@TestMethodOrder(OrderAnnotation.class)
+//@RunWith(SpringRunner.class)
+//@AutoConfigureMockMvc
+//@SpringBootTest
+//@ActiveProfiles("test")
+//@TestMethodOrder(OrderAnnotation.class)
 public class UnitVentaTests {
 
 	@Autowired

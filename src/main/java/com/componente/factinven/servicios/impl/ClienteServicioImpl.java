@@ -1,29 +1,30 @@
 package com.componente.factinven.servicios.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.*;
 import java.util.stream.Collectors;
 
+import com.componente.factinven.entidades.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.componente.factinven.dto.ClienteDto;
 import com.componente.factinven.dto.ClienteRespuestasDto;
 import com.componente.factinven.dto.EntradaDto;
 import com.componente.factinven.dto.OdontogramaRespuestasDto;
 import com.componente.factinven.dto.VentaResponse;
-import com.componente.factinven.entidades.Cliente;
-import com.componente.factinven.entidades.ClienteRespuestas;
-import com.componente.factinven.entidades.Detalle;
-import com.componente.factinven.entidades.Entrada;
-import com.componente.factinven.entidades.OdontogramaRespuestas;
 import com.componente.factinven.exceptions.CedulaEcException;
+import com.componente.factinven.exceptions.FTPErrors;
 import com.componente.factinven.mappers.ClienteMapper;
 import com.componente.factinven.mappers.ClienteRespuestasMapper;
 import com.componente.factinven.mappers.DetalleMapper;
@@ -36,6 +37,7 @@ import com.componente.factinven.repositorios.DetalleRepositorio;
 import com.componente.factinven.repositorios.EntradasRespository;
 import com.componente.factinven.repositorios.VentaRepositorio;
 import com.componente.factinven.repositorios.OdontogramaRespuestasRepositorio;
+import com.componente.factinven.servicios.interfaz.FTPService;
 import com.componente.factinven.servicios.interfaz.IClienteServicio;
 import com.componente.factinven.utils.ValidadorResponse;
 import com.componente.factinven.utils.ValidarIdenttificacion;
@@ -81,6 +83,12 @@ public class ClienteServicioImpl  implements IClienteServicio {
 	@Autowired
 	private OdontogramaRespuestasRepositorio odontogramaRespuestasRespository;
 	
+	@Autowired
+	private FTPService fTPService;
+	
+	@Value("${ftp.hostDir}")
+	private String ftpHostDir;
+	
 	
 	@Override
 	@Transactional
@@ -90,6 +98,7 @@ public class ClienteServicioImpl  implements IClienteServicio {
 		Cliente cliente = clienteMapper.toEntity(clienteDto);
 		ClienteDto clienteDtoNuevo =  new ClienteDto(clienteRepositorio.save(cliente));
 		clienteDtoNuevo= instanciarPreguntasCliente(clienteDtoNuevo);
+		clienteDtoNuevo= instanciarOdontogramaRepsuestas(clienteDtoNuevo);
 		//clienteGuardar.setCategoria(cliente.getCategoria());
 	    return clienteDtoNuevo;
 	}
@@ -135,8 +144,12 @@ public class ClienteServicioImpl  implements IClienteServicio {
 		//clienteDto.setListaPreguntas(new ArrayList<>());
 		Cliente cliente = clienteMapper.toEntity(clienteDto);
 		for (Iterator iterator = cliente.getListaClienteRepuestas().iterator(); iterator.hasNext();) {
-			ClienteRespuestas type = (ClienteRespuestas) iterator.next();
-			type.setCliente(cliente);
+			ClienteRespuestas crdto = (ClienteRespuestas) iterator.next();
+			crdto.setCliente(cliente);
+		}
+		
+		for(OdontogramaRespuestas respuesta: cliente.getListaOdontogramaRespuestas()) {
+			respuesta.setCliente(cliente);
 		}
 		//clienteGuardar.setCategoria(cliente.getCategoria());
 	    return  clienteMapper.toDto(clienteRepositorio.save(cliente));
@@ -165,6 +178,7 @@ public class ClienteServicioImpl  implements IClienteServicio {
 		//cliente.getListaClienteRepuestas();
 		ClienteDto clienteDto= clienteMapper.toDto(cliente);
 		clienteDto = instanciarPreguntasCliente(clienteDto);
+		clienteDto= instanciarOdontogramaRepsuestas(clienteDto);
 		return clienteDto;
 	}
 
@@ -185,6 +199,9 @@ public class ClienteServicioImpl  implements IClienteServicio {
 		List<Detalle> listDetalle= new ArrayList<>();
 		listDetalle.addAll(detalleRepositorio.findByMaestroCodigo("ANTF"));
 		listDetalle.addAll(detalleRepositorio.findByMaestroCodigo("ANHOSP"));
+		listDetalle.addAll(detalleRepositorio.findByMaestroCodigo("ASX"));
+		listDetalle.addAll(detalleRepositorio.findByMaestroCodigo("PCOM"));
+		
 		List<Integer> preguntasExistentes=  listDetalle.stream().map(element -> element.getId()).collect(Collectors.toList());
 		List<ClienteRespuestasDto> listaClientesRespuestaDto= new ArrayList<ClienteRespuestasDto>();
 		if(clienteDto.getId()==null) {//preguntas no respondidas
@@ -216,13 +233,9 @@ public class ClienteServicioImpl  implements IClienteServicio {
 	
 	//Odontologia Cliente
 	public ClienteDto instanciarOdontogramaRepsuestas(ClienteDto clienteDto) {
-		if(clienteDto.getId()==null) {
-			clienteDto.setListaOdontogramaRespuestasDto(obtenerOdontograma());
-		}else {
-			
-			
-		}
-		
+			if(clienteDto.getListaOdontogramaRespuestasDto()==null || clienteDto.getListaOdontogramaRespuestasDto().isEmpty()) {
+				clienteDto.setListaOdontogramaRespuestasDto(obtenerOdontograma());	
+			}
 		return clienteDto;
 	}
 	
@@ -271,10 +284,38 @@ public class ClienteServicioImpl  implements IClienteServicio {
 
 	@Override
 	public List<EntradaDto> listarPagostClientes(Integer id) {
-		List<EntradaDto> lista=entradaMapper.toDto(entradaRepositorio.pagosCliente(id));
-		return lista;
+		//List<EntradaDto> lista=entradaMapper.toDto(entradaRepositorio.pagosCliente(id));
+		return null;
 	}
-	
+
+
+	@Override
+	public String uploadandSaveFile(MultipartFile file, String fileName, Integer idCliente) {
+		try {
+			Cliente cliente = this.clienteRepositorio.findById(idCliente).get();
+			fTPService.connectToFTP();
+			String path="\\"+cliente.getnombreCompletosFolder()+"_"+cliente.getId();
+			fTPService.uploadFileToFTP(file, path, fileName);
+			Set<ImageModel> clientFiles=this.uploadImage(file, path);
+			cliente.setClientFiles(clientFiles);
+			this.clienteRepositorio.save(cliente);
+		} catch (FTPErrors | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		return null;
+	}
+
+
+	private Set<ImageModel> uploadImage(MultipartFile file, String path) throws IOException {
+		Set<ImageModel> imageModels= new HashSet<>();
+			ImageModel imgm= new ImageModel(file.getName(), file.getContentType(), path);
+			imageModels.add(imgm);
+		return imageModels;
+	}
+
+
+
 	//Pagos de Clientes
 	
 	//PresupuestoClientes

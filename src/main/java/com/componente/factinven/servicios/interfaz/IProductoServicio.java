@@ -25,4 +25,6 @@ public interface IProductoServicio {
 	public List<ProductoDto> findAll();
 	
 	public List<ProductoDto> findAllP();
+
+	public List<ProductoDto> findProductoOdonto();
 }

@@ -7,12 +7,15 @@ import java.util.List;
 
 import com.componente.factinven.entidades.Cliente;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class ClienteDto implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -31,7 +34,7 @@ public class ClienteDto implements Serializable{
     private Integer id;
 	private String nombresCompletos;
 	private List<ClienteRespuestasDto> listaClienteRespuestasDto;
-	private List<OdontogramaRespuestasDto> listaOdontogramaRespuestasDto;
+	private List<OdontogramaRespuestasDto> listaOdontogramaRespuestasDto; 
 	private String referidoPor;
 	private String ocupacion;
     

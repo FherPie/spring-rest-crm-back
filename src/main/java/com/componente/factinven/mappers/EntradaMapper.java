@@ -13,11 +13,13 @@ import com.componente.factinven.entidades.Entrada;
 public interface EntradaMapper extends EntityMapper<EntradaDto, Entrada>  {
 
 	@Override
-	@Mapping(target="cliente", source="clienteDto")
+	@Mapping(target="venta", source="idVenta")
+	@Mapping(target="detalleVenta", source="idDetalle")
 	public Entrada toEntity(EntradaDto dto);
 	
 	@Override
-	@Mapping(target="clienteDto", source="cliente")
+	@Mapping(target="idVenta", source="venta")
+	@Mapping(target="idDetalle", source="detalleVenta")
 	public EntradaDto toDto(Entrada entity);
 	@Override
 	public List<Entrada> toEntity(List<EntradaDto> dtoList);

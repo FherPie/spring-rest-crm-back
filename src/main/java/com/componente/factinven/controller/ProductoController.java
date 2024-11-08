@@ -112,4 +112,10 @@ public class ProductoController {
 	    return resultPage.getContent();
 	}
 
+
+	@GetMapping("/productoOdonto")
+	public List<ProductoDto> listarProductoOdonto() {
+		return productoService.findProductoOdonto();
+	}
+
 }

@@ -11,6 +11,6 @@ import com.componente.factinven.entidades.OdontogramaRespuestas;
 @Repository
 public interface OdontogramaRespuestasRepositorio extends JpaRepository<OdontogramaRespuestas, Integer> {
 
-	@Query("Select (respuesta) from OdontogramaRespuestas respuesta where cliente.id =  :clienteId order by repuesta.id ")
+	@Query("Select (respuesta) from OdontogramaRespuestas respuesta where cliente.id =  :clienteId order by respuesta.id ")
    	List<OdontogramaRespuestas> encontrarOdontogramaRepuestas(@Param("clienteId") Integer clienteId);
 }

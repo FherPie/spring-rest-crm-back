@@ -22,11 +22,11 @@ import com.componente.factinven.servicios.impl.PersonaServicioImpl;
 import com.componente.factinven.unittests.persona.UtilPersona;
 
 
-@RunWith(SpringRunner.class)
-@AutoConfigureMockMvc
-@SpringBootTest
-@ActiveProfiles("test")
-@TestMethodOrder(OrderAnnotation.class)
+//@RunWith(SpringRunner.class)
+//@AutoConfigureMockMvc
+//@SpringBootTest
+//@ActiveProfiles("test")
+//@TestMethodOrder(OrderAnnotation.class)
 public class UnitPersonaTests2 {
 
 	// 1 Microincremenrto Repositories

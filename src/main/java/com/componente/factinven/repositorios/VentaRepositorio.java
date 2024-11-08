@@ -40,6 +40,6 @@ public interface VentaRepositorio extends JpaRepository<Venta, Integer> {
 //			String formaPago, String total)
     
 
-    public List<Venta> findAllByOrderByIdDesc();
+    public List<Venta> findByEstadoOrderByIdDesc(String estado);
 
 }

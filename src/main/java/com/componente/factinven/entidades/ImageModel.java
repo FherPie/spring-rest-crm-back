@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Table(name="image_model")
+@Table(name="file_model")
 @Data
 @Builder
 @AllArgsConstructor
@@ -27,9 +27,10 @@ public class ImageModel {
 	  private Long id;
 	  private String name;
 	  private String type;
+	  private String path;
+	  private String nameFile;
 	  @Column(length = 50000000)
 	  private byte[] picByte;
-	  
 	  
 	  
 	public ImageModel(String name, String type, byte[] picByte) {
@@ -37,6 +38,14 @@ public class ImageModel {
 		this.name = name;
 		this.type = type;
 		this.picByte = picByte;
+	}
+
+
+	public ImageModel(String name, String type, String path) {
+		super();
+		this.name = name;
+		this.type = type;
+		this.path=path;
 	}
 	  
 	  

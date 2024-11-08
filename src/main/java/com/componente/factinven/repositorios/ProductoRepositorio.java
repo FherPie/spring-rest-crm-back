@@ -11,5 +11,5 @@ import com.componente.factinven.entidades.Producto;
 public interface ProductoRepositorio extends JpaRepository<Producto, Integer> {
 	
 	public List<Producto> findByNombreContainingIgnoreCase(String nombre);
-
+	public List<Producto> findByServdeOdontogramaTrue();
 }

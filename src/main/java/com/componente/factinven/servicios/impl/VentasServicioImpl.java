@@ -8,7 +8,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -31,6 +30,7 @@ import com.componente.factinven.repositorios.ProductoRepositorio;
 import com.componente.factinven.repositorios.SalidasRespository;
 import com.componente.factinven.repositorios.VentaRepositorio;
 import com.componente.factinven.servicios.interfaz.IComprobanteServicio;
+import com.componente.factinven.servicios.interfaz.IDetalleVentasServicio;
 
 @Service
 public class VentasServicioImpl implements IComprobanteServicio {
@@ -60,6 +60,10 @@ public class VentasServicioImpl implements IComprobanteServicio {
 	@Autowired
 	SalidasRespository salidaRespositorio;
 	
+	
+	@Autowired
+	IDetalleVentasServicio detalleVentasServicio;
+	
 	@Autowired
 	private ClienteMapper clienteMapper;
 	
@@ -79,28 +83,60 @@ public class VentasServicioImpl implements IComprobanteServicio {
 	@Transactional
 	@Override
 	public VentaResponse guardarComprobante(VentaResponse comprobanteRequest) {
-		VentaResponse ventaRequest =  comprobanteRequest;
+		//VentaResponse ventaRequest =  comprobanteRequest;
+		calculoTotal(comprobanteRequest);
 		comprobanteRequest.setFechayHora(LocalDateTime.now());
 		Venta venta = new Venta();
-		venta.setFormaPago("EFECTIVO");
-		venta.setCodigo("001");
-		venta.setEstado("VALIDO");
-		venta.setCliente(clienteRespositorio.findById(ventaRequest.getIdCliente().getId()).orElse(null));
-		venta.setFechayHora(ventaRequest.getFechayHora());
-		armarDetalles(ventaRequest.getDetallesVentaDto(), venta);
-		BigDecimal total= calcularTotalComprobante(ventaRequest.getDetallesVentaDto());
-		venta.setTotal(total);
+		
+		//venta.setCliente(clienteRespositorio.findById(ventaRequest.getIdCliente().getId()).orElse(null));
+		//venta.setFechayHora(ventaRequest.getFechayHora());
+
+		venta = ventaMapper.toEntity(comprobanteRequest);
+		venta.setDetallesVenta(new ArrayList<>());
+		armarDetalles(comprobanteRequest.getDetallesVentaDto(), venta);
+		venta.setEstado("1");
+		
 		venta = ventaRespositorio.save(venta);
-		return ventaMapper.toDto(ventaRespositorio.save(venta));
+		return ventaMapper.toDto(venta);
+	}
+	
+	@Transactional
+	@Override
+	public VentaResponse guardaryCerrarComprobante(VentaResponse comprobanteRequest) {
+		//VentaResponse ventaRequest =  comprobanteRequest;
+		calculoTotal(comprobanteRequest);
+		comprobanteRequest.setFechayHora(LocalDateTime.now());
+		Venta venta = new Venta();
+		
+		//venta.setCliente(clienteRespositorio.findById(ventaRequest.getIdCliente().getId()).orElse(null));
+		//venta.setFechayHora(ventaRequest.getFechayHora());
+
+		venta = ventaMapper.toEntity(comprobanteRequest);
+		venta.setDetallesVenta(new ArrayList<>());
+		armarDetalles(comprobanteRequest.getDetallesVentaDto(), venta);
+		venta.setEstado("2");
+		
+		venta = ventaRespositorio.save(venta);
+		return ventaMapper.toDto(venta);
 	}
 
-	private BigDecimal calcularTotalComprobante( List<DetalleVentaDto> lista){
-		BigDecimal total= new BigDecimal(0);
+
+	private Double calcularTotalComprobante( List<DetalleVentaDto> lista){
+		Double total= 0.0;
 		for (DetalleVentaDto det : lista) {
 			DetalleVenta deta =detalleVentaMapper.toEntity(det);
-			total= deta.getPrecioUnitario().multiply(new BigDecimal(deta.getCantidad()));
+			total+= deta.getPrecioUnitario()*deta.getCantidad();
 		}
 		
+        return total;
+	}
+	
+	private Double calcularDescuentoTotalComprobante( List<DetalleVentaDto> lista){
+		Double total= 0.0;
+		for (DetalleVentaDto det : lista) {
+			DetalleVenta deta =detalleVentaMapper.toEntity(det);
+			total+= deta.getDescuentoUnitario();
+		}
         return total;
 	}
 	
@@ -119,11 +155,10 @@ public class VentasServicioImpl implements IComprobanteServicio {
 	@Transactional
 	public VentaResponse actualizarComprobante(VentaResponse comprobanteRequest) {
 		VentaResponse ventaRequest =  comprobanteRequest;
+		calculoTotal(comprobanteRequest);
 		Venta venta= ventaMapper.toEntity(ventaRequest);
 		venta.removeDetails();
 		armarDetalles(ventaRequest.getDetallesVentaDto(), venta);
-		BigDecimal total= calcularTotalComprobante(ventaRequest.getDetallesVentaDto());
-		venta.setTotal(total);
 		venta = ventaRespositorio.save(venta);
 		return ventaMapper.toDto(ventaRespositorio.save(venta));
 	}
@@ -151,7 +186,7 @@ public class VentasServicioImpl implements IComprobanteServicio {
 	@Override
 	public List<VentaResponse> findAll() {
 		List<VentaResponse> listaRetorna = new ArrayList<>();
-		ventaRespositorio.findAllByOrderByIdDesc().forEach((n) -> {
+		ventaRespositorio.findByEstadoOrderByIdDesc("1").forEach((n) -> {
 			VentaResponse venta = new VentaResponse();
 			venta.setId(n.getId());
 			venta.setEstado(n.getEstado());
@@ -162,9 +197,9 @@ public class VentasServicioImpl implements IComprobanteServicio {
 			String formattedNumeroFactura = String.format("%06d", n.getId());
 			venta.setNumeroFactura(formattedNumeroFactura);
 			List<DetalleVenta> listaDetalles = detalleVentaRepositorio.listaDetallesVenta(n);
-			BigDecimal total = new BigDecimal(0);
+			Double total = 0.0;
 			for (DetalleVenta detalle : listaDetalles) {
-				total = total.add(new BigDecimal(detalle.getCantidad()).multiply(detalle.getPrecioUnitario()));
+				total += detalle.getCantidad()*detalle.getPrecioUnitario();
 			}
 			//venta.setTotal(df.format(total));
 			listaRetorna.add(venta);
@@ -192,10 +227,10 @@ public class VentasServicioImpl implements IComprobanteServicio {
 			venta.setId(n.getId());
 			venta.setFechaFormat(n.getFechayHora().format(formatter));
 			venta.setNumeroFactura(numeroVentaFormateado(n.getId()));
-			BigDecimal total = new BigDecimal(0);
+			Double total = 0.0;
 			List<DetalleVenta> listaDetalles = detalleVentaRepositorio.listaDetallesVenta(n);
 			for (DetalleVenta detalle : listaDetalles) {
-				total = total.add(new BigDecimal(detalle.getCantidad()).multiply(detalle.getPrecioUnitario()));
+				total += detalle.getCantidad()*detalle.getPrecioUnitario();
 			}
 			//venta.setTotal(df.format(total));
 			//venta.setTotal(new BigDecimal(1000));
@@ -238,9 +273,81 @@ public class VentasServicioImpl implements IComprobanteServicio {
 		DetalleVentaDto detalleAgregado= new DetalleVentaDto();
 		detalleAgregado.setEdit(true);
 		detalleAgregado.setProductoDto(new ProductoDto());
+		calculoTotal(comprobanteRequest);
 		comprobanteRequest.addDetailOnTop(detalleAgregado);
 		return comprobanteRequest;
 	}
+	
+	public VentaResponse removeDetalle(VentaResponse comprobanteRequest) {
+		calculoTotal(comprobanteRequest);
+		return comprobanteRequest;
+	}
+	
+	public VentaResponse doneDetalle(VentaResponse comprobanteRequest) {
+		calculoTotal(comprobanteRequest);
+		return comprobanteRequest;
+	}
+	
+	
+	
+	private void calculoTotal(VentaResponse comprobanteRequest) {
+		Double total= calcularTotalComprobante(comprobanteRequest.getDetallesVentaDto());
+		Double totalD= calcularDescuentoTotalComprobante(comprobanteRequest.getDetallesVentaDto());
+		comprobanteRequest.setTotalSinDescuento(total);
+		comprobanteRequest.setTotalDescuento(totalD);
+	    comprobanteRequest.setTotal(total-totalD);
+	}
+	
+	
+	public List<VentaResponse> findAllOrdenes() {
+		List<VentaResponse> listaRetorna = new ArrayList<>();
+		ventaRespositorio.findByEstadoOrderByIdDesc("2").forEach((n) -> {
+			VentaResponse venta = new VentaResponse();
+			venta.setId(n.getId());
+			venta.setEstado(n.getEstado());
+			venta.setFechaFormat(n.getFechayHora().format(formatter));
+			venta.setFormaPago(n.getFormaPago());
+			venta.setNombreCliente(
+					n.getCliente().getPersona().getNombres() + " " + n.getCliente().getPersona().getApellidos());
+			String formattedNumeroFactura = String.format("%06d", n.getId());
+			venta.setNumeroFactura(formattedNumeroFactura);
+			List<DetalleVenta> listaDetalles = detalleVentaRepositorio.listaDetallesVenta(n);
+			Double total = 0.0;
+			for (DetalleVenta detalle : listaDetalles) {
+				total += detalle.getCantidad()*detalle.getPrecioUnitario();
+			}
+			//venta.setTotal(df.format(total));
+			listaRetorna.add(venta);
+		});
+		return listaRetorna;
+	}
+
+	@Override
+	public List<VentaResponse> listarOrdernesConSaldo() {
+		List<VentaResponse> listaRetorna = new ArrayList<>();
+		List<VentaResponse> listaRespuesta = new ArrayList<>();
+		listaRetorna= ventaMapper.toDto(ventaRespositorio.findByEstadoOrderByIdDesc("2"));
+		listaRetorna.forEach((n) -> {
+			VentaResponse venta = new VentaResponse();
+			n.setFechaFormat(n.getFechayHora().format(formatter));
+			//venta.setNombreCliente(n.getCliente().getPersona().getNombres() + " " + n.getCliente().getPersona().getApellidos());
+			String formattedNumeroFactura = String.format("%06d", n.getId());
+			n.setNumeroFactura(formattedNumeroFactura);
+	         Boolean saldoAlaFecha= detalleVentasServicio.algunDetalleConSaldo(n.getId());
+			if(saldoAlaFecha); {
+				List<DetalleVentaDto> listaDetalles = detalleVentasServicio.listarDetallesVenta(n.getId());
+				Double total = 0.0;
+				for (DetalleVentaDto detalle : listaDetalles) {
+					total += detalle.getCantidad()*detalle.getPrecioUnitario();
+				}
+				listaRespuesta.add(n);
+			}
+		});
+		return listaRespuesta;
+	}
+
+
+	
 
 
 }

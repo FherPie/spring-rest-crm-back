@@ -56,4 +56,9 @@ public class DetalleServicioImpl implements IDetalleServicio
     {
         this.detalleRepositorio.deleteById(id);
     }
+
+	@Override
+	public List<DetalleDto> formasPago() {
+		return detalleMapper.toDto(this.detalleRepositorio.findByMaestroCodigo("FPS"));
+	}
 }

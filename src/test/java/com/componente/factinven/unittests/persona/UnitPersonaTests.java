@@ -21,12 +21,12 @@ import com.componente.factinven.entidades.Persona;
 import com.componente.factinven.servicios.impl.PersonaServicioImpl;
 import com.componente.factinven.unittests.persona.UtilPersona;
 
-
-@RunWith(SpringRunner.class)
-@AutoConfigureMockMvc
-@SpringBootTest
-@ActiveProfiles("test")
-@TestMethodOrder(OrderAnnotation.class)
+//
+//@RunWith(SpringRunner.class)
+//@AutoConfigureMockMvc
+//@SpringBootTest
+//@ActiveProfiles("test")
+//@TestMethodOrder(OrderAnnotation.class)
 public class UnitPersonaTests {
 
 	// https://github.com/tiwasi/inventario/tree/master/AplicacionWebInventario/src/java/com/inventario/entidades

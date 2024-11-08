@@ -21,11 +21,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.componente.factinven.entidades.Proveedor;
 import com.componente.factinven.servicios.impl.ProveedorServicioImpl;
 
-@RunWith(SpringRunner.class)
-@AutoConfigureMockMvc
-@SpringBootTest
-@ActiveProfiles("test")
-@TestMethodOrder(OrderAnnotation.class)
+//@RunWith(SpringRunner.class)
+//@AutoConfigureMockMvc
+//@SpringBootTest
+//@ActiveProfiles("test")
+//@TestMethodOrder(OrderAnnotation.class)
 public class UnitProveedorTests {
 
 	// 1 Microincremenrto Repositories

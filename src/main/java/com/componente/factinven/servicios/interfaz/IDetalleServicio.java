@@ -1,13 +1,14 @@
 package com.componente.factinven.servicios.interfaz;
 
-import com.componente.factinven.dto.DetalleDto;
-import com.componente.factinven.dto.DetalleDto;
-
 import java.util.List;
+
+import com.componente.factinven.dto.DetalleDto;
 
 public interface IDetalleServicio
 {
     public abstract List<DetalleDto> listarDetalles();
+    
+    public abstract List<DetalleDto> formasPago();
 
     public abstract DetalleDto findById(int id);
 
