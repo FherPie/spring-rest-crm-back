@@ -15,8 +15,6 @@ import com.componente.factinven.entidades.Establecimiento;
 import com.componente.factinven.entidades.ImageModel;
 import com.componente.factinven.mappers.EstablecimientoMapper;
 import com.componente.factinven.repositorios.EstablecimientoRepositorio;
-import com.componente.factinven.utils.ServiciosUtils;
-
 
 
 @Service
@@ -31,15 +29,18 @@ public class EstablecimientoServicioImpl  {
 	private EstablecimientoMapper establecimientoMapper;
 	
 
-	public EstablecimientoDto guardar(EstablecimientoDto establecimientoDto, MultipartFile[] files ) {
-		
-		Establecimiento establecimiento =establecimientoMapper.toEntity(establecimientoDto);
-        try {
-			Set<ImageModel> images= uploadImage(files);
-			establecimiento.setImageEstablishment(images);
-		} catch (Exception e) {
-            System.out.println(e.getMessage());
-		}
+//	public EstablecimientoDto guardar(EstablecimientoDto establecimientoDto, MultipartFile[] files ) {
+
+
+		public EstablecimientoDto guardar(EstablecimientoDto establecimientoDto) {
+
+			Establecimiento establecimiento =establecimientoMapper.toEntity(establecimientoDto);
+//        try {
+//			Set<ImageModel> images= uploadImage(files);
+//			//establecimiento.setImageEstablishment(images);
+//		} catch (Exception e) {
+//            System.out.println(e.getMessage());
+//		}
 		return establecimientoMapper.toDto(establecimientoRespositorio.save(establecimiento));
 	}
 	
@@ -67,8 +68,7 @@ public class EstablecimientoServicioImpl  {
 
 	
 	public EstablecimientoDto findByUserId(Integer id) {
-		id= ServiciosUtils.userLoggedId();
-		return establecimientoMapper.toDto(establecimientoRespositorio.findByCreatedBy(id));
+		return establecimientoMapper.toDto(establecimientoRespositorio.findAll().get(0));
 	}
 	
 	

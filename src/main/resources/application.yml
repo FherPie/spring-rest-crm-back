@@ -8,7 +8,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/factInventdb?allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
     username: root
-    password:
+    password: andres
     driver-class-name: com.mysql.cj.jdbc.Driver
   main:
    allow-bean-definition-overriding: true
@@ -38,7 +38,7 @@ ftp:
     user: andres
     port: 21
     password: ftpserver77
-    hostDir: C:\Users\LENOVO\Documents\ftp\
+    hostDir: C:\Users\LENOVO\Documents\ftpcrm
 
 
    

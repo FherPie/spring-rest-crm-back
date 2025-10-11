@@ -2,6 +2,7 @@ package com.componente.factinven.controller;
 
 import java.util.List;
 
+import com.componente.factinven.dto.MaestroDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,15 +31,24 @@ public class EstablecimientoController {
 	EstablecimientoServicioImpl establecimientoService;
 	
 	
-	@PostMapping(value="/establishmentuser", consumes= {MediaType.MULTIPART_FORM_DATA_VALUE})
-	public ResponseEntity<?> guardar(@RequestPart("establecimientoDto") EstablecimientoDto establecimientoDto,
-			@RequestPart("imageFile") MultipartFile[] file ) {
-        ResponseGenerico<EstablecimientoDto> response = new ResponseGenerico<>();
-        EstablecimientoDto dto = establecimientoService.guardar(establecimientoDto, file);
-        return ControllersUtils.repuestaGenericoExitoObject(response, dto);
-      };
+//	@PostMapping(value="/establishmentuser", consumes= {MediaType.MULTIPART_FORM_DATA_VALUE})
+//	public ResponseEntity<?> guardar(@RequestPart("establecimientoDto") EstablecimientoDto establecimientoDto,
+//			@RequestPart("imageFile") MultipartFile[] file ) {
+//        ResponseGenerico<EstablecimientoDto> response = new ResponseGenerico<>();
+//        EstablecimientoDto dto = establecimientoService.guardar(establecimientoDto, file);
+//        return ControllersUtils.repuestaGenericoExitoObject(response, dto);
+//      };
 
-     
+	@PostMapping(value="/establishmentuser")
+	public ResponseEntity<?> guardar(@RequestBody EstablecimientoDto establecimientoDto ) {
+		ResponseGenerico<EstablecimientoDto> response = new ResponseGenerico<>();
+//		EstablecimientoDto dto = establecimientoService.guardar(establecimientoDto, file);
+
+		EstablecimientoDto dto = establecimientoService.guardar(establecimientoDto);
+		return ControllersUtils.repuestaGenericoExitoObject(response, dto);
+	};
+
+
 	@PutMapping("/establishment")
 	public ResponseEntity<?> actualizar(@RequestBody EstablecimientoDto establecimientoDto) {
         ResponseGenerico<EstablecimientoDto> response = new ResponseGenerico<>();

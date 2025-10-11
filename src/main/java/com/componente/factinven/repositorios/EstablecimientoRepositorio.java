@@ -5,13 +5,20 @@ import org.springframework.stereotype.Repository;
 
 import com.componente.factinven.entidades.Establecimiento;
 
+import java.util.List;
+
 @Repository
 public interface EstablecimientoRepositorio extends JpaRepository<Establecimiento, Integer> {
 
 
 	
 	Establecimiento findByCreatedBy(Integer userId);
-	
+
+	Establecimiento getFirstEstablecimientoById(int id);
+
+
+	List<Establecimiento> findAll();
+
 //    @Transactional(readOnly = true)
 //	public List<Proveedor> findByNombreContainingIgnoreCase(String nombre);
 //
