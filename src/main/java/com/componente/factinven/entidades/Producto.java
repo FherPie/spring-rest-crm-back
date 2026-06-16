@@ -29,6 +29,9 @@ public class Producto extends AuditedEntity implements Serializable {
 	private Integer idProducto;
 	private String nombre;
 	private Double precioUnitario;
+	private Double precioUnitariob;
+	private Double precioUnitarioc;
+
 	private Double precioCompra;
 	private Boolean servdeOdontograma;
 	
@@ -78,6 +81,22 @@ public class Producto extends AuditedEntity implements Serializable {
 	public void setPrecioUnitario(Double precioUnitario) {
 		this.precioUnitario = precioUnitario;
 	}
+
+    public Double getPrecioUnitariob() {
+        return precioUnitariob;
+    }
+
+    public Double getPrecioUnitarioc() {
+        return precioUnitarioc;
+    }
+
+    public void setPrecioUnitarioc(Double precioUnitarioc) {
+        this.precioUnitarioc = precioUnitarioc;
+    }
+
+    public void setPrecioUnitariob(Double precioUnitariob) {
+        this.precioUnitariob = precioUnitariob;
+    }
 //	public Double getPrecioVenta() {
 //		return precioVenta;
 //	}

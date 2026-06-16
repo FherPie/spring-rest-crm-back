@@ -6,15 +6,16 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class VentaResponse {
+public class MensajesWhatsappResponse {
 
 	private static final long serialVersionUID = 8552336462521975417L;
 	private Integer id;
 	private LocalDateTime fechayHora;
-	private Integer idEmpleado;	
+	private Integer idEmpleado;
 	private ClienteDto idCliente;
-	private String estado; 
+	private String estado;
 	private String codigo;
+	private Integer idProducto;
 	private Integer idAlmacen;
 	private String formaPago;
 	private Double total;
@@ -26,14 +27,14 @@ public class VentaResponse {
 	private String motivoConsulta;
 	//private List<DetalleVentaDto> detallesVentaDto;
 	private List<DetalleVentaDto> detallesVentaDto = new LinkedList<>();
-	
-	public VentaResponse() {}
-	
-	
-	
-	
-	public VentaResponse(Integer id, LocalDateTime fechayHora, String estado, String codigo,
-			String formaPago, Double total) {
+
+	public MensajesWhatsappResponse() {}
+
+
+
+
+	public MensajesWhatsappResponse(Integer id, LocalDateTime fechayHora, String estado, String codigo,
+                                    String formaPago, Double total) {
 		super();
 		this.id = id;
 		this.fechayHora = fechayHora;
@@ -44,11 +45,10 @@ public class VentaResponse {
 	}
 
 
-	public void addDetailOnTop(DetalleVentaDto detalleVenta) {
-		this.detallesVentaDto.add(0,detalleVenta);
-		//detalleVenta.setVenta(this);
-	}
+
+
 	
+
 
 	
 	
@@ -121,7 +121,7 @@ public class VentaResponse {
 	public String getNumeroFactura() {
 		return numeroFactura;
 	}
-	public VentaResponse setNumeroFactura(String numeroFactura) {
+	public MensajesWhatsappResponse setNumeroFactura(String numeroFactura) {
 		this.numeroFactura = numeroFactura;
 		return this;
 	}

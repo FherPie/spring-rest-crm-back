@@ -32,7 +32,6 @@ public class AlmacenController {
 
 	@Autowired
 	AlmacenServicioImpl almacenServicio;
-	
 
 	private final ImporterExcelVenta importerExcelVenta;
 	
