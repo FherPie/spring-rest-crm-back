@@ -59,6 +59,7 @@ public class FinanzasImpl {
 		}
 		resultadoTotal=totalIngresos-totalEgresos;
 		var resultado= new ResultadosDto(totalIngresos, totalEgresos, resultadoTotal,
+				month);
 		return resultado;
 	}
 	
