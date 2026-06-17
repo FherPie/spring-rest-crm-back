@@ -29,9 +29,7 @@ public class FinanzasImpl {
 	
 	@Autowired
 	private  VentaRepositorio ventaRepo;
-	
-	
-	
+
 	
 	public List<EntradaDto> pagosVenta(Integer ventaId){
 		
@@ -60,7 +58,7 @@ public class FinanzasImpl {
 			totalIngresos+=entrada.getPrecio();
 		}
 		resultadoTotal=totalIngresos-totalEgresos;
-		var resultado= new ResultadosDto(totalIngresos, totalEgresos, resultadoTotal);
+		var resultado= new ResultadosDto(totalIngresos, totalEgresos, resultadoTotal,
 		return resultado;
 	}
 	
@@ -72,6 +70,7 @@ public class FinanzasImpl {
 		private Double totalIngresos;
 		private Double totalEgresos;
 		private Double total;
+		private int mes;
 	}
 
 	
